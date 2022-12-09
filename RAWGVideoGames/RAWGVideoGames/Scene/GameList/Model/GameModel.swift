@@ -10,14 +10,14 @@ import Foundation
 struct GameModel: Decodable {
     let id: Int
     let name: String
-    let playtime: Int
-    let platforms: [Platform]
-    let releaseDate: String
-    let imageURL: String
-    let rating: Double
-    let ratings: [Rating]
-    let ratingsCount: Int
-    let genres: [Genre]
+    let playtime: Int?
+    let platforms: [Platform]?
+    let releaseDate: String?
+    let imageURL: String?
+    let rating: Double?
+    let ratings: [Rating]?
+    let ratingsCount: Int?
+    let genres: [Genre]?
     
     enum CodingKeys: String, CodingKey {
         case id

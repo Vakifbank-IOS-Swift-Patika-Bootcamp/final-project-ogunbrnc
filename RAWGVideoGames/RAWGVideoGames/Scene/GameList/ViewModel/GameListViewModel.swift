@@ -10,8 +10,10 @@ import Foundation
 protocol GameListViewModelProtocol {
     var delegate: GameListViewModelDelegate? { get set }
     func fetchGames()
+    func fetchGamesSorted(by filter: String)
     func searchGame(with text: String)
     func searchGameCancel()
+    func getSortingOptions() -> [String]
     func getGameCount() -> Int
     func getGame(at index: Int) -> GameModel?
     func getGameId(at index: Int) -> Int?
@@ -26,6 +28,14 @@ final class GameListViewModel: GameListViewModelProtocol {
     weak var delegate: GameListViewModelDelegate?
     private var games: [GameModel]?
     private var filteredGames: [GameModel]?
+    private let sortingOptionsMapping: [String:String] = [
+        "Relevance":"relevance",
+        "Date added":"created",
+        "Name":"name",
+        "Release date":"released",
+        "Popularity":"added",
+        "Average rating":"rating",
+    ]
     
    
     
@@ -40,6 +50,10 @@ final class GameListViewModel: GameListViewModelProtocol {
         delegate?.gamesLoaded()
     }
     
+    func getSortingOptions() -> [String] {
+        return [String] (sortingOptionsMapping.keys)
+    }
+    
     func fetchGames() {
         Client.getGames { [weak self] games, error in
             guard let self = self else { return }
@@ -47,6 +61,16 @@ final class GameListViewModel: GameListViewModelProtocol {
             self.filteredGames = games
             self.delegate?.gamesLoaded()
         }
+    }
+    func fetchGamesSorted(by filter: String) {
+        let sortedParam = sortingOptionsMapping[filter]
+        Client.getGamesSorted(by: sortedParam!){ [weak self] games, error in
+            guard let self = self else { return }
+            self.games = games
+            self.filteredGames = games
+            self.delegate?.gamesLoaded()
+        }
+        
     }
     
     func getGameCount() -> Int {

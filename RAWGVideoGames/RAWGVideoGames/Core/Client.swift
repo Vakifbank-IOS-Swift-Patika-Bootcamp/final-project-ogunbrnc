@@ -17,7 +17,7 @@ final class Client {
         var stringValue: String {
             switch self {
             case .games:
-                return Endpoints.base + "/games" + "?dates=2022-01-01,2022-12-31" + "&ordering=-added" + "&key=" + Constants.API_KEY
+                return Endpoints.base + "/games" + "?key=" + Constants.API_KEY
             }
         }
 
@@ -25,6 +25,7 @@ final class Client {
             return URL(string: stringValue)!
         }
     }
+    
     
     @discardableResult
     class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void) -> URLSessionDataTask {
@@ -54,6 +55,14 @@ final class Client {
     
     class func getGames(completion: @escaping ([GameModel]?, Error?) -> Void) {
         taskForGETRequest(url: Endpoints.games.url, responseType: GetGamesResponseModel.self) { responseModel, error in
+            completion(responseModel?.results, error)
+        }
+    }
+    
+    class func getGamesSorted(by: String, completion: @escaping ([GameModel]?, Error?) -> Void) {
+
+        let sortedURL = Endpoints.games.stringValue + "&ordering=\(by)"
+        taskForGETRequest(url: URL(string: sortedURL)! , responseType: GetGamesResponseModel.self) { responseModel, error in
             completion(responseModel?.results, error)
         }
     }
