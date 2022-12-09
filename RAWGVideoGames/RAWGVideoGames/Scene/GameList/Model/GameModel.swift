@@ -15,7 +15,7 @@ struct GameModel: Decodable {
     let imageURL: String
     let rating: Double
     let ratings: [Rating]
-    let ratings_count: Int
+    let ratingsCount: Int
     let genres: [Genre]
     
     enum CodingKeys: String, CodingKey {
@@ -26,12 +26,16 @@ struct GameModel: Decodable {
         case imageURL = "background_image"
         case rating
         case ratings
-        case ratings_count
+        case ratingsCount = "ratings_count"
         case genres
     }
 }
 
 struct Platform: Decodable {
+    let platform: PlatformInfo
+}
+
+struct PlatformInfo: Decodable {
     let id: Int
     let name: String
     let slug: String
