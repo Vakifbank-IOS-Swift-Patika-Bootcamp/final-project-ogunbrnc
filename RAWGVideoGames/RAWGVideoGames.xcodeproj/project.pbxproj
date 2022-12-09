@@ -17,6 +17,8 @@
 		71C1401E29432BE100B85AD6 /* RAWGVideoGamesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1401D29432BE100B85AD6 /* RAWGVideoGamesTests.swift */; };
 		71C1402829432BE100B85AD6 /* RAWGVideoGamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1402729432BE100B85AD6 /* RAWGVideoGamesUITests.swift */; };
 		71C1402A29432BE100B85AD6 /* RAWGVideoGamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1402929432BE100B85AD6 /* RAWGVideoGamesUITestsLaunchTests.swift */; };
+		71C140D229435CC100B85AD6 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140D129435CC100B85AD6 /* Client.swift */; };
+		71C140D429435DB800B85AD6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140D329435DB800B85AD6 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		71C1402329432BE100B85AD6 /* RAWGVideoGamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RAWGVideoGamesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C1402729432BE100B85AD6 /* RAWGVideoGamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RAWGVideoGamesUITests.swift; sourceTree = "<group>"; };
 		71C1402929432BE100B85AD6 /* RAWGVideoGamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RAWGVideoGamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		71C140D129435CC100B85AD6 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		71C140D329435DB800B85AD6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +105,8 @@
 		71C1400229432BE000B85AD6 /* RAWGVideoGames */ = {
 			isa = PBXGroup;
 			children = (
+				71C140D029435CB300B85AD6 /* Core */,
 				71C14038294331FE00B85AD6 /* Scene */,
-				71C14037294331EE00B85AD6 /* Core */,
 				71C14036294331BB00B85AD6 /* App */,
 				71C1401429432BE100B85AD6 /* Info.plist */,
 				71C1400C29432BE000B85AD6 /* RAWGVideoGames.xcdatamodeld */,
@@ -135,15 +139,9 @@
 				71C1400329432BE000B85AD6 /* AppDelegate.swift */,
 				71C1400529432BE000B85AD6 /* SceneDelegate.swift */,
 				71C1400F29432BE100B85AD6 /* Assets.xcassets */,
+				71C140D329435DB800B85AD6 /* Constants.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		71C14037294331EE00B85AD6 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
 			sourceTree = "<group>";
 		};
 		71C14038294331FE00B85AD6 /* Scene */ = {
@@ -192,6 +190,14 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		71C140D029435CB300B85AD6 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				71C140D129435CC100B85AD6 /* Client.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,7 +334,9 @@
 				71C1400E29432BE000B85AD6 /* RAWGVideoGames.xcdatamodeld in Sources */,
 				71C1400829432BE000B85AD6 /* GameListViewController.swift in Sources */,
 				71C1400429432BE000B85AD6 /* AppDelegate.swift in Sources */,
+				71C140D229435CC100B85AD6 /* Client.swift in Sources */,
 				71C1400629432BE000B85AD6 /* SceneDelegate.swift in Sources */,
+				71C140D429435DB800B85AD6 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
