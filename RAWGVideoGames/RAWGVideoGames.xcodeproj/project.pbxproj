@@ -22,6 +22,8 @@
 		71C140D62943676E00B85AD6 /* GetGamesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140D52943676E00B85AD6 /* GetGamesResponseModel.swift */; };
 		71C140D8294367AE00B85AD6 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140D7294367AE00B85AD6 /* GameModel.swift */; };
 		71C140DC294373E700B85AD6 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140DB294373E700B85AD6 /* GameListViewModel.swift */; };
+		71C140E12943797200B85AD6 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 71C140E02943797200B85AD6 /* SDWebImage */; };
+		71C140E329438A0400B85AD6 /* GameListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140E229438A0400B85AD6 /* GameListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,7 @@
 		71C140D52943676E00B85AD6 /* GetGamesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGamesResponseModel.swift; sourceTree = "<group>"; };
 		71C140D7294367AE00B85AD6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		71C140DB294373E700B85AD6 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
+		71C140E229438A0400B85AD6 /* GameListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71C140E12943797200B85AD6 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +201,7 @@
 		71C140CB294358E000B85AD6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				71C140E229438A0400B85AD6 /* GameListTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,6 +230,9 @@
 			dependencies = (
 			);
 			name = RAWGVideoGames;
+			packageProductDependencies = (
+				71C140E02943797200B85AD6 /* SDWebImage */,
+			);
 			productName = RAWGVideoGames;
 			productReference = 71C1400029432BE000B85AD6 /* RAWGVideoGames.app */;
 			productType = "com.apple.product-type.application";
@@ -297,6 +305,9 @@
 				Base,
 			);
 			mainGroup = 71C13FF729432BE000B85AD6;
+			packageReferences = (
+				71C140DF2943797200B85AD6 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 71C1400129432BE000B85AD6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -343,6 +354,7 @@
 				71C1400E29432BE000B85AD6 /* RAWGVideoGames.xcdatamodeld in Sources */,
 				71C1400829432BE000B85AD6 /* GameListViewController.swift in Sources */,
 				71C1400429432BE000B85AD6 /* AppDelegate.swift in Sources */,
+				71C140E329438A0400B85AD6 /* GameListTableViewCell.swift in Sources */,
 				71C140D62943676E00B85AD6 /* GetGamesResponseModel.swift in Sources */,
 				71C140D229435CC100B85AD6 /* Client.swift in Sources */,
 				71C140DC294373E700B85AD6 /* GameListViewModel.swift in Sources */,
@@ -690,6 +702,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		71C140DF2943797200B85AD6 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		71C140E02943797200B85AD6 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 71C140DF2943797200B85AD6 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		71C1400C29432BE000B85AD6 /* RAWGVideoGames.xcdatamodeld */ = {

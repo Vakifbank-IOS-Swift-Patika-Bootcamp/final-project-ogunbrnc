@@ -9,12 +9,16 @@ import UIKit
 
 final class GameListViewController: UIViewController {
     
-    @IBOutlet weak var gameListCollectionView: UICollectionView! {
+    @IBOutlet private weak var gameListTableView: UITableView! {
         didSet {
-            gameListCollectionView.delegate = self
-            gameListCollectionView.dataSource = self
+            gameListTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
+            gameListTableView.delegate = self
+            gameListTableView.dataSource = self
+            gameListTableView.estimatedRowHeight = UITableView.automaticDimension
+
         }
     }
+    
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
 
     override func viewDidLoad() {
@@ -26,34 +30,26 @@ final class GameListViewController: UIViewController {
 
 extension GameListViewController: GameListViewModelDelegate {
     func gamesLoaded() {
-        gameListCollectionView.reloadData()
+        gameListTableView.reloadData()
     }
 }
 
-extension GameListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getGameCount()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as UICollectionViewCell
-        cell.backgroundColor = .systemGreen
-        return cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "GameListTableViewCell",for: indexPath) as? GameListTableViewCell, let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
+       cell.configureCell(game: model)
+       return cell
+    }
+   
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 300
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let numberOfCellsInRow = 2
-
-        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-
-        let totalSpace = flowLayout.sectionInset.left
-        + flowLayout.sectionInset.right
-        + (flowLayout.minimumInteritemSpacing * CGFloat(numberOfCellsInRow - 1))
-
-        let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(numberOfCellsInRow))
-
-        return CGSize(width: size, height: size)
-    }
+    
+    
     
 }
-
