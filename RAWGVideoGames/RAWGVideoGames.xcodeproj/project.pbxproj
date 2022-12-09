@@ -21,6 +21,7 @@
 		71C140D429435DB800B85AD6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140D329435DB800B85AD6 /* Constants.swift */; };
 		71C140D62943676E00B85AD6 /* GetGamesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140D52943676E00B85AD6 /* GetGamesResponseModel.swift */; };
 		71C140D8294367AE00B85AD6 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140D7294367AE00B85AD6 /* GameModel.swift */; };
+		71C140DC294373E700B85AD6 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140DB294373E700B85AD6 /* GameListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		71C140D329435DB800B85AD6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		71C140D52943676E00B85AD6 /* GetGamesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGamesResponseModel.swift; sourceTree = "<group>"; };
 		71C140D7294367AE00B85AD6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		71C140DB294373E700B85AD6 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 		71C140CA294358DA00B85AD6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				71C140DB294373E700B85AD6 /* GameListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				71C1400429432BE000B85AD6 /* AppDelegate.swift in Sources */,
 				71C140D62943676E00B85AD6 /* GetGamesResponseModel.swift in Sources */,
 				71C140D229435CC100B85AD6 /* Client.swift in Sources */,
+				71C140DC294373E700B85AD6 /* GameListViewModel.swift in Sources */,
 				71C1400629432BE000B85AD6 /* SceneDelegate.swift in Sources */,
 				71C140D429435DB800B85AD6 /* Constants.swift in Sources */,
 				71C140D8294367AE00B85AD6 /* GameModel.swift in Sources */,

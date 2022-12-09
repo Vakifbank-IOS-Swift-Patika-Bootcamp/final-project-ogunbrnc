@@ -15,15 +15,24 @@ final class GameListViewController: UIViewController {
             gameListCollectionView.dataSource = self
         }
     }
+    private var viewModel: GameListViewModelProtocol = GameListViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.fetchGames()
     }
 }
 
+extension GameListViewController: GameListViewModelDelegate {
+    func gamesLoaded() {
+        gameListCollectionView.reloadData()
+    }
+}
 
 extension GameListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return viewModel.getGameCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
