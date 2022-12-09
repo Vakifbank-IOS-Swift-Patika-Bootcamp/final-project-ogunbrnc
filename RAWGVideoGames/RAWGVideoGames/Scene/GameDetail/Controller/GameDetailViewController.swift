@@ -10,6 +10,8 @@ import UIKit
 class GameDetailViewController: UIViewController {
     
     var gameId: Int?
+    private var viewModel: GameDetailViewModelProtocol = GameDetailViewModel()
+
     
     // MARK: UI Components
     private let gameImageView: UIImageView = {
@@ -185,7 +187,7 @@ class GameDetailViewController: UIViewController {
        let gameDescriptionContentLabelConstraints = [
             gameDescriptionContentLabel.leadingAnchor.constraint(equalTo: gamePlatformLabel.leadingAnchor),
             gameDescriptionContentLabel.trailingAnchor.constraint(equalTo: gameGenreLabel.trailingAnchor),
-            gameDescriptionContentLabel.topAnchor.constraint(equalTo: gameReleaseDateContentLabel.bottomAnchor, constant: 20)
+            gameDescriptionContentLabel.topAnchor.constraint(equalTo: gameTagContentLabel.bottomAnchor, constant: 20)
         
        ]
        
@@ -226,5 +228,22 @@ class GameDetailViewController: UIViewController {
         
         configureSubviews()
         configureConstraints()
+        
+        guard let id = gameId else { return }
+        viewModel.delegate = self
+        viewModel.fetchGameDetail(id: id)
+    }
+}
+extension GameDetailViewController: GameDetailViewModelDelegate {
+    func gameLoaded() {
+        gameNameLabel.text = viewModel.getGameName()
+        gamePlatformContentLabel.text = viewModel.getGamePlatform()
+        gameGenreContentLabel.text = viewModel.getGameGenre()
+        gameReleaseDateContentLabel.text = viewModel.getGameReleaseDate()
+        gameTagContentLabel.text = viewModel.getGameTag()
+        gameDescriptionContentLabel.text = viewModel.getGameDescription()
+        guard let url = viewModel.getGameImageURL() else { return }
+        gameImageView.sd_setImage(with: url,placeholderImage: UIImage(systemName: "photo"),options: .continueInBackground)
+
     }
 }
