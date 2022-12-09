@@ -7,10 +7,11 @@
 
 import UIKit
 
-final class GameListViewController: UIViewController {
+final class GameListViewController: BaseViewController {
     
     private let searchController = UISearchController()
     
+    private var currentSorting: String?
     private var selectedSortingRow: Int = 0
     private var sortingOptions: [String] = []
     private var toolBar = UIToolbar()
@@ -22,7 +23,6 @@ final class GameListViewController: UIViewController {
             gameListTableView.delegate = self
             gameListTableView.dataSource = self
             gameListTableView.estimatedRowHeight = UITableView.automaticDimension
-
         }
     }
     
@@ -56,7 +56,13 @@ final class GameListViewController: UIViewController {
     }
     
     @objc func onDoneButtonTapped() {
-        viewModel.fetchGamesSorted(by: sortingOptions[selectedSortingRow])
+        let selectedSorting = sortingOptions[selectedSortingRow]
+        if selectedSorting != currentSorting {
+            currentSorting = selectedSorting
+            indicatorView.startAnimating()
+            viewModel.fetchGamesSorted(by: selectedSorting)
+        }
+
         toolBar.removeFromSuperview()
         sortingPickerView.removeFromSuperview()
     }
@@ -70,6 +76,8 @@ final class GameListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
+        
+        indicatorView.startAnimating()
         viewModel.fetchGames()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Order by", style: .plain, target: self, action: #selector(addTapped))
@@ -83,6 +91,7 @@ final class GameListViewController: UIViewController {
 extension GameListViewController: GameListViewModelDelegate {
     func gamesLoaded() {
         gameListTableView.reloadData()
+        indicatorView.stopAnimating()
     }
 }
 

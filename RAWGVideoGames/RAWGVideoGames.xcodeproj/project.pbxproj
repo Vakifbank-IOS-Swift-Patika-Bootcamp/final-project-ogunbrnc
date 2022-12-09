@@ -24,6 +24,7 @@
 		71C140DC294373E700B85AD6 /* GameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140DB294373E700B85AD6 /* GameListViewModel.swift */; };
 		71C140E12943797200B85AD6 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 71C140E02943797200B85AD6 /* SDWebImage */; };
 		71C140E329438A0400B85AD6 /* GameListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140E229438A0400B85AD6 /* GameListTableViewCell.swift */; };
+		71C140E72943BB6B00B85AD6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C140E62943BB6B00B85AD6 /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		71C140D7294367AE00B85AD6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		71C140DB294373E700B85AD6 /* GameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewModel.swift; sourceTree = "<group>"; };
 		71C140E229438A0400B85AD6 /* GameListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListTableViewCell.swift; sourceTree = "<group>"; };
+		71C140E62943BB6B00B85AD6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				71C140D129435CC100B85AD6 /* Client.swift */,
+				71C140E62943BB6B00B85AD6 /* BaseViewController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 			files = (
 				71C1400E29432BE000B85AD6 /* RAWGVideoGames.xcdatamodeld in Sources */,
 				71C1400829432BE000B85AD6 /* GameListViewController.swift in Sources */,
+				71C140E72943BB6B00B85AD6 /* BaseViewController.swift in Sources */,
 				71C1400429432BE000B85AD6 /* AppDelegate.swift in Sources */,
 				71C140E329438A0400B85AD6 /* GameListTableViewCell.swift in Sources */,
 				71C140D62943676E00B85AD6 /* GetGamesResponseModel.swift in Sources */,
