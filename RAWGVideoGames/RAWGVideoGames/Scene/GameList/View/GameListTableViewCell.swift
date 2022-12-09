@@ -101,6 +101,4 @@ class GameListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-
 }

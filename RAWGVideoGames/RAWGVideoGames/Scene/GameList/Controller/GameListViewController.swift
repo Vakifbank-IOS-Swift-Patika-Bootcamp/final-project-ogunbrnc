@@ -9,6 +9,8 @@ import UIKit
 
 final class GameListViewController: UIViewController {
     
+    private let searchController = UISearchController()
+    
     @IBOutlet private weak var gameListTableView: UITableView! {
         didSet {
             gameListTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
@@ -20,11 +22,22 @@ final class GameListViewController: UIViewController {
     }
     
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
+    
+    
+    
+    private func configureSearchController(){
+       navigationItem.searchController = searchController
+       searchController.searchResultsUpdater = self
+       searchController.searchBar.delegate = self
+           
+   }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
         viewModel.fetchGames()
+        
+        configureSearchController()
     }
 }
 
@@ -48,8 +61,29 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 300
     }
-    
-    
-    
-    
+}
+
+extension GameListViewController: UISearchResultsUpdating, UISearchBarDelegate{
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else {
+            return
+        }
+        
+        if !(text.isEmpty) {
+            viewModel.searchGame(with: text)
+        }
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.isActive = false
+        guard let text = searchBar.text else {
+            return
+        }
+        if !(text.isEmpty) {
+            viewModel.searchGame(with: text)
+        }
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchController.isActive = false
+        viewModel.searchGameCancel()
+    }
 }
