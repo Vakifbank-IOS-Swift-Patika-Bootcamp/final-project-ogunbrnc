@@ -71,9 +71,9 @@ final class Client {
         }
     }
     
-    class func getGameDetail(movieId: Int,completion: @escaping ([GameModel]?, Error?) -> Void) {
-        taskForGETRequest(url: Endpoints.gameDetail(movieId).url, responseType: GetGamesResponseModel.self) { responseModel, error in
-            completion(responseModel?.results, error)
+    class func getGameDetail(movieId: Int,completion: @escaping (GameDetailModel?, Error?) -> Void) {
+        taskForGETRequest(url: Endpoints.gameDetail(movieId).url, responseType: GameDetailModel.self) { response, error in
+            completion(response, error)
         }
     }
     

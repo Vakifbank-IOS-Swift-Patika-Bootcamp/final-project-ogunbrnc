@@ -40,6 +40,21 @@
             </objects>
             <point key="canvasLocation" x="1998.4615384615383" y="3.5545023696682461"/>
         </scene>
+        <!--Game Detail View Controller-->
+        <scene sceneID="Rw0-ih-dhu">
+            <objects>
+                <viewController storyboardIdentifier="GameDetailViewController" id="MGg-nD-flk" customClass="GameDetailViewController" customModule="RAWGVideoGames" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="itH-ls-vCM">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="fQC-SG-cdl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wrt-Fq-01o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2972" y="22"/>
+        </scene>
         <!--Games-->
         <scene sceneID="7NU-AL-D9h">
             <objects>
