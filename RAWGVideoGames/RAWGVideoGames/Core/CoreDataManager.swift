@@ -72,7 +72,16 @@ final class CoreDataManager {
         return false
     }
     
-    
+    func getNotes() -> [GameNote] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "GameNote")
+        do {
+            let notes = try managedContext.fetch(fetchRequest)
+            return notes as! [GameNote]
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        return []
+    }
     
     
 }
