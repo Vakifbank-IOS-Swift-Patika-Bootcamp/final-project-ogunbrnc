@@ -27,6 +27,18 @@ final class CoreDataManager {
         
     }
     
+    func getFavoriteGames() -> [FavoriteGame] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteGame")
+        do {
+            let games = try managedContext.fetch(fetchRequest)
+            return games as! [FavoriteGame]
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        return []
+    }
+    
+    
     func addToFavorite(id gameId: Int) -> Bool {
         let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
         let game = NSManagedObject(entity: entity, insertInto: managedContext)
