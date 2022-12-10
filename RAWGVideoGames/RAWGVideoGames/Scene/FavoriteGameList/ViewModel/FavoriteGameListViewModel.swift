@@ -36,7 +36,6 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
             games?.remove(at: index)
             delegate?.gamesLoaded()
         }
-        
     }
 
     func fetchGames() {
@@ -53,7 +52,7 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     }
     
     func getGameId(at index: Int) -> Int? {
-        return Int(games![index].gameId )
+        return Int(games![index].gameId)
     }
     
 }

@@ -18,24 +18,57 @@ class FavoriteGameListViewController: UIViewController {
         }
     }
     private var viewModel: FavoriteGameListViewModelProtocol = FavoriteGameListViewModel()
+    
+    private let noFavoriteGameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "There are no games. \n You can add games to favorite list using detail page."
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .label
+        return label
+    }()
+    
+    private func configureNoNoteLabel(){
+        if viewModel.getGameCount() == 0 {
+            view.addSubview(noFavoriteGameLabel)
+            noFavoriteGameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            noFavoriteGameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
+            noFavoriteGameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
+        }
+    }
+    
+    private func configureNotificationCenters() {
+        NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameAdded), name: NSNotification.Name(rawValue: "FavoriteGameAdded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameDeleted), name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil)
+    }
 
     @objc func favoriteGameAdded(_ notification: NSNotification) {
+        //game is added to the favorite list for the first time
+        if viewModel.getGameCount() == 0 {
+            noFavoriteGameLabel.removeFromSuperview()
+        }
         if let favoriteGame = notification.userInfo?["favoriteGame"] as? FavoriteGame {
             viewModel.newGameAddedToFavorites(game: favoriteGame)
         }
+        
     }
+    
     @objc func favoriteGameDeleted() {
         viewModel.gameDeletedFromFavorites()
+        //last game in the list has been deleted from the favorite list
+        if viewModel.getGameCount() == 0 {
+            configureNoNoteLabel()
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameAdded), name: NSNotification.Name(rawValue: "FavoriteGameAdded"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameDeleted), name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil)
-
         viewModel.delegate = self
         viewModel.fetchGames()
+        configureNotificationCenters()
+        configureNoNoteLabel()
     }
     
 }
