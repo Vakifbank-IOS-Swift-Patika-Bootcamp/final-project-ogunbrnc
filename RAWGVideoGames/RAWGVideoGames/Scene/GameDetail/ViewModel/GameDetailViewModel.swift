@@ -71,18 +71,22 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func isItFavoriteGame() -> Bool {
-        return CoreDataManager.shared.isFavorite(id: game!.id)
+        CoreDataManager.shared.isFavorite(id: game!.id)
     }
     
     func addGameToFavoriteList(completion: (Bool) -> ()) {
-        if CoreDataManager.shared.addToFavorite(id: game!.id) {
+        if let favoriteGame = CoreDataManager.shared.addToFavorite(id: game!.id, gameName: game!.name, gameImageURL: game!.imageURL) {
+            let favoriteGameDatadict:[String: FavoriteGame] = ["favoriteGame": favoriteGame]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameAdded"), object: nil, userInfo: favoriteGameDatadict)
             completion(true)
         } else {
             completion(false)
         }
     }
+    
     func deleteGameFromFavoriteList(completion: (Bool) -> ()) {
         if CoreDataManager.shared.deleteFromFavorite(id: game!.id) {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil, userInfo: nil)
             completion(true)
         } else {
             completion(false)
