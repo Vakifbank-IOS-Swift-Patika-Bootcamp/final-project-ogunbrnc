@@ -17,6 +17,7 @@ protocol GameDetailViewModelProtocol {
     func getGameReleaseDate() -> String
     func getGameTag() -> String
     func getGameDescription() -> String
+    func isItFavoriteGame() -> Bool
 }
 
 protocol GameDetailViewModelDelegate: AnyObject {
@@ -64,6 +65,10 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     
     func getGameDescription() -> String {
         game?.descriptionRaw ?? ""
+    }
+    
+    func isItFavoriteGame() -> Bool {
+        return true
     }
     
 }
