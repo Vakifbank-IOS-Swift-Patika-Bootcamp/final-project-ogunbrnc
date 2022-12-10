@@ -58,6 +58,13 @@ extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSo
        return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GameDetailViewController") as? GameDetailViewController else { return }
+        detailVC.gameId = viewModel.getGameId(at: indexPath.row)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 225
