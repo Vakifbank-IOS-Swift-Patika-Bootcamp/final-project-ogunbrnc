@@ -46,11 +46,11 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func getGamePlatform() -> String {
-        game?.parentPlatforms.reduce(""){$0 + $1.platform.name} ?? ""
+        game?.parentPlatforms.map{$0.platform.name}.joined(separator: ",") ?? ""
     }
     
     func getGameGenre() -> String {
-        game?.genres.reduce(""){$0 + $1.name} ?? ""
+        game?.genres.map{$0.name}.joined(separator: ",") ?? ""
     }
     
     func getGameReleaseDate() -> String {
@@ -58,7 +58,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func getGameTag() -> String {
-        game?.tags.reduce(""){$0 + $1.name} ?? ""
+        game?.tags.map{$0.name}.joined(separator: ",") ?? ""
     }
     
     func getGameDescription() -> String {

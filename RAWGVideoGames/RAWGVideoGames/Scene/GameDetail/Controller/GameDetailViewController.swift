@@ -14,6 +14,18 @@ class GameDetailViewController: UIViewController {
 
     
     // MARK: UI Components
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let gameImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +41,6 @@ class GameDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .label
         label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.text = "Game Name"
         return label
     }()
     
@@ -48,7 +59,6 @@ class GameDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .label
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "Game platforms Content,Game platforms Content,"
         return label
     }()
     
@@ -67,7 +77,6 @@ class GameDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .label
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "Game Genres Content"
         return label
     }()
     
@@ -86,7 +95,6 @@ class GameDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .label
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "Release date Content"
         return label
     }()
     
@@ -105,7 +113,6 @@ class GameDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .label
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "Tags content"
         return label
     }()
     
@@ -115,15 +122,31 @@ class GameDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .label
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description.Game description."
         return label
     }()
     
     // MARK: Configure UI Components
    private func configureConstraints() {
+       
+       let scrollViewConstraints = [
+            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            
+       ]
+       let contentViewConstraints = [
+            contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, constant: 200)
+       ]
+       
        let gameImageViewConstraints = [
-            gameImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 20),
-            gameImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 20),
+            gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             gameImageView.widthAnchor.constraint(equalToConstant: 350),
             gameImageView.heightAnchor.constraint(equalToConstant: 150)
        ]
@@ -140,13 +163,13 @@ class GameDetailViewController: UIViewController {
        let gamePlatformContentLabelConstraints = [
             gamePlatformContentLabel.leadingAnchor.constraint(equalTo: gamePlatformLabel.leadingAnchor),
             gamePlatformContentLabel.topAnchor.constraint(equalTo: gamePlatformLabel.bottomAnchor, constant: 10),
-            gamePlatformContentLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5, constant: -80)
+            gamePlatformContentLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5, constant: -80)
             
        ]
        
        let gameGenreLabelConstraints = [
             gameGenreLabel.leadingAnchor.constraint(equalTo: gamePlatformLabel.trailingAnchor, constant: 20),
-            gameGenreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            gameGenreLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             gameGenreLabel.topAnchor.constraint(equalTo: gamePlatformLabel.topAnchor)
         
        ]
@@ -155,7 +178,7 @@ class GameDetailViewController: UIViewController {
             gameGenreContentLabel.leadingAnchor.constraint(equalTo: gameGenreLabel.leadingAnchor),
             gameGenreContentLabel.trailingAnchor.constraint(equalTo: gameGenreLabel.trailingAnchor),
             gameGenreContentLabel.topAnchor.constraint(equalTo: gameGenreLabel.bottomAnchor, constant: 10),
-            gameGenreContentLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5, constant: -80)
+            gameGenreContentLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5, constant: -80)
         
        ]
        
@@ -172,7 +195,7 @@ class GameDetailViewController: UIViewController {
    
        let gameTagsLabelConstraints = [
             gameTagLabel.leadingAnchor.constraint(equalTo: gameGenreLabel.leadingAnchor),
-            gameTagLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            gameTagLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             gameTagLabel.topAnchor.constraint(equalTo: gameReleaseDateLabel.topAnchor)
         
        ]
@@ -191,6 +214,8 @@ class GameDetailViewController: UIViewController {
         
        ]
        
+       NSLayoutConstraint.activate(scrollViewConstraints)
+       NSLayoutConstraint.activate(contentViewConstraints)
        NSLayoutConstraint.activate(gameImageViewConstraints)
        NSLayoutConstraint.activate(gameNameLabelConstraints)
        NSLayoutConstraint.activate(gamePlatformLabelConstraints)
@@ -208,17 +233,19 @@ class GameDetailViewController: UIViewController {
    }
     
     private func configureSubviews() {
-        view.addSubview(gameImageView)
-        view.addSubview(gameNameLabel)
-        view.addSubview(gamePlatformLabel)
-        view.addSubview(gamePlatformContentLabel)
-        view.addSubview(gameGenreLabel)
-        view.addSubview(gameGenreContentLabel)
-        view.addSubview(gameReleaseDateLabel)
-        view.addSubview(gameReleaseDateContentLabel)
-        view.addSubview(gameTagLabel)
-        view.addSubview(gameTagContentLabel)
-        view.addSubview(gameDescriptionContentLabel)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(gameImageView)
+        contentView.addSubview(gameNameLabel)
+        contentView.addSubview(gamePlatformLabel)
+        contentView.addSubview(gamePlatformContentLabel)
+        contentView.addSubview(gameGenreLabel)
+        contentView.addSubview(gameGenreContentLabel)
+        contentView.addSubview(gameReleaseDateLabel)
+        contentView.addSubview(gameReleaseDateContentLabel)
+        contentView.addSubview(gameTagLabel)
+        contentView.addSubview(gameTagContentLabel)
+        contentView.addSubview(gameDescriptionContentLabel)
        
             
     }
@@ -233,6 +260,7 @@ class GameDetailViewController: UIViewController {
         viewModel.delegate = self
         viewModel.fetchGameDetail(id: id)
     }
+    
 }
 extension GameDetailViewController: GameDetailViewModelDelegate {
     func gameLoaded() {
