@@ -31,6 +31,9 @@ class GameNoteListViewController: UIViewController {
         return label
     }()
     
+    private var viewModel: GameNoteListViewModelProtocol = GameNoteListViewModel()
+
+    
     // MARK: Configure Views
     private func configureSubViews() {
         view.addSubview(floatingActionButton)
@@ -56,9 +59,11 @@ class GameNoteListViewController: UIViewController {
     }
         
     private func configureNoNoteLabel(){
-        view.addSubview(noNoteLabel)
-        noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        if viewModel.getGameNotesCount() == 0 {
+            view.addSubview(noNoteLabel)
+            noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        }
     }
     
     private func configureButtons() {
@@ -72,20 +77,28 @@ class GameNoteListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.fetchGameNotes()
 
         configureNoNoteLabel()
-       configureTableView()
-       configureSubViews()
-       configureConstraints()
-       configureButtons()
+        configureTableView()
+        configureSubViews()
+        configureConstraints()
+        configureButtons()
     }
 
+}
+
+extension GameNoteListViewController: GameNoteListViewModelDelegate {
+    func gameNotesLoaded() {
+        notesTableView.reloadData()
+    }
 }
 
 //MARK: TableView Extension
 extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return viewModel.getGameNotesCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
