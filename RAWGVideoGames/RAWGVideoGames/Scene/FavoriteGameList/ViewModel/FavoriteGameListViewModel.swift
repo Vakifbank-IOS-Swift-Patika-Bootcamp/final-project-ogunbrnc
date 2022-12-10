@@ -9,6 +9,8 @@ import Foundation
 
 protocol FavoriteGameListViewModelProtocol {
     var delegate: FavoriteGameListViewModelDelegate? { get set }
+    func newGameAddedToFavorites(game: FavoriteGame)
+    func gameDeletedFromFavorites()
     func fetchGames()
     func getGameCount() -> Int
     func getGame(at index: Int) -> FavoriteGame?
@@ -23,10 +25,22 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     weak var delegate: FavoriteGameListViewModelDelegate?
     private var games: [FavoriteGame]?
 
+    func newGameAddedToFavorites(game: FavoriteGame) {
+        games?.append(game)
+        delegate?.gamesLoaded()
+    }
+    
+    func gameDeletedFromFavorites() {
+        //since game id is equal to 0 after deletion from coredata, we remove the one whose id is equal to zero.
+        if let index = games?.enumerated().filter({$0.element.gameId == 0}).map({$0.offset}).first {
+            games?.remove(at: index)
+            delegate?.gamesLoaded()
+        }
+        
+    }
 
     func fetchGames() {
         games = CoreDataManager.shared.getFavoriteGames()
-        print(games)
         delegate?.gamesLoaded()
     }
     
@@ -39,7 +53,7 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     }
     
     func getGameId(at index: Int) -> Int? {
-        5
+        return games![index].gameId as! Int
     }
     
 }

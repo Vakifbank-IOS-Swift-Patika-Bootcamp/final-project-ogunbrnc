@@ -19,7 +19,7 @@ final class CoreDataManager {
     
     func isFavorite(id gameId: Int) -> Bool {
         let fetchNote: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
-        fetchNote.predicate = NSPredicate(format: "id = %@", String(gameId))
+        fetchNote.predicate = NSPredicate(format: "gameId = %@", String(gameId))
 
         let results = try? managedContext.fetch(fetchNote)
 
@@ -39,25 +39,25 @@ final class CoreDataManager {
     }
     
     
-    func addToFavorite(id: Int, gameName: String, gameImageURL: String) -> Bool {
+    func addToFavorite(id: Int, gameName: String, gameImageURL: String) -> FavoriteGame? {
         let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
         let game = NSManagedObject(entity: entity, insertInto: managedContext)
-        game.setValue(id, forKeyPath: "id")
+        game.setValue(id, forKeyPath: "gameId")
         game.setValue(gameImageURL, forKey: "imageURL")
         game.setValue(gameName, forKey: "name")
         
         do {
             try managedContext.save()
-            return true
+            return game as? FavoriteGame
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
-            return false
+            return nil
         }
     }
     
     func deleteFromFavorite(id gameId: Int) -> Bool {
         let fetchNote: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
-        fetchNote.predicate = NSPredicate(format: "id = %@", String(gameId))
+        fetchNote.predicate = NSPredicate(format: "gameId = %@", String(gameId))
 
         if let game = try? managedContext.fetch(fetchNote).first {
             managedContext.delete(game)

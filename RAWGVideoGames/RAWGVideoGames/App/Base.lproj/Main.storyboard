@@ -253,7 +253,7 @@
             </objects>
             <point key="canvasLocation" x="2920" y="4"/>
         </scene>
-        <!--Favorite Game List View Controller-->
+        <!--Favorites-->
         <scene sceneID="BXG-SP-T6C">
             <objects>
                 <viewController storyboardIdentifier="FavoriteGameListViewController" id="GSz-p2-zpd" customClass="FavoriteGameListViewController" customModule="RAWGVideoGames" customModuleProvider="target" sceneMemberID="viewController">
@@ -275,7 +275,7 @@
                             <constraint firstItem="Pu0-iX-WU3" firstAttribute="bottom" secondItem="ozG-Oe-UMl" secondAttribute="bottom" id="xsp-bf-zb6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="JPl-BX-fGI"/>
+                    <navigationItem key="navigationItem" title="Favorites" id="JPl-BX-fGI"/>
                     <connections>
                         <outlet property="favoriteGamesTableView" destination="ozG-Oe-UMl" id="Bzu-bA-ve4"/>
                     </connections>

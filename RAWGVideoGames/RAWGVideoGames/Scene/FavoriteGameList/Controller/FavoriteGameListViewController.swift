@@ -19,12 +19,25 @@ class FavoriteGameListViewController: UIViewController {
     }
     private var viewModel: FavoriteGameListViewModelProtocol = FavoriteGameListViewModel()
 
+    @objc func favoriteGameAdded(_ notification: NSNotification) {
+        if let favoriteGame = notification.userInfo?["favoriteGame"] as? FavoriteGame {
+            viewModel.newGameAddedToFavorites(game: favoriteGame)
+        }
+    }
+    @objc func favoriteGameDeleted() {
+        viewModel.gameDeletedFromFavorites()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameAdded), name: NSNotification.Name(rawValue: "FavoriteGameAdded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameDeleted), name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil)
+
         viewModel.delegate = self
         viewModel.fetchGames()
     }
+    
 }
 
 extension FavoriteGameListViewController: FavoriteGameListViewModelDelegate {
@@ -47,7 +60,7 @@ extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSo
     
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 225
     }
 }
 
