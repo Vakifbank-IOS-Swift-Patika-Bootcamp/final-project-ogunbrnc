@@ -15,6 +15,7 @@ protocol FavoriteGameListViewModelProtocol {
     func getGameCount() -> Int
     func getGame(at index: Int) -> FavoriteGame?
     func getGameId(at index: Int) -> Int?
+    func deleteGameFromFavoriteList(index: Int, completion: (Bool) -> ())
 }
 
 protocol FavoriteGameListViewModelDelegate: AnyObject {
@@ -35,6 +36,16 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
         if let index = games?.enumerated().filter({$0.element.gameId == 0}).map({$0.offset}).first {
             games?.remove(at: index)
             delegate?.gamesLoaded()
+        }
+    }
+    
+    func deleteGameFromFavoriteList(index: Int, completion: (Bool) -> ()) {
+        let gameId = getGameId(at: index)
+        if CoreDataManager.shared.deleteFromFavorite(id: gameId!) {
+            games?.remove(at: index)
+            completion(true)
+        } else {
+            completion(false)
         }
     }
 

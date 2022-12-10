@@ -83,6 +83,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
             completion(false)
         }
     }
+    
     func deleteGameFromFavoriteList(completion: (Bool) -> ()) {
         if CoreDataManager.shared.deleteFromFavorite(id: game!.id) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil, userInfo: nil)

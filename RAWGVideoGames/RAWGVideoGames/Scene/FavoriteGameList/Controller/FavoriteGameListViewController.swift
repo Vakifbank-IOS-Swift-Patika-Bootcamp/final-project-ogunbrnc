@@ -22,7 +22,7 @@ class FavoriteGameListViewController: UIViewController {
     private let noFavoriteGameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "There are no games. \n You can add games to favorite list using detail page."
+        label.text = "There are no games in your favorite list.\n You can add games to favorite list using detail page."
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .label
@@ -98,6 +98,19 @@ extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSo
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.deleteGameFromFavoriteList(index: indexPath.row) { result in
+                if result {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    configureNoNoteLabel()
+                }
+                else {
+                    return
+                }
+        }
+        }
+    }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 225
