@@ -27,6 +27,20 @@ final class CoreDataManager {
         
     }
     
+    func addToFavorite(id gameId: Int) -> Bool {
+        let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
+        let game = NSManagedObject(entity: entity, insertInto: managedContext)
+        game.setValue(gameId, forKeyPath: "id")
+        
+        do {
+            try managedContext.save()
+            return true
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+            return false
+        }
+    }
+    
     
     
 

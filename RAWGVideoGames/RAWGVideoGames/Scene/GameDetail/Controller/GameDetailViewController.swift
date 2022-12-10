@@ -16,34 +16,34 @@ class GameDetailViewController: UIViewController {
     @IBOutlet weak var gameTagsLabel: UILabel!
     @IBOutlet weak var gameDescriptionLabel: UILabel!
     
-    private let button : UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "star"), for: .normal)
-        button.addTarget(GameDetailViewController.self, action: #selector(fbButtonPressed), for: .touchUpInside)
-        button.frame = CGRect(x: 0, y: 0, width: 64, height: 64)
-        return button
-    }()
+    private var favoriteButton = UIButton(type: .custom)
     
     var gameId: Int?
     private var viewModel: GameDetailViewModelProtocol = GameDetailViewModel()
     
     
-    @objc func fbButtonPressed() {
+    @objc func addFavoriteTapped() {
 
-        print("Share to fb")
+        viewModel.addGameToFavoriteList {result in
+            if result {
+                favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            }
+        }
     }
     
     
     
     private func configureFavoriteButton() {
-        let iconName = viewModel.isItFavoriteGame() ? "star.fill" : "star"
         
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: iconName), for: .normal)
-        button.addTarget(self, action: #selector(fbButtonPressed), for: .touchUpInside)
-        button.frame = CGRect(x: 0, y: 0, width: 64, height: 64)
+        if viewModel.isItFavoriteGame() {
+            favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            favoriteButton.addTarget(self, action: #selector(addFavoriteTapped), for: .touchUpInside)
+        }
         
-        let barButton = UIBarButtonItem(customView: button)
+        
+        favoriteButton.frame = CGRect(x: 0, y: 0, width: 64, height: 64)
+        
+        let barButton = UIBarButtonItem(customView: favoriteButton)
         self.navigationItem.rightBarButtonItem = barButton
         
     }

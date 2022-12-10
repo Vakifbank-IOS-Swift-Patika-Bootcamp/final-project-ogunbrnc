@@ -18,6 +18,7 @@ protocol GameDetailViewModelProtocol {
     func getGameTag() -> String
     func getGameDescription() -> String
     func isItFavoriteGame() -> Bool
+    func addGameToFavoriteList(completion: (Bool) -> ())
 }
 
 protocol GameDetailViewModelDelegate: AnyObject {
@@ -69,6 +70,15 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     
     func isItFavoriteGame() -> Bool {
         return CoreDataManager.shared.isFavorite(id: game!.id)
+    }
+    
+    func addGameToFavoriteList(completion: (Bool) -> ()) {
+        if CoreDataManager.shared.addToFavorite(id: game!.id) {
+            completion(true)
+        } else {
+            completion(false)
+        }
+        
     }
     
 }
