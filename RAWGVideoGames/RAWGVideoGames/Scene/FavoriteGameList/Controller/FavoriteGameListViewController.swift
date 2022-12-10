@@ -11,7 +11,7 @@ class FavoriteGameListViewController: UIViewController {
 
     @IBOutlet weak var favoriteGamesTableView: UITableView! {
         didSet {
-            favoriteGamesTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
+            favoriteGamesTableView.register(FavoriteGameListTableViewCell.self, forCellReuseIdentifier: FavoriteGameListTableViewCell.identifier)
             favoriteGamesTableView.delegate = self
             favoriteGamesTableView.dataSource = self
             favoriteGamesTableView.estimatedRowHeight = UITableView.automaticDimension
@@ -30,7 +30,7 @@ extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GameListTableViewCell.identifier,for: indexPath) as? GameListTableViewCell, let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteGameListTableViewCell.identifier,for: indexPath) as? FavoriteGameListTableViewCell, let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
        cell.configureCell(game: model)
        return cell
     }
