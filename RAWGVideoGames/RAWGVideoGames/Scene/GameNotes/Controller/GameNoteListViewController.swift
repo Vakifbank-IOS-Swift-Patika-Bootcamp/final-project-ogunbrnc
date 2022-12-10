@@ -72,7 +72,10 @@ class GameNoteListViewController: UIViewController {
     
     // MARK: UIButton Action
     @objc private func didTapAddNote() {
-        
+        guard let noteAddingEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
+            fatalError("View Controller not found")
+        }
+        navigationController?.present(noteAddingEditingViewController, animated: true)
     }
 
     override func viewDidLoad() {
