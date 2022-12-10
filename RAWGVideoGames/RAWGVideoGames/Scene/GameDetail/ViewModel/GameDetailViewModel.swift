@@ -75,7 +75,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func addGameToFavoriteList(completion: (Bool) -> ()) {
-        if CoreDataManager.shared.addToFavorite(id: game!.id) {
+        if CoreDataManager.shared.addToFavorite(id: game!.id, gameName: game!.name, gameImageURL: game!.imageURL) {
             completion(true)
         } else {
             completion(false)

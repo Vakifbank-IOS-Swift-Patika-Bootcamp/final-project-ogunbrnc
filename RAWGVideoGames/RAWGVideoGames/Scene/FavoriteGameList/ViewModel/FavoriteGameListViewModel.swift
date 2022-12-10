@@ -11,7 +11,7 @@ protocol FavoriteGameListViewModelProtocol {
     var delegate: FavoriteGameListViewModelDelegate? { get set }
     func fetchGames()
     func getGameCount() -> Int
-    func getGame(at index: Int) -> GameModel?
+    func getGame(at index: Int) -> FavoriteGame?
     func getGameId(at index: Int) -> Int?
 }
 
@@ -21,11 +21,12 @@ protocol FavoriteGameListViewModelDelegate: AnyObject {
 
 final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     weak var delegate: FavoriteGameListViewModelDelegate?
-    private var games: [GameModel]?
+    private var games: [FavoriteGame]?
 
 
     func fetchGames() {
-        games = []
+        games = CoreDataManager.shared.getFavoriteGames()
+        print(games)
         delegate?.gamesLoaded()
     }
     
@@ -33,12 +34,12 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
         games?.count ?? 0
     }
     
-    func getGame(at index: Int) -> GameModel? {
+    func getGame(at index: Int) -> FavoriteGame? {
         games?[index]
     }
     
     func getGameId(at index: Int) -> Int? {
-        games?[index].id
+        5
     }
     
 }

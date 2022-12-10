@@ -30,7 +30,8 @@ extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteGameListTableViewCell.identifier,for: indexPath) as? FavoriteGameListTableViewCell, let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteGameListTableViewCell.identifier,for: indexPath) as? FavoriteGameListTableViewCell,
+              let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
        cell.configureCell(game: model)
        return cell
     }

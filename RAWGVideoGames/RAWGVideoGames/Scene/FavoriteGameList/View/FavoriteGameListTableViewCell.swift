@@ -58,7 +58,7 @@ class FavoriteGameListTableViewCell: UITableViewCell {
     }
     
     // If there is no image, the "photo" image will be used to provide a consistent structure
-    func configureCell(game: GameModel){
+    func configureCell(game: FavoriteGame){
         gameNameLabel.text = game.name
         gameImageView.sd_setImage(with: URL(string: game.imageURL ?? ""),placeholderImage: UIImage(systemName: "photo"),options: .continueInBackground)
     }

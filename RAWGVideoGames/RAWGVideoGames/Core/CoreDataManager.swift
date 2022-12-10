@@ -39,10 +39,12 @@ final class CoreDataManager {
     }
     
     
-    func addToFavorite(id gameId: Int) -> Bool {
+    func addToFavorite(id: Int, gameName: String, gameImageURL: String) -> Bool {
         let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
         let game = NSManagedObject(entity: entity, insertInto: managedContext)
-        game.setValue(gameId, forKeyPath: "id")
+        game.setValue(id, forKeyPath: "id")
+        game.setValue(gameImageURL, forKey: "imageURL")
+        game.setValue(gameName, forKey: "name")
         
         do {
             try managedContext.save()
