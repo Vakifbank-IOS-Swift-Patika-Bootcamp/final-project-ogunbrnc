@@ -19,6 +19,8 @@ protocol GameDetailViewModelProtocol {
     func getGameDescription() -> String
     func isItFavoriteGame() -> Bool
     func addGameToFavoriteList(completion: (Bool) -> ())
+    func deleteGameFromFavoriteList(completion: (Bool) -> ())
+
 }
 
 protocol GameDetailViewModelDelegate: AnyObject {
@@ -78,7 +80,13 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
         } else {
             completion(false)
         }
-        
+    }
+    func deleteGameFromFavoriteList(completion: (Bool) -> ()) {
+        if CoreDataManager.shared.deleteFromFavorite(id: game!.id) {
+            completion(true)
+        } else {
+            completion(false)
+        }
     }
     
 }

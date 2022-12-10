@@ -23,20 +23,32 @@ class GameDetailViewController: UIViewController {
     
     
     @objc func addFavoriteTapped() {
-
         viewModel.addGameToFavoriteList {result in
             if result {
                 favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+                favoriteButton.removeTarget(nil, action: nil, for: .allEvents)
+                favoriteButton.addTarget(self, action: #selector(removeFavoriteTapped), for: .touchUpInside)
             }
         }
     }
     
-    
-    
+    @objc func removeFavoriteTapped() {
+        viewModel.deleteGameFromFavoriteList {result in
+            if result {
+                favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
+                favoriteButton.removeTarget(nil, action: nil, for: .allEvents)
+                favoriteButton.addTarget(self, action: #selector(addFavoriteTapped), for: .touchUpInside)
+            }
+        }
+    }
+
     private func configureFavoriteButton() {
         
         if viewModel.isItFavoriteGame() {
             favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            favoriteButton.addTarget(self, action: #selector(removeFavoriteTapped), for: .touchUpInside)
+        } else {
+            favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
             favoriteButton.addTarget(self, action: #selector(addFavoriteTapped), for: .touchUpInside)
         }
         
