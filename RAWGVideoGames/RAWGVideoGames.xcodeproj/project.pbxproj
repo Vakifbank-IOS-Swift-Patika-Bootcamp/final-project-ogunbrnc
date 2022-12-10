@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		71A5D41D2943F9B2000B4E53 /* GameDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D41C2943F9B2000B4E53 /* GameDetailViewModel.swift */; };
 		71A5D41F29448DD2000B4E53 /* GameDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D41E29448DD2000B4E53 /* GameDetailViewController.swift */; };
+		71A5D4212944A711000B4E53 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D4202944A711000B4E53 /* CoreDataManager.swift */; };
 		71C1400429432BE000B85AD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1400329432BE000B85AD6 /* AppDelegate.swift */; };
 		71C1400629432BE000B85AD6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1400529432BE000B85AD6 /* SceneDelegate.swift */; };
 		71C1400829432BE000B85AD6 /* GameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1400729432BE000B85AD6 /* GameListViewController.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		71A5D41C2943F9B2000B4E53 /* GameDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailViewModel.swift; sourceTree = "<group>"; };
 		71A5D41E29448DD2000B4E53 /* GameDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailViewController.swift; sourceTree = "<group>"; };
+		71A5D4202944A711000B4E53 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		71C1400029432BE000B85AD6 /* RAWGVideoGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RAWGVideoGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C1400329432BE000B85AD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71C1400529432BE000B85AD6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				71C140D129435CC100B85AD6 /* Client.swift */,
 				71C140E62943BB6B00B85AD6 /* BaseViewController.swift */,
+				71A5D4202944A711000B4E53 /* CoreDataManager.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				71C1400E29432BE000B85AD6 /* RAWGVideoGames.xcdatamodeld in Sources */,
 				71A5D41D2943F9B2000B4E53 /* GameDetailViewModel.swift in Sources */,
 				71C1400829432BE000B85AD6 /* GameListViewController.swift in Sources */,
+				71A5D4212944A711000B4E53 /* CoreDataManager.swift in Sources */,
 				71C140EE2943D29F00B85AD6 /* GameDetailModel.swift in Sources */,
 				71C140E72943BB6B00B85AD6 /* BaseViewController.swift in Sources */,
 				71C1400429432BE000B85AD6 /* AppDelegate.swift in Sources */,
