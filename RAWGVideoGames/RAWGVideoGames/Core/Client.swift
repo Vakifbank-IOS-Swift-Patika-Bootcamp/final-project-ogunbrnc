@@ -13,11 +13,14 @@ final class Client {
         static let base = "https://api.rawg.io/api"
 
         case games
+        case gameDetail(Int)
         
         var stringValue: String {
             switch self {
             case .games:
                 return Endpoints.base + "/games" + "?key=" + Constants.API_KEY
+            case .gameDetail(let movieId):
+                return Endpoints.base + "/games/" + String(movieId) + "?key=" + Constants.API_KEY
             }
         }
 
@@ -59,6 +62,7 @@ final class Client {
         }
     }
     
+    
     class func getGamesSorted(by: String, completion: @escaping ([GameModel]?, Error?) -> Void) {
 
         let sortedURL = Endpoints.games.stringValue + "&ordering=\(by)"
@@ -66,4 +70,12 @@ final class Client {
             completion(responseModel?.results, error)
         }
     }
+    
+    class func getGameDetail(movieId: Int,completion: @escaping (GameDetailModel?, Error?) -> Void) {
+        taskForGETRequest(url: Endpoints.gameDetail(movieId).url, responseType: GameDetailModel.self) { response, error in
+            completion(response, error)
+        }
+    }
+    
+    
 }
