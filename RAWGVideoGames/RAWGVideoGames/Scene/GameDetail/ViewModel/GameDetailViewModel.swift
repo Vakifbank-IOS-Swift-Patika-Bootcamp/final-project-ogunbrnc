@@ -71,7 +71,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func isItFavoriteGame() -> Bool {
-        return CoreDataManager.shared.isFavorite(id: game!.id)
+        CoreDataManager.shared.isFavorite(id: game!.id)
     }
     
     func addGameToFavoriteList(completion: (Bool) -> ()) {

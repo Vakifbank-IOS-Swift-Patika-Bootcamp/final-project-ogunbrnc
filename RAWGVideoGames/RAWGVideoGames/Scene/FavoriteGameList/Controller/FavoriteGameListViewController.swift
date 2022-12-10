@@ -21,6 +21,15 @@ class FavoriteGameListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.delegate = self
+        viewModel.fetchGames()
+    }
+}
+
+extension FavoriteGameListViewController: FavoriteGameListViewModelDelegate {
+    func gamesLoaded() {
+        favoriteGamesTableView.reloadData()
     }
 }
 
@@ -41,3 +50,4 @@ extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSo
         return 300
     }
 }
+
