@@ -24,7 +24,7 @@ class GameNoteListViewController: UIViewController {
     private let noNoteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "There are no notes. \n You can add new note using the + button."
+        label.text = "There are no notes. \n You can add new note using the + button.".localized()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .label

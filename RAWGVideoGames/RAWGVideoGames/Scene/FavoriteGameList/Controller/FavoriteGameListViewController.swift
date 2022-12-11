@@ -22,7 +22,7 @@ class FavoriteGameListViewController: UIViewController {
     private let noFavoriteGameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "There are no games in your favorite list.\n You can add games to favorite list using detail page."
+        label.text = "There are no games in your favorite list.\n You can add games to favorite list using detail page.".localized()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .label
