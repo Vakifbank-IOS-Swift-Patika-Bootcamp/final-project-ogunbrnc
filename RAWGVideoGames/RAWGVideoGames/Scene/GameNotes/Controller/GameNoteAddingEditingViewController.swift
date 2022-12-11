@@ -25,6 +25,7 @@ class GameNoteAddingEditingViewController: UIViewController {
         super.viewDidLoad()
         
         viewModel.delegate = self
+        viewModel.getNote(noteId: noteId)
     }
     
     @IBAction func saveNoteClicked(_ sender: Any) {
@@ -40,13 +41,16 @@ class GameNoteAddingEditingViewController: UIViewController {
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
     
     func didAddNote(gameNote: GameNote) {
-        dismiss(animated: true)
+        
         delegate?.didAddNote(gameNote: gameNote)
+        dismiss(animated: true)
+        
 
     }
     func didUpdateNote(gameNote: GameNote) {
-        dismiss(animated: true)
         delegate?.didUpdateNote(gameNote: gameNote)
+        dismiss(animated: true)
+
     }
     
     func didNoteLoaded(gameNote: GameNote?) {

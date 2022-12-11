@@ -425,7 +425,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Save Note"/>
                                         <connections>
-                                            <action selector="saveNote:" destination="ZG1-k7-Gd8" eventType="touchUpInside" id="o22-pt-fkH"/>
+                                            <action selector="saveNoteClicked:" destination="ZG1-k7-Gd8" eventType="touchUpInside" id="7Ow-py-4Wa"/>
                                         </connections>
                                     </button>
                                 </subviews>

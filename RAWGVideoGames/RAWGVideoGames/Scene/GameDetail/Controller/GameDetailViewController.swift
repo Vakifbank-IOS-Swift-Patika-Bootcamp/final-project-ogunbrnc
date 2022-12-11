@@ -66,9 +66,6 @@ class GameDetailViewController: UIViewController {
         guard let id = gameId else { return }
         viewModel.delegate = self
         viewModel.fetchGameDetail(id: id)
-        
-        
-        
     }
     
     

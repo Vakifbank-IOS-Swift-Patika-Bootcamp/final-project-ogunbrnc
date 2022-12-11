@@ -24,7 +24,8 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
     private var gameNote: GameNote?
     
     func getNote(noteId: UUID?) {
-        delegate?.didNoteLoaded(gameNote: gameNote ?? nil)
+        gameNote = CoreDataManager.shared.getNote(noteId: noteId ?? UUID())
+        delegate?.didNoteLoaded(gameNote: gameNote)
     }
     
     func saveNote(gameName: String, noteContent: String) {
@@ -43,7 +44,6 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
             if let updatedGameNote = CoreDataManager.shared.updateNote(noteContent: noteContent, gameNote: gameNote!) {
                 delegate?.didUpdateNote(gameNote: updatedGameNote)
             }
-            
         }
     }
     

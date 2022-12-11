@@ -72,6 +72,19 @@ final class CoreDataManager {
         return false
     }
     
+    
+    func getNote(noteId: UUID) -> GameNote? {
+        let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
+        fetchNote.predicate = NSPredicate(format: "id = %@", noteId.uuidString)
+
+        let results = try? managedContext.fetch(fetchNote)
+        if let note = results?.first {
+            return note
+        }
+
+        return nil
+    }
+    
     func getNotes() -> [GameNote] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "GameNote")
         do {
@@ -82,6 +95,7 @@ final class CoreDataManager {
         }
         return []
     }
+    
     
     func addNote(gameName: String, noteContent: String) -> GameNote? {
         let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
