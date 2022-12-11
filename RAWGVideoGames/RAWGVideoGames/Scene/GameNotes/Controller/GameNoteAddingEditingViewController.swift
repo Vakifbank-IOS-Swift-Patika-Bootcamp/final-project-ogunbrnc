@@ -24,10 +24,9 @@ class GameNoteAddingEditingViewController: UIViewController {
         super.viewDidLoad()
         
         viewModel.delegate = self
-        
     }
     
-    @IBAction func saveNote(_ sender: Any) {
+    @IBAction func saveNoteClicked(_ sender: Any) {
         guard let gameName = gameNameTextField.text,
               !gameName.isEmpty,
               let gameNote = gameNoteTextField.text,

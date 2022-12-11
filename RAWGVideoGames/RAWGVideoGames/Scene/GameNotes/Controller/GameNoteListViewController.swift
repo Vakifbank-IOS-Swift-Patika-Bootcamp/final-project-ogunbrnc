@@ -114,6 +114,17 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+                
+        let note = viewModel.getGameNote(at: indexPath.row)
+        guard let noteAddingOrEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
+                   fatalError("View Controller not found")
+               }
+        noteAddingOrEditingViewController.delegate = self
+        navigationController?.present(noteAddingOrEditingViewController, animated: true)
+    }
 }
 
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
