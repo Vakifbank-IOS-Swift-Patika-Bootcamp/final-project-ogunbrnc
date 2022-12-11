@@ -122,6 +122,6 @@ extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegat
     }
     
     func didUpdateNote(gameNote: GameNote) {
-        
+        viewModel.update(note: gameNote)
     }
 }

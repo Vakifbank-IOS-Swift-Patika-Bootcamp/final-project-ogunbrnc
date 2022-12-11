@@ -33,6 +33,11 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
             if gameNote?.noteContent == noteContent {
                 return
             }
+            
+            if let updatedGameNote = CoreDataManager.shared.updateNote(noteContent: noteContent, gameNote: gameNote!) {
+                delegate?.didUpdateNote(gameNote: updatedGameNote)
+            }
+            
         }
     }
 }

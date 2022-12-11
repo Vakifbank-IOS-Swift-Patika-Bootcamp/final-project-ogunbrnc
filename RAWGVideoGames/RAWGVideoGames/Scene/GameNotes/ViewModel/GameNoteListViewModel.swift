@@ -50,7 +50,10 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     }
     
     func update(note: GameNote) {
-        
+        if let row = gameNotes?.firstIndex(where: {$0.id == note.id}) {
+            gameNotes?[row] = note
+            delegate?.gameNotesLoaded()
+        }
     }
 }
 

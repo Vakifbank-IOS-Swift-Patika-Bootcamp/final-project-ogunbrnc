@@ -44,6 +44,7 @@ extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDel
 
     }
     func didUpdateNote(gameNote: GameNote) {
-        print("updating")
+        dismiss(animated: true)
+        delegate?.didUpdateNote(gameNote: gameNote)
     }
 }
