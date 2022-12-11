@@ -40,7 +40,7 @@ class GameNoteListViewController: UIViewController {
     }
     
     private func configureTableView() {
-        notesTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        notesTableView.register(GameNoteListTableViewCell.self, forCellReuseIdentifier: GameNoteListTableViewCell.identifier)
         notesTableView.dataSource = self
         notesTableView.delegate = self
         notesTableView.estimatedRowHeight = UITableView.automaticDimension
@@ -106,8 +106,11 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        cell.textLabel?.text = viewModel.getGameNote(at: indexPath.row)?.noteContent
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GameNoteListTableViewCell.identifier,for: indexPath) as? GameNoteListTableViewCell, let note = viewModel.getGameNote(at: indexPath.row) else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(with: note)
         return cell
     }
     
