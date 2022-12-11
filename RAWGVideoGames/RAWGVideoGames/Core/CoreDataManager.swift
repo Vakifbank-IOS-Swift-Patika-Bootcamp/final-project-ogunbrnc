@@ -139,6 +139,24 @@ final class CoreDataManager {
 
         return nil
     }
+  
+
+    func deleteNote(id: UUID) -> Bool {
+        let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
+        fetchNote.predicate = NSPredicate(format: "id = %@", String(id.uuidString))
+
+        if let note = try? managedContext.fetch(fetchNote).first {
+            managedContext.delete(note)
+            do {
+                try managedContext.save()
+                return true
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+                return false
+            }
+        }
+        return false
+    }
     
     
     
