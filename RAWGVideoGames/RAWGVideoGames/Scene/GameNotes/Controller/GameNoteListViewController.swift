@@ -82,6 +82,7 @@ class GameNoteListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.delegate = self
         viewModel.fetchGameNotes()
 
         configureNoNoteLabel()
@@ -134,7 +135,6 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
         if editingStyle == .delete {
             let noteId = viewModel.getGameNoteId(at: indexPath.row)
             viewModel.delete(id: noteId ?? UUID())
-            tableView.deleteRows(at: [indexPath], with: .fade)
             
             // if there is no note left when the note is deleted
             if viewModel.getGameNotesCount() == 0  {
@@ -146,6 +146,10 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
 
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
     func didAddNote(gameNote: GameNote) {
+        print(viewModel.getGameNotesCount())
+        if viewModel.getGameNotesCount() == 0 {
+            noNoteLabel.removeFromSuperview()
+        }
         viewModel.add(note: gameNote)
     }
     

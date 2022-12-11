@@ -64,7 +64,6 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
             if let index = gameNotes?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {
                 gameNotes?.remove(at: index)
                 delegate?.gameNotesLoaded()
-
             }
         }
     }

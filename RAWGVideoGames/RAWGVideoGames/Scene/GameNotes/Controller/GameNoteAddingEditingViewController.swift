@@ -41,11 +41,8 @@ class GameNoteAddingEditingViewController: UIViewController {
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
     
     func didAddNote(gameNote: GameNote) {
-        
         delegate?.didAddNote(gameNote: gameNote)
         dismiss(animated: true)
-        
-
     }
     func didUpdateNote(gameNote: GameNote) {
         delegate?.didUpdateNote(gameNote: gameNote)
