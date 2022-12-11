@@ -105,5 +105,28 @@ final class CoreDataManager {
         return nil
     }
     
+    func updateNote(noteContent: String,gameNote: GameNote) -> GameNote? {
+        let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
+        fetchNote.predicate = NSPredicate(format: "id = %@", gameNote.id?.uuidString ?? "")
+
+        let results = try? managedContext.fetch(fetchNote)
+        if let note = results?.first {
+            let currentDate = Date.now
+            note.noteContent = noteContent
+            note.noteDate = currentDate
+            
+            do {
+                try managedContext.save()
+                return note
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        }
+
+        return nil
+    }
+    
+    
+    
     
 }
