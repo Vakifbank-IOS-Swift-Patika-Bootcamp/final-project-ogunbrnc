@@ -12,7 +12,9 @@ protocol GameNoteListViewModelProtocol {
     func fetchGameNotes()
     func getGameNotesCount() -> Int
     func getGameNote(at index: Int) -> GameNote?
-    func getGameNoteId(at index: Int) -> Int?
+    func getGameNoteId(at index: Int) -> UUID?
+    func add(note: GameNote)
+    func update(note: GameNote)
 }
 
 protocol GameNoteListViewModelDelegate: AnyObject {
@@ -22,6 +24,7 @@ protocol GameNoteListViewModelDelegate: AnyObject {
 final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     
     weak var delegate: GameNoteListViewModelDelegate?
+    
     private var gameNotes: [GameNote]?
     
     func fetchGameNotes() {
@@ -37,9 +40,17 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         gameNotes?[index]
     }
     
-    func getGameNoteId(at index: Int) -> Int? {
-        Int(gameNotes![index].gameId)
-
+    func getGameNoteId(at index: Int) -> UUID? {
+        gameNotes![index].id
     }
     
+    func add(note: GameNote) {
+        gameNotes?.append(note)
+        delegate?.gameNotesLoaded()
+    }
+    
+    func update(note: GameNote) {
+        
+    }
 }
+

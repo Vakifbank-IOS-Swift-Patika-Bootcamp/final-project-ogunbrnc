@@ -75,6 +75,7 @@ class GameNoteListViewController: UIViewController {
         guard let noteAddingEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
             fatalError("View Controller not found")
         }
+        noteAddingEditingViewController.delegate = self
         navigationController?.present(noteAddingEditingViewController, animated: true)
     }
 
@@ -105,18 +106,22 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        cell.textLabel?.text = "dummy"
+        cell.textLabel?.text = viewModel.getGameNote(at: indexPath.row)?.noteContent
         return cell
-        
-    
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
+}
+
+extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
+    func didAddNote(gameNote: GameNote) {
+        viewModel.add(note: gameNote)
+    }
     
-   
-    
+    func didUpdateNote(gameNote: GameNote) {
+        
+    }
 }

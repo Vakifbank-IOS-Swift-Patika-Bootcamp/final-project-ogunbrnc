@@ -83,5 +83,27 @@ final class CoreDataManager {
         return []
     }
     
+    func addNote(gameName: String, noteContent: String) -> GameNote? {
+        let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
+        let note = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        let noteDate = Date.now
+        let noteId = UUID()
+        
+        note.setValue(gameName, forKeyPath: "gameName")
+        note.setValue(noteId, forKeyPath: "id")
+        note.setValue(noteContent, forKeyPath: "noteContent")
+        note.setValue(noteDate, forKeyPath: "noteDate")
+        
+        do {
+            try managedContext.save()
+            return note as? GameNote
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
+        return nil
+    }
+    
     
 }
