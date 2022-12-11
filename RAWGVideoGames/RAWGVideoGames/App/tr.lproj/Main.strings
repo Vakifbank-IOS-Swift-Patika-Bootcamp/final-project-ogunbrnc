@@ -3,7 +3,7 @@
 "5jN-b2-vLS.text" = "Tarih";
 
 /* Class = "UITabBarItem"; title = "Notes"; ObjectID = "8FR-Ts-qWR"; */
-"8FR-Ts-qWR.title" = "Notlar";
+"8FR-Ts-qWR.title" = "Notlarım";
 
 /* Class = "UIButton"; configuration.title = "Save Note"; ObjectID = "98n-51-6AN"; */
 "98n-51-6AN.configuration.title" = "Kaydet";
@@ -27,7 +27,7 @@
 "L7k-8z-OGk.text" = "Tag";
 
 /* Class = "UILabel"; text = "Game Platforms"; ObjectID = "Lv9-c2-owP"; */
-"Lv9-c2-owP.text" = "Game Platforms";
+"Lv9-c2-owP.text" = "Platformlar";
 
 /* Class = "UILabel"; text = "Note"; ObjectID = "XPw-A9-XXr"; */
 "XPw-A9-XXr.text" = "Not";
