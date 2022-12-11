@@ -129,6 +129,19 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
         noteAddingOrEditingViewController.noteId = note?.id
         navigationController?.present(noteAddingOrEditingViewController, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let noteId = viewModel.getGameNoteId(at: indexPath.row)
+            viewModel.delete(id: noteId ?? UUID())
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // if there is no note left when the note is deleted
+            if viewModel.getGameNotesCount() == 0  {
+                configureNoNoteLabel()
+            }
+        }
+    }
 }
 
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {

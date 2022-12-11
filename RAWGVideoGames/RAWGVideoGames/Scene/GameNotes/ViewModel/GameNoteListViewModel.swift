@@ -61,9 +61,10 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         let success = CoreDataManager.shared.deleteNote(id: id)
         if success {
             //since game id string is equal to empty string after deletion from coredata, we remove the one whose id is equal to empty string.
-            if let index = gameNotes?.enumerated().filter({$0.element.id?.uuidString == ""}).map({$0.offset}).first {
+            if let index = gameNotes?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {
                 gameNotes?.remove(at: index)
                 delegate?.gameNotesLoaded()
+
             }
         }
     }
