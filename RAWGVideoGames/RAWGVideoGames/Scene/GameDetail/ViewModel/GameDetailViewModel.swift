@@ -50,7 +50,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func getGamePlatform() -> String {
-        game?.parentPlatforms.map{$0.platform.name}.joined(separator: "\n") ?? ""
+        return game?.parentPlatforms.map{$0.platform.name}.joined(separator: "\n") ?? ""
     }
     
     func getGameGenre() -> String {
