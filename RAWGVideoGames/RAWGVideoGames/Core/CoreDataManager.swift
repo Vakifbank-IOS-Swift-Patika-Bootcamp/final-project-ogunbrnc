@@ -71,4 +71,94 @@ final class CoreDataManager {
         }
         return false
     }
+    
+    
+    func getNote(noteId: UUID) -> GameNote? {
+        let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
+        fetchNote.predicate = NSPredicate(format: "id = %@", noteId.uuidString)
+
+        let results = try? managedContext.fetch(fetchNote)
+        if let note = results?.first {
+            return note
+        }
+
+        return nil
+    }
+    
+    func getNotes() -> [GameNote] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "GameNote")
+        do {
+            let notes = try managedContext.fetch(fetchRequest)
+            return notes as! [GameNote]
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        return []
+    }
+    
+    
+    func addNote(gameName: String, noteContent: String) -> GameNote? {
+        let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
+        let note = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        let noteDate = Date.now
+        let noteId = UUID()
+        
+        note.setValue(gameName, forKeyPath: "gameName")
+        note.setValue(noteId, forKeyPath: "id")
+        note.setValue(noteContent, forKeyPath: "noteContent")
+        note.setValue(noteDate, forKeyPath: "noteDate")
+        
+        do {
+            try managedContext.save()
+            return note as? GameNote
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
+        return nil
+    }
+    
+    func updateNote(noteContent: String,gameNote: GameNote) -> GameNote? {
+        let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
+        fetchNote.predicate = NSPredicate(format: "id = %@", gameNote.id?.uuidString ?? "")
+
+        let results = try? managedContext.fetch(fetchNote)
+        if let note = results?.first {
+            let currentDate = Date.now
+            note.noteContent = noteContent
+            note.noteDate = currentDate
+            
+            do {
+                try managedContext.save()
+                return note
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        }
+
+        return nil
+    }
+  
+
+    func deleteNote(id: UUID) -> Bool {
+        let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
+        fetchNote.predicate = NSPredicate(format: "id = %@", String(id.uuidString))
+
+        if let note = try? managedContext.fetch(fetchNote).first {
+            managedContext.delete(note)
+            do {
+                try managedContext.save()
+                return true
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+                return false
+            }
+        }
+        return false
+    }
+    
+    
+    
+    
 }

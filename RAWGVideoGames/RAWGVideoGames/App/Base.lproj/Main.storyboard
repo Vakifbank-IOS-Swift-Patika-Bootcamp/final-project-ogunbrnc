@@ -75,6 +75,7 @@
                     <connections>
                         <segue destination="d98-Bv-KMx" kind="relationship" relationship="viewControllers" id="Jih-Qn-bvf"/>
                         <segue destination="clv-q6-LPH" kind="relationship" relationship="viewControllers" id="aH4-PB-uSZ"/>
+                        <segue destination="TCa-kL-Jll" kind="relationship" relationship="viewControllers" id="zA7-iQ-UcC"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ac8-gS-cei" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -306,10 +307,152 @@
             </objects>
             <point key="canvasLocation" x="1067.6923076923076" y="700.94786729857822"/>
         </scene>
+        <!--My Notes-->
+        <scene sceneID="PYY-gf-D5q">
+            <objects>
+                <viewController storyboardIdentifier="GameNoteListViewController" id="k0F-so-CUh" customClass="GameNoteListViewController" customModule="RAWGVideoGames" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Nnz-ci-9TT">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="h89-FZ-7vt">
+                                <rect key="frame" x="0.0" y="91" width="390" height="670"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="RZM-tv-CyR">
+                                        <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RZM-tv-CyR" id="98q-7I-aSX">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cln-zv-Wm1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="h89-FZ-7vt" firstAttribute="top" secondItem="cln-zv-Wm1" secondAttribute="top" id="4Ri-Af-MmV"/>
+                            <constraint firstItem="h89-FZ-7vt" firstAttribute="leading" secondItem="cln-zv-Wm1" secondAttribute="leading" id="acr-tC-0ez"/>
+                            <constraint firstItem="cln-zv-Wm1" firstAttribute="trailing" secondItem="h89-FZ-7vt" secondAttribute="trailing" id="nWx-uA-G8p"/>
+                            <constraint firstItem="cln-zv-Wm1" firstAttribute="bottom" secondItem="h89-FZ-7vt" secondAttribute="bottom" id="zRG-sK-80F"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="My Notes" id="L17-ko-KSn"/>
+                    <connections>
+                        <outlet property="notesTableView" destination="h89-FZ-7vt" id="akx-N2-Fbb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XE2-fa-4eX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1995.3846153846152" y="1381.9905213270142"/>
+        </scene>
+        <!--Notes-->
+        <scene sceneID="jGZ-X3-qlL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TCa-kL-Jll" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notes" id="8FR-Ts-qWR">
+                        <imageReference key="image" image="note" catalog="system" symbolScale="medium"/>
+                        <imageReference key="selectedImage" image="note" catalog="system" symbolScale="large"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ElX-ar-12w">
+                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="k0F-so-CUh" kind="relationship" relationship="rootViewController" id="1ai-QU-0KV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qno-A9-OZ3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1067.6923076923076" y="1381.9905213270142"/>
+        </scene>
+        <!--Game Note Adding Editing View Controller-->
+        <scene sceneID="Iux-ZK-g8z">
+            <objects>
+                <viewController storyboardIdentifier="GameNoteAddingEditingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZG1-k7-Gd8" customClass="GameNoteAddingEditingViewController" customModule="RAWGVideoGames" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fms-eQ-jgp">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="IxA-bQ-hIV">
+                                <rect key="frame" x="20" y="67" width="350" height="359.66666666666669"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="64" translatesAutoresizingMaskIntoConstraints="NO" id="AP7-CM-zED">
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2G-k0-xka">
+                                                <rect key="frame" x="0.0" y="0.0" width="94" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YM0-cY-42I">
+                                                <rect key="frame" x="158" y="0.0" width="192" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="mTU-aO-NRW">
+                                        <rect key="frame" x="0.0" y="53.000000000000014" width="350" height="253.33333333333337"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPw-A9-XXr">
+                                                <rect key="frame" x="156.66666666666666" y="0.0" width="37" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2U0-6w-Yns">
+                                                <rect key="frame" x="20" y="53.333333333333343" width="310" height="200"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="bk3-Xg-BBe"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="2U0-6w-Yns" secondAttribute="trailing" constant="20" id="MMy-j6-gHZ"/>
+                                            <constraint firstItem="2U0-6w-Yns" firstAttribute="leading" secondItem="mTU-aO-NRW" secondAttribute="leading" constant="20" id="eSw-2Q-Ocm"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98n-51-6AN">
+                                        <rect key="frame" x="0.0" y="325.33333333333331" width="350" height="34.333333333333314"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Save Note"/>
+                                        <connections>
+                                            <action selector="saveNoteClicked:" destination="ZG1-k7-Gd8" eventType="touchUpInside" id="7Ow-py-4Wa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lZg-pk-UpL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="IxA-bQ-hIV" firstAttribute="leading" secondItem="lZg-pk-UpL" secondAttribute="leading" constant="20" id="2Ic-MS-cC8"/>
+                            <constraint firstItem="lZg-pk-UpL" firstAttribute="trailing" secondItem="IxA-bQ-hIV" secondAttribute="trailing" constant="20" id="KvT-Rb-cGB"/>
+                            <constraint firstItem="IxA-bQ-hIV" firstAttribute="top" secondItem="lZg-pk-UpL" secondAttribute="top" constant="20" id="nnx-2s-o1b"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="gameNameTextField" destination="YM0-cY-42I" id="aE3-uG-Fh0"/>
+                        <outlet property="gameNoteTextField" destination="2U0-6w-Yns" id="uZd-OS-aGL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iWV-Yc-jxD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2874" y="1382"/>
+        </scene>
     </scenes>
     <resources>
         <image name="gamecontroller" catalog="system" width="128" height="79"/>
         <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
+        <image name="note" catalog="system" width="128" height="107"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>

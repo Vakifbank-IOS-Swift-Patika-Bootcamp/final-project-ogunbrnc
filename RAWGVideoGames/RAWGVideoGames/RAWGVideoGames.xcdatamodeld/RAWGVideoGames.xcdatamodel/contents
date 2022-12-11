@@ -5,4 +5,10 @@
         <attribute name="imageURL" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="GameNote" representedClassName="GameNote" syncable="YES" codeGenerationType="class">
+        <attribute name="gameName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="noteContent" optional="YES" attributeType="String"/>
+        <attribute name="noteDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
 </model>
