@@ -1,0 +1,54 @@
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "5jN-b2-vLS"; */
+"5jN-b2-vLS.text" = "Tarih";
+
+/* Class = "UITabBarItem"; title = "Notes"; ObjectID = "8FR-Ts-qWR"; */
+"8FR-Ts-qWR.title" = "Notlarım";
+
+/* Class = "UIButton"; configuration.title = "Save Note"; ObjectID = "98n-51-6AN"; */
+"98n-51-6AN.configuration.title" = "Kaydet";
+
+/* Class = "UILabel"; text = "Genres"; ObjectID = "9TF-o0-gKi"; */
+"9TF-o0-gKi.text" = "Türler";
+
+/* Class = "UILabel"; text = "Platforms"; ObjectID = "Ema-be-C2U"; */
+"Ema-be-C2U.text" = "Platformlar";
+
+/* Class = "UINavigationItem"; title = "Favorites"; ObjectID = "JPl-BX-fGI"; */
+"JPl-BX-fGI.title" = "Favorilerim";
+
+/* Class = "UITabBarItem"; title = "Games"; ObjectID = "Jse-EQ-Df2"; */
+"Jse-EQ-Df2.title" = "Oyunlar";
+
+/* Class = "UINavigationItem"; title = "My Notes"; ObjectID = "L17-ko-KSn"; */
+"L17-ko-KSn.title" = "Notlarım";
+
+/* Class = "UILabel"; text = "Tag"; ObjectID = "L7k-8z-OGk"; */
+"L7k-8z-OGk.text" = "Tag";
+
+/* Class = "UILabel"; text = "Game Platforms"; ObjectID = "Lv9-c2-owP"; */
+"Lv9-c2-owP.text" = "Platformlar";
+
+/* Class = "UILabel"; text = "Note"; ObjectID = "XPw-A9-XXr"; */
+"XPw-A9-XXr.text" = "Not";
+
+/* Class = "UILabel"; text = "Tags"; ObjectID = "bAn-EJ-YRF"; */
+"bAn-EJ-YRF.text" = "Etiketler";
+
+/* Class = "UILabel"; text = "Release Date"; ObjectID = "d95-Cx-ZKu"; */
+"d95-Cx-ZKu.text" = "Çıkış Tarihi";
+
+/* Class = "UILabel"; text = "About"; ObjectID = "g7U-y7-mfb"; */
+"g7U-y7-mfb.text" = "Hakkında";
+
+/* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "gQc-iu-rxb"; */
+"gQc-iu-rxb.title" = "Favorilerim";
+
+/* Class = "UILabel"; text = "Game Genres"; ObjectID = "qeO-HP-wg6"; */
+"qeO-HP-wg6.text" = "Oyun Türü";
+
+/* Class = "UILabel"; text = "Game Name"; ObjectID = "u2G-k0-xka"; */
+"u2G-k0-xka.text" = "Oyun İsmi";
+
+/* Class = "UILabel"; text = "Game Name"; ObjectID = "xVc-Cx-d41"; */
+"xVc-Cx-d41.text" = "Oyun İsmi";

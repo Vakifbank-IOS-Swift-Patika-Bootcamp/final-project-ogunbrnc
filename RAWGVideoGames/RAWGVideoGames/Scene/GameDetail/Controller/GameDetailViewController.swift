@@ -73,6 +73,7 @@ class GameDetailViewController: UIViewController {
 }
 extension GameDetailViewController: GameDetailViewModelDelegate {
     func gameLoaded() {
+        
         gameNameLabel.text = viewModel.getGameName()
         gamePlatformLabel.text = viewModel.getGamePlatform()
         gameGenresLabel.text = viewModel.getGameGenre()

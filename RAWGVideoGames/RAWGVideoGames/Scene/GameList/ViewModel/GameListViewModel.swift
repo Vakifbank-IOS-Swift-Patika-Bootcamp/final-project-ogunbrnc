@@ -29,12 +29,12 @@ final class GameListViewModel: GameListViewModelProtocol {
     private var games: [GameModel]?
     private var filteredGames: [GameModel]?
     private let sortingOptionsMapping: [String:String] = [
-        "Relevance":"relevance",
-        "Date added":"created",
-        "Name":"name",
-        "Release date":"released",
-        "Popularity":"added",
-        "Average rating":"rating",
+        "Relevance".localized():"relevance",
+        "Date added".localized():"created",
+        "Name".localized():"name",
+        "Release date".localized():"released",
+        "Popularity".localized():"added",
+        "Average rating".localized():"rating",
     ]
     
    

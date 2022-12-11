@@ -51,7 +51,7 @@ final class GameListViewController: BaseViewController {
     private func configureToolbar() {
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
         toolBar.barStyle = .black
-        toolBar.items = [UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(onDoneButtonTapped))]
+        toolBar.items = [UIBarButtonItem(title: "Done".localized(), style: .done, target: self, action: #selector(onDoneButtonTapped))]
         self.view.addSubview(toolBar)
     }
     
@@ -80,7 +80,7 @@ final class GameListViewController: BaseViewController {
         indicatorView.startAnimating()
         viewModel.fetchGames()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Order by", style: .plain, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Order by".localized(), style: .plain, target: self, action: #selector(addTapped))
 
         configureSearchController()
         

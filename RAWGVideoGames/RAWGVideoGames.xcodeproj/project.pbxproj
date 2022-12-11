@@ -15,6 +15,8 @@
 		716727682945393A00F8527F /* GameNoteAddingEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716727672945393A00F8527F /* GameNoteAddingEditingViewController.swift */; };
 		7167276A29453F6400F8527F /* GameNotAddingEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167276929453F6400F8527F /* GameNotAddingEditingViewModel.swift */; };
 		7167276C29460EFD00F8527F /* GameNoteListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167276B29460EFD00F8527F /* GameNoteListTableViewCell.swift */; };
+		7167276F29467DBB00F8527F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167276E29467DBB00F8527F /* StringExtension.swift */; };
+		7167277A2946817300F8527F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7167277C2946817300F8527F /* Localizable.strings */; };
 		71A5D41D2943F9B2000B4E53 /* GameDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D41C2943F9B2000B4E53 /* GameDetailViewModel.swift */; };
 		71A5D41F29448DD2000B4E53 /* GameDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D41E29448DD2000B4E53 /* GameDetailViewController.swift */; };
 		71A5D4212944A711000B4E53 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D4202944A711000B4E53 /* CoreDataManager.swift */; };
@@ -65,6 +67,11 @@
 		716727672945393A00F8527F /* GameNoteAddingEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNoteAddingEditingViewController.swift; sourceTree = "<group>"; };
 		7167276929453F6400F8527F /* GameNotAddingEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNotAddingEditingViewModel.swift; sourceTree = "<group>"; };
 		7167276B29460EFD00F8527F /* GameNoteListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNoteListTableViewCell.swift; sourceTree = "<group>"; };
+		7167276E29467DBB00F8527F /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		7167277029467EBF00F8527F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
+		7167277129467EBF00F8527F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		7167277B2946817300F8527F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7167277D2946817600F8527F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71A5D41C2943F9B2000B4E53 /* GameDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailViewModel.swift; sourceTree = "<group>"; };
 		71A5D41E29448DD2000B4E53 /* GameDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailViewController.swift; sourceTree = "<group>"; };
 		71A5D4202944A711000B4E53 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -162,6 +169,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		7167276D29467D6B00F8527F /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				7167276E29467DBB00F8527F /* StringExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		71A5D4222944B9A5000B4E53 /* FavoriteGameList */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +242,7 @@
 		71C1400229432BE000B85AD6 /* RAWGVideoGames */ = {
 			isa = PBXGroup;
 			children = (
+				7167276D29467D6B00F8527F /* Extension */,
 				71C140D029435CB300B85AD6 /* Core */,
 				71C14038294331FE00B85AD6 /* Scene */,
 				71C14036294331BB00B85AD6 /* App */,
@@ -327,6 +343,7 @@
 				71C140D129435CC100B85AD6 /* Client.swift */,
 				71C140E62943BB6B00B85AD6 /* BaseViewController.swift */,
 				71A5D4202944A711000B4E53 /* CoreDataManager.swift */,
+				7167277C2946817300F8527F /* Localizable.strings */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -462,6 +479,7 @@
 			knownRegions = (
 				en,
 				Base,
+				tr,
 			);
 			mainGroup = 71C13FF729432BE000B85AD6;
 			packageReferences = (
@@ -484,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				71C1401329432BE100B85AD6 /* LaunchScreen.storyboard in Resources */,
+				7167277A2946817300F8527F /* Localizable.strings in Resources */,
 				71C1401029432BE100B85AD6 /* Assets.xcassets in Resources */,
 				71C1400B29432BE000B85AD6 /* Main.storyboard in Resources */,
 			);
@@ -530,6 +549,7 @@
 				71C1400629432BE000B85AD6 /* SceneDelegate.swift in Sources */,
 				71C140D429435DB800B85AD6 /* Constants.swift in Sources */,
 				716727572944BCD500F8527F /* FavoriteGameListViewModel.swift in Sources */,
+				7167276F29467DBB00F8527F /* StringExtension.swift in Sources */,
 				7167276A29453F6400F8527F /* GameNotAddingEditingViewModel.swift in Sources */,
 				7167276C29460EFD00F8527F /* GameNoteListTableViewCell.swift in Sources */,
 				71C140D8294367AE00B85AD6 /* GameModel.swift in Sources */,
@@ -569,10 +589,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		7167277C2946817300F8527F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7167277B2946817300F8527F /* en */,
+				7167277D2946817600F8527F /* tr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		71C1400929432BE000B85AD6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				71C1400A29432BE000B85AD6 /* Base */,
+				7167277029467EBF00F8527F /* tr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -581,6 +611,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				71C1401229432BE100B85AD6 /* Base */,
+				7167277129467EBF00F8527F /* tr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -592,6 +623,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -652,6 +684,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
