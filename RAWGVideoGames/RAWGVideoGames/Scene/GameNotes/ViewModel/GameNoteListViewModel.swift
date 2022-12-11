@@ -15,6 +15,7 @@ protocol GameNoteListViewModelProtocol {
     func getGameNoteId(at index: Int) -> UUID?
     func add(note: GameNote)
     func update(note: GameNote)
+    func delete(id: UUID)
 }
 
 protocol GameNoteListViewModelDelegate: AnyObject {
@@ -53,6 +54,17 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         if let row = gameNotes?.firstIndex(where: {$0.id == note.id}) {
             gameNotes?[row] = note
             delegate?.gameNotesLoaded()
+        }
+    }
+    
+    func delete(id: UUID){
+        let success = CoreDataManager.shared.deleteNote(id: id)
+        if success {
+            //since game id string is equal to empty string after deletion from coredata, we remove the one whose id is equal to empty string.
+            if let index = gameNotes?.enumerated().filter({$0.element.id?.uuidString == ""}).map({$0.offset}).first {
+                gameNotes?.remove(at: index)
+                delegate?.gameNotesLoaded()
+            }
         }
     }
 }
