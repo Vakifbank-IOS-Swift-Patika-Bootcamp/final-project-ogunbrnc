@@ -123,6 +123,7 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
                    fatalError("View Controller not found")
                }
         noteAddingOrEditingViewController.delegate = self
+        noteAddingOrEditingViewController.noteId = note?.id
         navigationController?.present(noteAddingOrEditingViewController, animated: true)
     }
 }

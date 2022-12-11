@@ -17,6 +17,7 @@ class GameNoteAddingEditingViewController: UIViewController {
     @IBOutlet weak var gameNameTextField: UITextField!
     @IBOutlet weak var gameNoteTextField: UITextField!
     
+    var noteId: UUID?
     weak var delegate: GameNoteAddingEditingViewControllerDelegate?
     private var viewModel: GameNoteAddingEditingViewModelProtocol = GameNoteAddingEditingViewModel()
     
@@ -37,6 +38,7 @@ class GameNoteAddingEditingViewController: UIViewController {
     }
 }
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
+    
     func didAddNote(gameNote: GameNote) {
         dismiss(animated: true)
         delegate?.didAddNote(gameNote: gameNote)
@@ -46,4 +48,10 @@ extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDel
         dismiss(animated: true)
         delegate?.didUpdateNote(gameNote: gameNote)
     }
+    
+    func didNoteLoaded(gameNote: GameNote?) {
+        gameNoteTextField.text = gameNote?.noteContent
+        gameNameTextField.text = gameNote?.gameName
+    }
+
 }

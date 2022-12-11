@@ -9,10 +9,12 @@ import Foundation
 
 protocol GameNoteAddingEditingViewModelProtocol {
     var delegate: GameNoteAddingEditingViewModelDelegate? { get set }
+    func getNote(noteId: UUID?)
     func saveNote(gameName: String, noteContent: String)
 }
 
 protocol GameNoteAddingEditingViewModelDelegate: AnyObject {
+    func didNoteLoaded(gameNote: GameNote?)
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
 }
@@ -20,6 +22,10 @@ protocol GameNoteAddingEditingViewModelDelegate: AnyObject {
 final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtocol {
     weak var delegate: GameNoteAddingEditingViewModelDelegate?
     private var gameNote: GameNote?
+    
+    func getNote(noteId: UUID?) {
+        delegate?.didNoteLoaded(gameNote: gameNote ?? nil)
+    }
     
     func saveNote(gameName: String, noteContent: String) {
         //adding new note
@@ -40,5 +46,6 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
             
         }
     }
+    
 }
 
