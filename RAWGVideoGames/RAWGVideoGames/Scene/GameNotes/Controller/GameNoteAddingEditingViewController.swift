@@ -16,6 +16,18 @@ class GameNoteAddingEditingViewController: UIViewController {
 
     @IBOutlet weak var gameNameTextField: UITextField!
     @IBOutlet weak var gameNoteTextField: UITextField!
+    @IBOutlet weak var noteTypeSegmentedControl: UISegmentedControl!
+    
+    private let gameNoteReminderDatePicker: UIDatePicker =  {
+        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.preferredDatePickerStyle = .compact
+        
+        
+        return datePicker
+    }()
     
     var noteId: UUID?
     weak var delegate: GameNoteAddingEditingViewControllerDelegate?
@@ -23,11 +35,32 @@ class GameNoteAddingEditingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSegmentedControl()
+        
         
         viewModel.delegate = self
         viewModel.getNote(noteId: noteId)
+        
     }
     
+    private func configureSegmentedControl(){
+        noteTypeSegmentedControl.addTarget(self, action: #selector(noteTypeSegmentedControlValueChanged(_:)), for: .valueChanged)
+    }
+    
+    private func configureDatePickerConstraints () {
+        gameNoteReminderDatePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        gameNoteReminderDatePicker.topAnchor.constraint(equalTo: gameNoteTextField.bottomAnchor, constant: 20).isActive = true
+    }
+    
+    @objc private func noteTypeSegmentedControlValueChanged (_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            gameNoteReminderDatePicker.removeFromSuperview()
+        } else {
+            view.addSubview(gameNoteReminderDatePicker)
+            configureDatePickerConstraints()
+        }
+    }
+
     @IBAction func saveNoteClicked(_ sender: Any) {
         guard let gameName = gameNameTextField.text,
               !gameName.isEmpty,
