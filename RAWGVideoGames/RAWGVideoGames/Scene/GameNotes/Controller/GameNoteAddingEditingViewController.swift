@@ -47,6 +47,8 @@ class GameNoteAddingEditingViewController: UIViewController {
         noteTypeSegmentedControl.addTarget(self, action: #selector(noteTypeSegmentedControlValueChanged(_:)), for: .valueChanged)
     }
     
+    
+    
     private func configureDatePickerConstraints () {
         gameNoteReminderDatePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         gameNoteReminderDatePicker.topAnchor.constraint(equalTo: gameNoteTextField.bottomAnchor, constant: 20).isActive = true
@@ -62,13 +64,21 @@ class GameNoteAddingEditingViewController: UIViewController {
     }
 
     @IBAction func saveNoteClicked(_ sender: Any) {
+        
         guard let gameName = gameNameTextField.text,
               !gameName.isEmpty,
               let gameNote = gameNoteTextField.text,
               !gameNote.isEmpty else {
             return
         }
-        viewModel.saveNote(gameName: gameName, noteContent: gameNote)
+        
+        if noteTypeSegmentedControl.selectedSegmentIndex == 0 {
+            viewModel.saveNote(gameName: gameName, noteContent: gameNote)
+        } else {
+            viewModel.saveReminder(gameName: gameName, reminderContent: gameNote, reminderDate: gameNoteReminderDatePicker.date)
+        }
+        
+        
     }
 }
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
@@ -80,7 +90,6 @@ extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDel
     func didUpdateNote(gameNote: GameNote) {
         delegate?.didUpdateNote(gameNote: gameNote)
         dismiss(animated: true)
-
     }
     
     func didNoteLoaded(gameNote: GameNote?) {
