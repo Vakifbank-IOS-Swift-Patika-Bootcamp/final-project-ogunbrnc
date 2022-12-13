@@ -9,6 +9,7 @@ import Foundation
 
 protocol GameNoteListViewModelProtocol {
     var delegate: GameNoteListViewModelDelegate? { get set }
+    func checkEditable(note: GameNote) -> Bool
     func fetchGameNotes()
     func getGameNotesCount() -> Int
     func getGameNotesHasReminderCount() -> Int
@@ -30,6 +31,8 @@ protocol GameNoteListViewModelDelegate: AnyObject {
 }
 
 final class GameNoteListViewModel: GameNoteListViewModelProtocol {
+   
+    
     private var notificationManager: NotificationProtocol
     weak var delegate: GameNoteListViewModelDelegate?
     
@@ -39,6 +42,11 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     init(notificationManager: NotificationProtocol = LocalNotificationManager.shared, gameNotes: [GameNote]? = nil) {
         self.notificationManager = notificationManager
         self.gameNotes = gameNotes
+    }
+    
+    func checkEditable(note: GameNote) -> Bool {
+        let currentTime = Date.now
+        return note.noteScheduledReminderDate! > currentTime
     }
     
     func fetchGameNotes() {

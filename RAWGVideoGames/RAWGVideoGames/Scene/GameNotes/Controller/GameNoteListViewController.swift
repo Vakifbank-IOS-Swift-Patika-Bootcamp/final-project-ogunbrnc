@@ -174,6 +174,12 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
             
         } else {
             note = viewModel.getGameNoteHasReminder(at: indexPath.row)
+            let isEditable = viewModel.checkEditable(note: note!)
+            print(isEditable)
+            if !isEditable {
+                return
+            }
+            
         }
         
         guard let noteAddingOrEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
