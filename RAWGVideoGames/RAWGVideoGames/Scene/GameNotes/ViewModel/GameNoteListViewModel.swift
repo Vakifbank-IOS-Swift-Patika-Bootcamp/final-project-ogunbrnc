@@ -76,6 +76,18 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         }
     }
     
+    func add(reminder: GameNote) {
+        gameNotesHasReminder?.append(reminder)
+        delegate?.gameNotesLoaded()
+    }
+    
+    func update(reminder: GameNote) {
+        if let row = gameNotesHasReminder?.firstIndex(where: {$0.id == reminder.id}) {
+            gameNotesHasReminder?[row] = reminder
+            delegate?.gameNotesLoaded()
+        }
+    }
+    
     func delete(id: UUID){
         let success = CoreDataManager.shared.deleteNote(id: id)
         if success {
