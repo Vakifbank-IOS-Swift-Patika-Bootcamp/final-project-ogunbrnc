@@ -11,8 +11,11 @@ protocol GameNoteListViewModelProtocol {
     var delegate: GameNoteListViewModelDelegate? { get set }
     func fetchGameNotes()
     func getGameNotesCount() -> Int
+    func getGameNotesHasReminderCount() -> Int
     func getGameNote(at index: Int) -> GameNote?
+    func getGameNoteHasReminder(at index: Int) -> GameNote?
     func getGameNoteId(at index: Int) -> UUID?
+    func getGameNoteHasReminderId(at index: Int) -> UUID? 
     func add(note: GameNote)
     func update(note: GameNote)
     func delete(id: UUID)
@@ -27,9 +30,13 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     weak var delegate: GameNoteListViewModelDelegate?
     
     private var gameNotes: [GameNote]?
+    private var gameNotesHasReminder: [GameNote]?
+    
     
     func fetchGameNotes() {
-        gameNotes = CoreDataManager.shared.getNotes()
+        let gameNotesReminders = CoreDataManager.shared.getNotes()
+        gameNotes = gameNotesReminders.filter { !$0.noteHasReminder}
+        gameNotesHasReminder = gameNotesReminders.filter { $0.noteHasReminder }
         delegate?.gameNotesLoaded()
     }
     
@@ -37,12 +44,24 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         gameNotes?.count ?? 0
     }
     
+    func getGameNotesHasReminderCount() -> Int {
+        gameNotesHasReminder?.count ?? 0
+    }
+    
     func getGameNote(at index: Int) -> GameNote? {
         gameNotes?[index]
     }
     
+    func getGameNoteHasReminder(at index: Int) -> GameNote? {
+        gameNotesHasReminder?[index]
+    }
+    
     func getGameNoteId(at index: Int) -> UUID? {
         gameNotes![index].id
+    }
+    
+    func getGameNoteHasReminderId(at index: Int) -> UUID? {
+        gameNotesHasReminder![index].id
     }
     
     func add(note: GameNote) {

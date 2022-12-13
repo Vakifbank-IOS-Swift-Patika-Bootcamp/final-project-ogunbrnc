@@ -116,16 +116,30 @@ extension GameNoteListViewController: GameNoteListViewModelDelegate {
 //MARK: TableView Extension
 extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getGameNotesCount()
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            return viewModel.getGameNotesCount()
+            
+        } else {
+            return viewModel.getGameNotesHasReminderCount()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GameNoteListTableViewCell.identifier,for: indexPath) as? GameNoteListTableViewCell, let note = viewModel.getGameNote(at: indexPath.row) else {
-            return UITableViewCell()
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GameNoteListTableViewCell.identifier,for: indexPath) as? GameNoteListTableViewCell,
+                  let note = viewModel.getGameNote(at: indexPath.row) else {
+                return UITableViewCell()
+            }
+            cell.configure(with: note)
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GameNoteReminderTableViewCell.identifier,for: indexPath) as? GameNoteReminderTableViewCell,
+                let note = viewModel.getGameNoteHasReminder(at: indexPath.row) else {
+                return UITableViewCell()
+            }
+            cell.configure(with: note)
+            return cell
         }
-        
-        cell.configure(with: note)
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -159,7 +173,6 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
 
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
     func didAddNote(gameNote: GameNote) {
-        print(viewModel.getGameNotesCount())
         if viewModel.getGameNotesCount() == 0 {
             noNoteLabel.removeFromSuperview()
         }
