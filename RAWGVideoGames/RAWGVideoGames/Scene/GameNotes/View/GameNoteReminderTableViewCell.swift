@@ -38,6 +38,14 @@ class GameNoteReminderTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let gameReminderScheduledTimeImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
     
     // MARK: Configure UI Components
     private func configureConstraints() {
@@ -56,13 +64,19 @@ class GameNoteReminderTableViewCell: UITableViewCell {
         let gameNoteDateLabelConstraints = [
             gameNoteDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -20),
             gameNoteDateLabel.topAnchor.constraint(equalTo: gameNoteContentLabel.bottomAnchor, constant: 10),
-            gameNoteDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+        ]
+        
+        let gameReminderScheduledTimeImageViewConstraints = [
+            gameReminderScheduledTimeImageView.trailingAnchor.constraint(equalTo: gameNoteDateLabel.trailingAnchor),
+            gameReminderScheduledTimeImageView.topAnchor.constraint(equalTo: gameNoteDateLabel.bottomAnchor, constant: 10),
+            gameReminderScheduledTimeImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ]
         
         
         NSLayoutConstraint.activate(gameNameLabelConstraints)
         NSLayoutConstraint.activate(gameNoteContentLabelConstraints)
         NSLayoutConstraint.activate(gameNoteDateLabelConstraints)
+        NSLayoutConstraint.activate(gameReminderScheduledTimeImageViewConstraints)
 
     }
     
@@ -70,13 +84,20 @@ class GameNoteReminderTableViewCell: UITableViewCell {
         addSubview(gameNameLabel)
         addSubview(gameNoteDateLabel)
         addSubview(gameNoteContentLabel)
+        addSubview(gameReminderScheduledTimeImageView)
     }
     
     // Season and episode will be used seperated by "." to be more readable.
     func configure(with model: GameNote){
+        guard let noteDate = model.noteDate,
+              let noteScheduledDate = model.noteScheduledReminderDate else { return }
+        
+        let currentDate = Date.now
         gameNameLabel.text = model.gameName
-        gameNoteDateLabel.text = dateToString(model.noteDate ?? Date())
+        gameNoteDateLabel.text = dateToString(noteDate)
         gameNoteContentLabel.text = model.noteContent
+        let imageName = currentDate > noteScheduledDate  ? "checkmark.circle" : "clock"
+        gameReminderScheduledTimeImageView.image = UIImage(systemName: imageName)
         
     }
     
