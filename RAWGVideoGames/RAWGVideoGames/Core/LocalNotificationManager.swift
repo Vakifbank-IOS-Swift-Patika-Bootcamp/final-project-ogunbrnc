@@ -12,6 +12,7 @@ enum VoidResult {
     case success
     case failure(Error)
 }
+
 enum LocalNotificationManagerError: Error {
     case notAuthorized
 }
@@ -25,19 +26,19 @@ extension LocalNotificationManagerError: LocalizedError {
     }
 }
 
-protocol LocalNotificationManagerProtocol {
-    func scheduleLocalNotification(title: String, message: String, date: Date, completion: @escaping (VoidResult) -> Void)
+protocol NotificationProtocol {
+    func scheduleNotification(title: String, message: String, date: Date, completion: @escaping (VoidResult) -> Void)
 }
 
-final class LocalNotificationManager: LocalNotificationManagerProtocol {
+final class LocalNotificationManager: NotificationProtocol {
     static let shared = LocalNotificationManager()
-    private let notificationCenter: UNUserNotificationCenter!
+    private let notificationCenter: UNUserNotificationCenter
     
-    private init() {
-        notificationCenter = UNUserNotificationCenter.current()
+    init(notificationCenter: UNUserNotificationCenter = .current()) {
+        self.notificationCenter = notificationCenter
     }
     
-    func scheduleLocalNotification(title: String, message: String, date: Date, completion: @escaping (VoidResult) -> Void) {
+    func scheduleNotification(title: String, message: String, date: Date, completion: @escaping (VoidResult) -> Void) {
         notificationCenter.getNotificationSettings { (settings) in
             DispatchQueue.main.async
             {

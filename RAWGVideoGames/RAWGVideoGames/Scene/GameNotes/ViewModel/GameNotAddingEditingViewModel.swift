@@ -21,10 +21,16 @@ protocol GameNoteAddingEditingViewModelDelegate: AnyObject {
 }
 
 final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtocol {
-    
+    private var notificationManager: NotificationProtocol
     weak var delegate: GameNoteAddingEditingViewModelDelegate?
     private var gameNote: GameNote?
-    private var localNotificationManager: LocalNotificationManagerProtocol?
+    
+    init(notificationManager: NotificationProtocol = LocalNotificationManager.shared, gameNote: GameNote? = nil) {
+        self.notificationManager = notificationManager
+        self.gameNote = gameNote
+    }
+    
+    
     
     func getNote(noteId: UUID?) {
         gameNote = CoreDataManager.shared.getNote(noteId: noteId ?? UUID())
@@ -51,7 +57,7 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
     }
     
     func saveReminder(gameName: String, reminderContent: String, reminderDate: Date) {
-        localNotificationManager?.scheduleLocalNotification(title: gameName, message: reminderContent, date: reminderDate, completion: { result in
+        notificationManager.scheduleNotification(title: gameName, message: reminderContent, date: reminderDate, completion: { result in
             switch result {
             case .success:
                 print("success")
@@ -60,6 +66,5 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
             }
         })
     }
-    
 }
 
