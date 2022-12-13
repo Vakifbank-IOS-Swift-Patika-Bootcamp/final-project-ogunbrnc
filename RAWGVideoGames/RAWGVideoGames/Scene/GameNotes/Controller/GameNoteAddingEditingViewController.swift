@@ -89,12 +89,10 @@ extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDel
             gameNameTextField.text = gameNote.gameName
             
             if gameNote.noteHasReminder {
-                noteTypeSegmentedControl.selectedSegmentIndex = 1
                 view.addSubview(gameNoteReminderDatePicker)
                 configureDatePickerConstraints()
             }
             
-            gameNameTextField.isUserInteractionEnabled = false
             noteTypeSegmentedControl.isUserInteractionEnabled = false
         }
     }

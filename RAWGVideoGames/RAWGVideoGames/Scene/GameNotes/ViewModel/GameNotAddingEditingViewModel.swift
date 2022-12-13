@@ -66,7 +66,7 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
     
     func saveReminder(gameName: String, reminderContent: String, reminderDate: Date) {
         if gameNote == nil {
-            guard let gameNote = CoreDataManager.shared.addNote(gameName: gameName, noteContent: reminderContent, noteHasReminder: true),
+            guard let gameNote = CoreDataManager.shared.addNote(gameName: gameName, noteContent: reminderContent, noteHasReminder: true, noteScheduledReminderDate: reminderDate),
                   let gameNoteId = gameNote.id else {
                 return
             }

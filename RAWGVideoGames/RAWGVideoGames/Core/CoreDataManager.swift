@@ -97,7 +97,7 @@ final class CoreDataManager {
     }
     
     
-    func addNote(gameName: String, noteContent: String, noteHasReminder: Bool) -> GameNote? {
+    func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil) -> GameNote? {
         let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
         let note = NSManagedObject(entity: entity, insertInto: managedContext)
         
@@ -109,6 +109,7 @@ final class CoreDataManager {
         note.setValue(noteContent, forKeyPath: "noteContent")
         note.setValue(noteDate, forKeyPath: "noteDate")
         note.setValue(noteHasReminder, forKey: "noteHasReminder")
+        note.setValue(noteScheduledReminderDate, forKey: "noteScheduledReminderDate")
         
         do {
             try managedContext.save()
