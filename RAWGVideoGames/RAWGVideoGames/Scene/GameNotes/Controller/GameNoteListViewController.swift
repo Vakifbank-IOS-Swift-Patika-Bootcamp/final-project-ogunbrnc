@@ -199,9 +199,6 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
                 noteCount = viewModel.getGameNotesHasReminderCount()
             }
             
-
-            
-            
             // if there is no note left when the note is deleted
             if noteCount == 0  {
                 configureNoNoteLabel()

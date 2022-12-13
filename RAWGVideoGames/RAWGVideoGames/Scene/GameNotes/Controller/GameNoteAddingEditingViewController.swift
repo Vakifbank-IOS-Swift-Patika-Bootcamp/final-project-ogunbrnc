@@ -8,11 +8,6 @@
 import UIKit
 
 
-enum GameNoteType {
-    case note
-    case reminder
-}
-
 protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
@@ -36,24 +31,24 @@ class GameNoteAddingEditingViewController: UIViewController {
     }()
     
     var noteId: UUID?
+    
     weak var delegate: GameNoteAddingEditingViewControllerDelegate?
     private var viewModel: GameNoteAddingEditingViewModelProtocol = GameNoteAddingEditingViewModel()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSegmentedControl()
         
-        
+
         viewModel.delegate = self
         viewModel.getNote(noteId: noteId)
+        configureSegmentedControl()
         
     }
     
     private func configureSegmentedControl(){
         noteTypeSegmentedControl.addTarget(self, action: #selector(noteTypeSegmentedControlValueChanged(_:)), for: .valueChanged)
     }
-    
-    
     
     private func configureDatePickerConstraints () {
         gameNoteReminderDatePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -87,9 +82,21 @@ class GameNoteAddingEditingViewController: UIViewController {
     }
 }
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
-    func didNoteLoaded(gameNote: GameNote?) {
-        gameNoteTextField.text = gameNote?.noteContent
-        gameNameTextField.text = gameNote?.gameName
+    func didNoteLoaded(gameNote: GameNote?,pageViewMode: PageViewMode) {
+        if pageViewMode == .edit {
+            guard let gameNote = gameNote else { return }
+            gameNoteTextField.text = gameNote.noteContent
+            gameNameTextField.text = gameNote.gameName
+            
+            if gameNote.noteHasReminder {
+                noteTypeSegmentedControl.selectedSegmentIndex = 1
+                view.addSubview(gameNoteReminderDatePicker)
+                configureDatePickerConstraints()
+            }
+            
+            gameNameTextField.isUserInteractionEnabled = false
+            noteTypeSegmentedControl.isUserInteractionEnabled = false
+        }
     }
     
     func didAddNote(gameNote: GameNote) {

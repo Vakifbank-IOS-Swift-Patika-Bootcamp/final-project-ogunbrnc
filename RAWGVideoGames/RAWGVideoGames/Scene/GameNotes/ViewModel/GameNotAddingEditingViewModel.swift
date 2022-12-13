@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum PageViewMode {
+    case add
+    case edit
+}
+
 protocol GameNoteAddingEditingViewModelProtocol {
     var delegate: GameNoteAddingEditingViewModelDelegate? { get set }
     func getNote(noteId: UUID?)
@@ -15,7 +20,7 @@ protocol GameNoteAddingEditingViewModelProtocol {
 }
 
 protocol GameNoteAddingEditingViewModelDelegate: AnyObject {
-    func didNoteLoaded(gameNote: GameNote?)
+    func didNoteLoaded(gameNote: GameNote?,pageViewMode: PageViewMode)
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
     func didAuthErrorOccur(error: String)
@@ -33,7 +38,8 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
     
     func getNote(noteId: UUID?) {
         gameNote = CoreDataManager.shared.getNote(noteId: noteId ?? UUID())
-        delegate?.didNoteLoaded(gameNote: gameNote)
+        let pageViewMode: PageViewMode = gameNote == nil ? .add : .edit
+        delegate?.didNoteLoaded(gameNote: gameNote,pageViewMode: pageViewMode)
     }
     
     func saveNote(gameName: String, noteContent: String) {
