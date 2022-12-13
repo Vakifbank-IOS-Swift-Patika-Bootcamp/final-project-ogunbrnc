@@ -32,8 +32,6 @@ class GameNoteAddingEditingViewController: UIViewController {
         datePicker.timeZone = NSTimeZone.local
         datePicker.datePickerMode = .dateAndTime
         datePicker.preferredDatePickerStyle = .compact
-        
-        
         return datePicker
     }()
     

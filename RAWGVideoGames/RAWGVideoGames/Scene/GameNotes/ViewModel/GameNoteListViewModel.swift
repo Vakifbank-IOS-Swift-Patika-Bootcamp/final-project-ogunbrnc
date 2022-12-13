@@ -28,12 +28,16 @@ protocol GameNoteListViewModelDelegate: AnyObject {
 }
 
 final class GameNoteListViewModel: GameNoteListViewModelProtocol {
-    
+    private var notificationManager: NotificationProtocol
     weak var delegate: GameNoteListViewModelDelegate?
     
     private var gameNotes: [GameNote]?
     private var gameNotesHasReminder: [GameNote]?
     
+    init(notificationManager: NotificationProtocol = LocalNotificationManager.shared, gameNotes: [GameNote]? = nil) {
+        self.notificationManager = notificationManager
+        self.gameNotes = gameNotes
+    }
     
     func fetchGameNotes() {
         let gameNotesReminders = CoreDataManager.shared.getNotes()
@@ -96,6 +100,16 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
             //since game id string is equal to empty string after deletion from coredata, we remove the one whose id is equal to empty string.
             if let index = gameNotes?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {
                 gameNotes?.remove(at: index)
+                delegate?.gameNotesLoaded()
+            }
+        }
+    }
+    func deleteReminder(id: UUID) {
+        let success = CoreDataManager.shared.deleteNote(id: id)
+        if success {
+            notificationManager.deleteScheduledNotification(id: id)
+            if let index = gameNotesHasReminder?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {
+                gameNotesHasReminder?.remove(at: index)
                 delegate?.gameNotesLoaded()
             }
         }
