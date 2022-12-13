@@ -18,6 +18,7 @@ protocol GameNoteAddingEditingViewModelDelegate: AnyObject {
     func didNoteLoaded(gameNote: GameNote?)
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
+    func didAuthErrorOccur(error: String)
 }
 
 final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtocol {
@@ -69,7 +70,7 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
                 case .success:
                     self.delegate?.didAddNote(gameNote: gameNote)
                 case .failure(let error):
-                    print(error)
+                    self.delegate?.didAuthErrorOccur(error: error.localizedDescription)
                 }
             })
         }

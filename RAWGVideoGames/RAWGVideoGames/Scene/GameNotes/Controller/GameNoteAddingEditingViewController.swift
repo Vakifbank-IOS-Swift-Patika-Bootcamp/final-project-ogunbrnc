@@ -87,6 +87,10 @@ class GameNoteAddingEditingViewController: UIViewController {
     }
 }
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
+    func didNoteLoaded(gameNote: GameNote?) {
+        gameNoteTextField.text = gameNote?.noteContent
+        gameNameTextField.text = gameNote?.gameName
+    }
     
     func didAddNote(gameNote: GameNote) {
         delegate?.didAddNote(gameNote: gameNote)
@@ -97,9 +101,18 @@ extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDel
         dismiss(animated: true)
     }
     
-    func didNoteLoaded(gameNote: GameNote?) {
-        gameNoteTextField.text = gameNote?.noteContent
-        gameNameTextField.text = gameNote?.gameName
+    func didAuthErrorOccur(error: String) {
+        let alertController = UIAlertController(title: "Enable Notifications", message: error.localized(), preferredStyle: .alert)
+        let goToSettings = UIAlertAction(title: "Settings", style: .default)
+        { (_) in
+            guard let setttingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+            if(UIApplication.shared.canOpenURL(setttingsURL)) {
+                UIApplication.shared.open(setttingsURL) { (_) in}
+            }
+        }
+        alertController.addAction(goToSettings)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (_) in}))
+        self.present(alertController, animated: true)
     }
 
 }
