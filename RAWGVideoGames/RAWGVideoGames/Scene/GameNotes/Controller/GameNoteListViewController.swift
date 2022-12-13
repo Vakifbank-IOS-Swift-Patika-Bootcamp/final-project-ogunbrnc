@@ -11,6 +11,8 @@ class GameNoteListViewController: UIViewController {
     
     //MARK: UI Components
     @IBOutlet private weak var notesTableView: UITableView!
+    @IBOutlet private weak var notesRemindersSegmentedControl: UISegmentedControl!
+    
     private let floatingActionButton: UIButton = {
         let floatingButton = UIButton()
         floatingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -41,6 +43,7 @@ class GameNoteListViewController: UIViewController {
     
     private func configureTableView() {
         notesTableView.register(GameNoteListTableViewCell.self, forCellReuseIdentifier: GameNoteListTableViewCell.identifier)
+        notesTableView.register(GameNoteReminderTableViewCell.self, forCellReuseIdentifier: GameNoteReminderTableViewCell.identifier)
         notesTableView.dataSource = self
         notesTableView.delegate = self
         notesTableView.estimatedRowHeight = UITableView.automaticDimension
@@ -70,6 +73,15 @@ class GameNoteListViewController: UIViewController {
         floatingActionButton.addTarget(self, action: #selector(didTapAddNote), for: .touchUpInside)
     }
     
+    
+    private func configureSegmentedControl() {
+        notesRemindersSegmentedControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
+    }
+    
+    @objc func handleSegmentChange() {
+        notesTableView.reloadData()
+    }
+    
     // MARK: UIButton Action
     @objc private func didTapAddNote() {
         guard let noteAddingEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
@@ -90,6 +102,7 @@ class GameNoteListViewController: UIViewController {
         configureSubViews()
         configureConstraints()
         configureButtons()
+        configureSegmentedControl()
     }
 
 }

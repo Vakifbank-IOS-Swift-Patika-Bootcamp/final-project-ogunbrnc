@@ -315,33 +315,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="h89-FZ-7vt">
-                                <rect key="frame" x="0.0" y="91" width="390" height="670"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="msR-Zq-6ad">
+                                <rect key="frame" x="0.0" y="91" width="390" height="32"/>
+                                <segments>
+                                    <segment title="Notes"/>
+                                    <segment title="Reminders"/>
+                                </segments>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pNy-gG-3kU">
+                                <rect key="frame" x="0.0" y="122" width="390" height="639"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="RZM-tv-CyR">
-                                        <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RZM-tv-CyR" id="98q-7I-aSX">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cln-zv-Wm1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="h89-FZ-7vt" firstAttribute="top" secondItem="cln-zv-Wm1" secondAttribute="top" id="4Ri-Af-MmV"/>
-                            <constraint firstItem="h89-FZ-7vt" firstAttribute="leading" secondItem="cln-zv-Wm1" secondAttribute="leading" id="acr-tC-0ez"/>
-                            <constraint firstItem="cln-zv-Wm1" firstAttribute="trailing" secondItem="h89-FZ-7vt" secondAttribute="trailing" id="nWx-uA-G8p"/>
-                            <constraint firstItem="cln-zv-Wm1" firstAttribute="bottom" secondItem="h89-FZ-7vt" secondAttribute="bottom" id="zRG-sK-80F"/>
+                            <constraint firstItem="pNy-gG-3kU" firstAttribute="top" secondItem="msR-Zq-6ad" secondAttribute="bottom" id="4Vb-c8-MDh"/>
+                            <constraint firstItem="pNy-gG-3kU" firstAttribute="leading" secondItem="cln-zv-Wm1" secondAttribute="leading" id="7p3-mn-ZOS"/>
+                            <constraint firstItem="cln-zv-Wm1" firstAttribute="trailing" secondItem="pNy-gG-3kU" secondAttribute="trailing" id="BEW-X8-dBA"/>
+                            <constraint firstItem="msR-Zq-6ad" firstAttribute="leading" secondItem="cln-zv-Wm1" secondAttribute="leading" id="IhT-XL-Bv6"/>
+                            <constraint firstItem="cln-zv-Wm1" firstAttribute="trailing" secondItem="msR-Zq-6ad" secondAttribute="trailing" id="eX7-Ic-FXf"/>
+                            <constraint firstItem="cln-zv-Wm1" firstAttribute="bottom" secondItem="pNy-gG-3kU" secondAttribute="bottom" id="hqY-Tl-MK8"/>
+                            <constraint firstItem="msR-Zq-6ad" firstAttribute="top" secondItem="cln-zv-Wm1" secondAttribute="top" id="pSP-ti-E1m"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="My Notes" id="L17-ko-KSn"/>
                     <connections>
-                        <outlet property="notesTableView" destination="h89-FZ-7vt" id="akx-N2-Fbb"/>
+                        <outlet property="notesRemindersSegmentedControl" destination="msR-Zq-6ad" id="7SB-4c-Ups"/>
+                        <outlet property="notesTableView" destination="pNy-gG-3kU" id="yR1-VV-OlA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XE2-fa-4eX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
