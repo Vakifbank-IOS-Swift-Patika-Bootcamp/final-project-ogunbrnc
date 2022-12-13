@@ -21,6 +21,8 @@ protocol GameNoteAddingEditingViewModelProtocol {
 
 protocol GameNoteAddingEditingViewModelDelegate: AnyObject {
     func didNoteLoaded(gameNote: GameNote?,pageViewMode: PageViewMode)
+    func didAddReminder(gameNote: GameNote)
+    func didUpdateReminder(gameNote: GameNote)
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
     func didAuthErrorOccur(error: String)
@@ -74,25 +76,26 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    self.delegate?.didAddNote(gameNote: gameNote)
+                    self.delegate?.didAddReminder(gameNote: gameNote)
                 case .failure(let error):
                     self.delegate?.didAuthErrorOccur(error: error.localizedDescription)
                 }
             })
         }
         else {
+            
             guard let gameNoteId = gameNote?.id else { return }
-            guard let gameNote = CoreDataManager.shared.updateNote(noteContent: reminderContent, gameNoteId: gameNoteId) else {
+            guard let gameNote = CoreDataManager.shared.updateNote(noteContent: reminderContent,noteScheduledReminderDate: reminderDate, gameNoteId: gameNoteId) else {
                 return
             }
-            
             notificationManager.updateScheduledNotification(title: gameName, message: reminderContent, id: gameNoteId, date: reminderDate, completion: { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    self.delegate?.didUpdateNote(gameNote: gameNote)
+                    self.delegate?.didUpdateReminder(gameNote: gameNote)
+                    print("update edildi")
                 case .failure(let error):
-                    print(error)
+                    self.delegate?.didAuthErrorOccur(error: error.localizedDescription)
                 }
             })
         }

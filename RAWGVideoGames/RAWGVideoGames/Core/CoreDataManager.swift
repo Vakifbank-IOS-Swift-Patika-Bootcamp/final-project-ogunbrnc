@@ -121,7 +121,7 @@ final class CoreDataManager {
         return nil
     }
     
-    func updateNote(noteContent: String,gameNoteId: UUID) -> GameNote? {
+    func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil,gameNoteId: UUID) -> GameNote? {
         let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
         fetchNote.predicate = NSPredicate(format: "id = %@", gameNoteId.uuidString )
 
@@ -130,6 +130,7 @@ final class CoreDataManager {
             let currentDate = Date.now
             note.noteContent = noteContent
             note.noteDate = currentDate
+            note.noteScheduledReminderDate = noteScheduledReminderDate
             
             
             do {

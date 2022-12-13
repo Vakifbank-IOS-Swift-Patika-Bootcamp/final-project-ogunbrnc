@@ -84,17 +84,29 @@ class GameNoteAddingEditingViewController: UIViewController {
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
     func didNoteLoaded(gameNote: GameNote?,pageViewMode: PageViewMode) {
         if pageViewMode == .edit {
-            guard let gameNote = gameNote else { return }
+            guard let gameNote = gameNote,
+                  let scheduledReminderDate = gameNote.noteScheduledReminderDate else { return }
             gameNoteTextField.text = gameNote.noteContent
             gameNameTextField.text = gameNote.gameName
-            
             if gameNote.noteHasReminder {
+                noteTypeSegmentedControl.selectedSegmentIndex = 1
+                gameNoteReminderDatePicker.date = scheduledReminderDate
                 view.addSubview(gameNoteReminderDatePicker)
                 configureDatePickerConstraints()
             }
             
             noteTypeSegmentedControl.isUserInteractionEnabled = false
         }
+    }
+    
+    func didAddReminder(gameNote: GameNote) {
+        delegate?.didAddReminder(gameNote: gameNote)
+        dismiss(animated: true)
+    }
+    
+    func didUpdateReminder(gameNote: GameNote) {
+        delegate?.didUpdateReminder(gameNote: gameNote)
+        dismiss(animated: true)
     }
     
     func didAddNote(gameNote: GameNote) {
