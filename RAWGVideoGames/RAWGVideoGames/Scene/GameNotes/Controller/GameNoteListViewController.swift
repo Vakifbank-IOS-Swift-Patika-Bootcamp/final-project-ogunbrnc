@@ -147,9 +147,16 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let note: GameNote?
         tableView.deselectRow(at: indexPath, animated: true)
-                
-        let note = viewModel.getGameNote(at: indexPath.row)
+        
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            note = viewModel.getGameNote(at: indexPath.row)
+            
+        } else {
+            note = viewModel.getGameNoteHasReminder(at: indexPath.row)
+        }
+        
         guard let noteAddingOrEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
                    fatalError("View Controller not found")
                }
