@@ -7,6 +7,12 @@
 
 import UIKit
 
+
+enum GameNoteType {
+    case note
+    case reminder
+}
+
 protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
@@ -64,7 +70,6 @@ class GameNoteAddingEditingViewController: UIViewController {
     }
 
     @IBAction func saveNoteClicked(_ sender: Any) {
-        
         guard let gameName = gameNameTextField.text,
               !gameName.isEmpty,
               let gameNote = gameNoteTextField.text,

@@ -27,7 +27,8 @@ extension LocalNotificationManagerError: LocalizedError {
 }
 
 protocol NotificationProtocol {
-    func scheduleNotification(title: String, message: String, date: Date, completion: @escaping (VoidResult) -> Void)
+    func scheduleNotification(title: String, message: String, id: UUID, date: Date, completion: @escaping (VoidResult) -> Void)
+    func updateScheduledNotification(title: String, message: String,id: UUID, date: Date, completion: @escaping (VoidResult) -> Void)
 }
 
 final class LocalNotificationManager: NotificationProtocol {
@@ -38,7 +39,7 @@ final class LocalNotificationManager: NotificationProtocol {
         self.notificationCenter = notificationCenter
     }
     
-    func scheduleNotification(title: String, message: String, date: Date, completion: @escaping (VoidResult) -> Void) {
+    func scheduleNotification(title: String, message: String, id: UUID , date: Date, completion: @escaping (VoidResult) -> Void) {
         notificationCenter.getNotificationSettings { (settings) in
             DispatchQueue.main.async
             {
@@ -51,7 +52,7 @@ final class LocalNotificationManager: NotificationProtocol {
                     let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
                     
                     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
-                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                    let request = UNNotificationRequest(identifier: id.uuidString, content: content, trigger: trigger)
                     
                     self.notificationCenter.add(request) { (error) in
                         if error != nil {
@@ -69,4 +70,14 @@ final class LocalNotificationManager: NotificationProtocol {
             }
         }
     }
+    
+    func updateScheduledNotification(title: String, message: String,id: UUID, date: Date, completion: @escaping (VoidResult) -> Void) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers:[id.uuidString])
+        scheduleNotification(title: title, message: message, id: id, date: date) { result in
+            return completion(result)
+        }
+    }
+    
+    
+    
 }
