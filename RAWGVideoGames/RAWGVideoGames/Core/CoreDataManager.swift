@@ -97,7 +97,7 @@ final class CoreDataManager {
     }
     
     
-    func addNote(gameName: String, noteContent: String) -> GameNote? {
+    func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil) -> GameNote? {
         let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
         let note = NSManagedObject(entity: entity, insertInto: managedContext)
         
@@ -108,6 +108,8 @@ final class CoreDataManager {
         note.setValue(noteId, forKeyPath: "id")
         note.setValue(noteContent, forKeyPath: "noteContent")
         note.setValue(noteDate, forKeyPath: "noteDate")
+        note.setValue(noteHasReminder, forKey: "noteHasReminder")
+        note.setValue(noteScheduledReminderDate, forKey: "noteScheduledReminderDate")
         
         do {
             try managedContext.save()
@@ -119,15 +121,17 @@ final class CoreDataManager {
         return nil
     }
     
-    func updateNote(noteContent: String,gameNote: GameNote) -> GameNote? {
+    func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil,gameNoteId: UUID) -> GameNote? {
         let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
-        fetchNote.predicate = NSPredicate(format: "id = %@", gameNote.id?.uuidString ?? "")
+        fetchNote.predicate = NSPredicate(format: "id = %@", gameNoteId.uuidString )
 
         let results = try? managedContext.fetch(fetchNote)
         if let note = results?.first {
             let currentDate = Date.now
             note.noteContent = noteContent
             note.noteDate = currentDate
+            note.noteScheduledReminderDate = noteScheduledReminderDate
+            
             
             do {
                 try managedContext.save()

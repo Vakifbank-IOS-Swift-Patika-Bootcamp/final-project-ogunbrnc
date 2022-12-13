@@ -11,6 +11,8 @@ class GameNoteListViewController: UIViewController {
     
     //MARK: UI Components
     @IBOutlet private weak var notesTableView: UITableView!
+    @IBOutlet private weak var notesRemindersSegmentedControl: UISegmentedControl!
+    
     private let floatingActionButton: UIButton = {
         let floatingButton = UIButton()
         floatingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -21,6 +23,7 @@ class GameNoteListViewController: UIViewController {
         floatingButton.layer.cornerRadius = 25
         return floatingButton
     }()
+    
     private let noNoteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,6 +44,7 @@ class GameNoteListViewController: UIViewController {
     
     private func configureTableView() {
         notesTableView.register(GameNoteListTableViewCell.self, forCellReuseIdentifier: GameNoteListTableViewCell.identifier)
+        notesTableView.register(GameNoteReminderTableViewCell.self, forCellReuseIdentifier: GameNoteReminderTableViewCell.identifier)
         notesTableView.dataSource = self
         notesTableView.delegate = self
         notesTableView.estimatedRowHeight = UITableView.automaticDimension
@@ -70,6 +74,33 @@ class GameNoteListViewController: UIViewController {
         floatingActionButton.addTarget(self, action: #selector(didTapAddNote), for: .touchUpInside)
     }
     
+    
+    private func configureSegmentedControl() {
+        notesRemindersSegmentedControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
+    }
+    
+    @objc func handleSegmentChange() {
+        let noteCount: Int
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            noteCount = viewModel.getGameNotesCount()
+        }
+        else {
+            noteCount = viewModel.getGameNotesHasReminderCount()
+        }
+        
+        if noteCount == 0 {
+            view.addSubview(noNoteLabel)
+            noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        }
+        else {
+            noNoteLabel.removeFromSuperview()
+        }
+        
+        
+        notesTableView.reloadData()
+    }
+    
     // MARK: UIButton Action
     @objc private func didTapAddNote() {
         guard let noteAddingEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
@@ -90,6 +121,7 @@ class GameNoteListViewController: UIViewController {
         configureSubViews()
         configureConstraints()
         configureButtons()
+        configureSegmentedControl()
     }
 
 }
@@ -103,16 +135,30 @@ extension GameNoteListViewController: GameNoteListViewModelDelegate {
 //MARK: TableView Extension
 extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getGameNotesCount()
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            return viewModel.getGameNotesCount()
+            
+        } else {
+            return viewModel.getGameNotesHasReminderCount()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GameNoteListTableViewCell.identifier,for: indexPath) as? GameNoteListTableViewCell, let note = viewModel.getGameNote(at: indexPath.row) else {
-            return UITableViewCell()
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GameNoteListTableViewCell.identifier,for: indexPath) as? GameNoteListTableViewCell,
+                  let note = viewModel.getGameNote(at: indexPath.row) else {
+                return UITableViewCell()
+            }
+            cell.configure(with: note)
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GameNoteReminderTableViewCell.identifier,for: indexPath) as? GameNoteReminderTableViewCell,
+                let note = viewModel.getGameNoteHasReminder(at: indexPath.row) else {
+                return UITableViewCell()
+            }
+            cell.configure(with: note)
+            return cell
         }
-        
-        cell.configure(with: note)
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -120,9 +166,21 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let note: GameNote?
         tableView.deselectRow(at: indexPath, animated: true)
-                
-        let note = viewModel.getGameNote(at: indexPath.row)
+        
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            note = viewModel.getGameNote(at: indexPath.row)
+            
+        } else {
+            note = viewModel.getGameNoteHasReminder(at: indexPath.row)
+            let isEditable = viewModel.checkEditable(note: note!)
+            if !isEditable {
+                return
+            }
+            
+        }
+        
         guard let noteAddingOrEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
                    fatalError("View Controller not found")
                }
@@ -132,12 +190,22 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let noteId: UUID?
+        let noteCount: Int
         if editingStyle == .delete {
-            let noteId = viewModel.getGameNoteId(at: indexPath.row)
-            viewModel.delete(id: noteId ?? UUID())
+            if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+                noteId = viewModel.getGameNoteId(at: indexPath.row)
+                viewModel.delete(id: noteId ?? UUID())
+                noteCount = viewModel.getGameNotesCount()
+                
+            } else {
+                noteId = viewModel.getGameNoteHasReminderId(at: indexPath.row)
+                viewModel.deleteReminder(id: noteId ?? UUID())
+                noteCount = viewModel.getGameNotesHasReminderCount()
+            }
             
             // if there is no note left when the note is deleted
-            if viewModel.getGameNotesCount() == 0  {
+            if noteCount == 0  {
                 configureNoNoteLabel()
             }
         }
@@ -145,8 +213,18 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
 }
 
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
+    func didAddReminder(gameNote: GameNote) {
+        if viewModel.getGameNotesHasReminderCount() == 0 {
+            noNoteLabel.removeFromSuperview()
+        }
+        viewModel.add(reminder: gameNote)
+    }
+    
+    func didUpdateReminder(gameNote: GameNote) {
+        viewModel.update(reminder: gameNote)
+    }
+    
     func didAddNote(gameNote: GameNote) {
-        print(viewModel.getGameNotesCount())
         if viewModel.getGameNotesCount() == 0 {
             noNoteLabel.removeFromSuperview()
         }
