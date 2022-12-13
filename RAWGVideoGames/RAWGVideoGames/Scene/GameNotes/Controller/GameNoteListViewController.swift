@@ -185,12 +185,25 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let noteId: UUID?
+        let noteCount: Int
         if editingStyle == .delete {
-            let noteId = viewModel.getGameNoteId(at: indexPath.row)
-            viewModel.delete(id: noteId ?? UUID())
+            if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+                noteId = viewModel.getGameNoteId(at: indexPath.row)
+                viewModel.delete(id: noteId ?? UUID())
+                noteCount = viewModel.getGameNotesCount()
+                
+            } else {
+                noteId = viewModel.getGameNoteHasReminderId(at: indexPath.row)
+                viewModel.deleteReminder(id: noteId ?? UUID())
+                noteCount = viewModel.getGameNotesHasReminderCount()
+            }
+            
+
+            
             
             // if there is no note left when the note is deleted
-            if viewModel.getGameNotesCount() == 0  {
+            if noteCount == 0  {
                 configureNoNoteLabel()
             }
         }

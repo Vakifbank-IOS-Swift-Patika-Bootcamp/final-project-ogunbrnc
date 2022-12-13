@@ -21,6 +21,8 @@ protocol GameNoteListViewModelProtocol {
     func update(note: GameNote)
     func update(reminder: GameNote)
     func delete(id: UUID)
+    func deleteReminder(id: UUID)
+
 }
 
 protocol GameNoteListViewModelDelegate: AnyObject {
