@@ -16,6 +16,8 @@ enum GameNoteType {
 protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
+    func didAddReminder(gameNote: GameNote)
+    func didUpdateReminder(gameNote: GameNote)
 }
 
 class GameNoteAddingEditingViewController: UIViewController {

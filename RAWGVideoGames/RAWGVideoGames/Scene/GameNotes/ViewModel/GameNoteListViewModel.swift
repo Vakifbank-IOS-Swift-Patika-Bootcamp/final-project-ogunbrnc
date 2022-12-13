@@ -17,7 +17,9 @@ protocol GameNoteListViewModelProtocol {
     func getGameNoteId(at index: Int) -> UUID?
     func getGameNoteHasReminderId(at index: Int) -> UUID? 
     func add(note: GameNote)
+    func add(reminder: GameNote)
     func update(note: GameNote)
+    func update(reminder: GameNote)
     func delete(id: UUID)
 }
 

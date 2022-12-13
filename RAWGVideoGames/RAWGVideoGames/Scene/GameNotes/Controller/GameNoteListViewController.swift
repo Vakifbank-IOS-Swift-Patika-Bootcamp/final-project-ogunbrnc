@@ -23,6 +23,7 @@ class GameNoteListViewController: UIViewController {
         floatingButton.layer.cornerRadius = 25
         return floatingButton
     }()
+    
     private let noNoteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -79,6 +80,24 @@ class GameNoteListViewController: UIViewController {
     }
     
     @objc func handleSegmentChange() {
+        let noteCount: Int
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            noteCount = viewModel.getGameNotesCount()
+        }
+        else {
+            noteCount = viewModel.getGameNotesHasReminderCount()
+        }
+        
+        if noteCount == 0 {
+            view.addSubview(noNoteLabel)
+            noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        }
+        else {
+            noNoteLabel.removeFromSuperview()
+        }
+        
+        
         notesTableView.reloadData()
     }
     
@@ -179,6 +198,17 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
 }
 
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
+    func didAddReminder(gameNote: GameNote) {
+        if viewModel.getGameNotesHasReminderCount() == 0 {
+            noNoteLabel.removeFromSuperview()
+        }
+        viewModel.add(reminder: gameNote)
+    }
+    
+    func didUpdateReminder(gameNote: GameNote) {
+        viewModel.update(reminder: gameNote)
+    }
+    
     func didAddNote(gameNote: GameNote) {
         if viewModel.getGameNotesCount() == 0 {
             noNoteLabel.removeFromSuperview()
