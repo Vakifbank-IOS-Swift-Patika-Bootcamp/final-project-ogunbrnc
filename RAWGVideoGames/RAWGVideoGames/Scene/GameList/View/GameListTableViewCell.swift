@@ -75,6 +75,15 @@ class GameListTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let gameReleaseDateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        return label
+    }()
+    
 
     
     // MARK: Configure UI Components
@@ -95,10 +104,16 @@ class GameListTableViewCell: UITableViewCell {
                 gameNameLabel.leadingAnchor.constraint(equalTo: gameImageView.trailingAnchor, constant: 20),
                 gameNameLabel.widthAnchor.constraint(equalToConstant: contentView.width - gameImageViewSize)
            ]
+           
+           let gameReleaseDateLabelConstraints = [
+                gameReleaseDateLabel.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor, constant: 5),
+                gameReleaseDateLabel.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
+                gameReleaseDateLabel.widthAnchor.constraint(equalToConstant: contentView.width - gameImageViewSize)
+           ]
           
            let gameTimeIconImageViewConstraints = [
                 gameTimeIconImageView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
-                gameTimeIconImageView.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor,constant: 10),
+                gameTimeIconImageView.topAnchor.constraint(equalTo: gameReleaseDateLabel.bottomAnchor,constant: 10),
                 gameTimeIconImageView.widthAnchor.constraint(equalToConstant: iconImageViewSize),
                 gameTimeIconImageView.heightAnchor.constraint(equalToConstant: iconImageViewSize)
            ]
@@ -126,10 +141,13 @@ class GameListTableViewCell: UITableViewCell {
                 gamePlatformLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20),
                 gamePlatformLabel.widthAnchor.constraint(equalToConstant: contentView.width)
            ]
+           
+           
        
            
            NSLayoutConstraint.activate(gameImageViewConstraints)
            NSLayoutConstraint.activate(gameNameLabelConstraints)
+           NSLayoutConstraint.activate(gameReleaseDateLabelConstraints)
            NSLayoutConstraint.activate(gamePlatformLabelConstraints)
            NSLayoutConstraint.activate(gameTimeIconImageViewConstraints)
            NSLayoutConstraint.activate(gameTimeLabelConstraints)
@@ -144,6 +162,7 @@ class GameListTableViewCell: UITableViewCell {
     private func configureSubviews() {
         addSubview(gameImageView)
         addSubview(gameNameLabel)
+        addSubview(gameReleaseDateLabel)
         addSubview(gamePlatformLabel)
         addSubview(gameTimeIconImageView)
         addSubview(gameTimeLabel)
@@ -154,6 +173,7 @@ class GameListTableViewCell: UITableViewCell {
     // If there is no image, the "photo" image will be used to provide a consistent structure
     func configureCell(game: GameModel){
         gameNameLabel.text = game.name
+        gameReleaseDateLabel.text = game.releaseDate
         gameTimeLabel.text = String(game.playtime ?? 0)
         gameRatingLabel.text = String(game.rating ?? 0.0)
         gameImageView.sd_setImage(with: URL(string: game.imageURL ?? ""))
