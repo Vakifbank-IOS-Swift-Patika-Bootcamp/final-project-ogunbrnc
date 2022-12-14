@@ -39,24 +39,26 @@ class GameListTableViewCell: UITableViewCell {
         return label
     }()
     
+
+    
     // MARK: Configure UI Components
        private func configureConstraints() {
            let gameImageViewConstraints = [
                 gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 20),
                 gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                gameImageView.widthAnchor.constraint(equalToConstant: 350),
-                gameImageView.heightAnchor.constraint(equalToConstant: 150)
+                gameImageView.widthAnchor.constraint(equalToConstant: 175),
+                gameImageView.heightAnchor.constraint(equalToConstant: 175)
            ]
+           
            let gameNameLabelConstraints = [
-                gameNameLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor,constant: 20),
-                gameNameLabel.centerXAnchor.constraint(equalTo: gameImageView.centerXAnchor)
-           
+                gameNameLabel.topAnchor.constraint(equalTo: gameImageView.topAnchor),
+                gameNameLabel.leadingAnchor.constraint(equalTo: gameImageView.trailingAnchor, constant: 20)
            ]
-           
+          
            let gamePlatformLabelConstraints = [
                 gamePlatformLabel.leadingAnchor.constraint(equalTo: gameImageView.leadingAnchor),
                 gamePlatformLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                gamePlatformLabel.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor, constant: 20)
+                gamePlatformLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20)
            ]
        
            
@@ -73,7 +75,6 @@ class GameListTableViewCell: UITableViewCell {
         addSubview(gameImageView)
         addSubview(gameNameLabel)
         addSubview(gamePlatformLabel)
-       
             
     }
     

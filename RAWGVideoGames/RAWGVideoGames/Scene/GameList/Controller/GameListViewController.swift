@@ -10,13 +10,7 @@ import UIKit
 final class GameListViewController: BaseViewController {
     
     private let searchController = UISearchController()
-    
-    private var currentSorting: String?
-    private var selectedSortingRow: Int = 0
-    private var sortingOptions: [String] = []
-    private var toolBar = UIToolbar()
     private var sortingPickerView  = UIPickerView()
-    
     private let sortButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
@@ -24,6 +18,14 @@ final class GameListViewController: BaseViewController {
         button.tintColor = .label
         return button
     }()
+    
+    private var currentSorting: String?
+    private var selectedSortingRow: Int = 0
+    private var sortingOptions: [String] = []
+    private var toolBar = UIToolbar()
+   
+    
+    
     
     @IBOutlet private weak var gameListTableView: UITableView! {
         didSet {
@@ -64,8 +66,9 @@ final class GameListViewController: BaseViewController {
         toolBar.tintColor = .label
         toolBar.sizeToFit()
         
+        
         let doneButton = UIBarButtonItem(title: "Done".localized(), style: .done, target: self, action: #selector(onDoneButtonTapped))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace,target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel".localized(), style: .done, target: self, action: #selector(onCancelButtonTapped))
         toolBar.setItems([cancelButton,spaceButton,doneButton], animated: false)
         self.view.addSubview(toolBar)
@@ -93,7 +96,7 @@ final class GameListViewController: BaseViewController {
         configurePickerview()
         configureToolbar()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
@@ -125,14 +128,15 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "GameListTableViewCell",for: indexPath) as? GameListTableViewCell, let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
-       cell.configureCell(game: model)
-       return cell
+        cell.configureCell(game: model)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GameDetailViewController") as? GameDetailViewController else { return }
-            detailVC.gameId = viewModel.getGameId(at: indexPath.row)
-            navigationController?.pushViewController(detailVC, animated: true)
+        detailVC.gameId = viewModel.getGameId(at: indexPath.row)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
