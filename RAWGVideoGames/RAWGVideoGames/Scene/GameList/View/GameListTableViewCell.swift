@@ -57,6 +57,24 @@ class GameListTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let gameRatingsCountIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "bubble.left")
+        imageView.tintColor = .label
+
+        return imageView
+    }()
+    
+    private let gameRatingsCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
     private let gameRatingIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -111,21 +129,21 @@ class GameListTableViewCell: UITableViewCell {
                 gameReleaseDateLabel.widthAnchor.constraint(equalToConstant: contentView.width - gameImageViewSize)
            ]
           
-           let gameTimeIconImageViewConstraints = [
-                gameTimeIconImageView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
-                gameTimeIconImageView.topAnchor.constraint(equalTo: gameReleaseDateLabel.bottomAnchor,constant: 10),
-                gameTimeIconImageView.widthAnchor.constraint(equalToConstant: iconImageViewSize),
-                gameTimeIconImageView.heightAnchor.constraint(equalToConstant: iconImageViewSize)
+           let gameRatingsCountIconImageViewConstraints = [
+                gameRatingsCountIconImageView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
+                gameRatingsCountIconImageView.topAnchor.constraint(equalTo: gameReleaseDateLabel.bottomAnchor,constant: 10),
+                gameRatingsCountIconImageView.widthAnchor.constraint(equalToConstant: iconImageViewSize),
+                gameRatingsCountIconImageView.heightAnchor.constraint(equalToConstant: iconImageViewSize)
            ]
            
-           let gameTimeLabelConstraints = [
-                gameTimeLabel.topAnchor.constraint(equalTo: gameTimeIconImageView.topAnchor),
-                gameTimeLabel.leadingAnchor.constraint(equalTo: gameTimeIconImageView.trailingAnchor, constant: 5),
+           let gameRatingsCountLabelConstraints = [
+                gameRatingsCountLabel.topAnchor.constraint(equalTo: gameRatingsCountIconImageView.topAnchor),
+                gameRatingsCountLabel.leadingAnchor.constraint(equalTo: gameRatingsCountIconImageView.trailingAnchor, constant: 5),
            ]
            
            let gameRatingImageViewConstraints = [
-                gameRatingIconImageView.leadingAnchor.constraint(equalTo: gameTimeLabel.trailingAnchor, constant: 10),
-                gameRatingIconImageView.topAnchor.constraint(equalTo: gameTimeLabel.topAnchor),
+                gameRatingIconImageView.leadingAnchor.constraint(equalTo: gameRatingsCountLabel.trailingAnchor, constant: 10),
+                gameRatingIconImageView.topAnchor.constraint(equalTo: gameRatingsCountLabel.topAnchor),
                 gameRatingIconImageView.widthAnchor.constraint(equalToConstant: iconImageViewSize),
                 gameRatingIconImageView.heightAnchor.constraint(equalToConstant: iconImageViewSize)
            ]
@@ -133,6 +151,18 @@ class GameListTableViewCell: UITableViewCell {
            let gameRatingLabelConstraints = [
                 gameRatingLabel.topAnchor.constraint(equalTo: gameRatingIconImageView.topAnchor),
                 gameRatingLabel.leadingAnchor.constraint(equalTo: gameRatingIconImageView.trailingAnchor, constant: 5),
+           ]
+           
+           let gameTimeIconImageViewConstraints = [
+                gameTimeIconImageView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
+                gameTimeIconImageView.topAnchor.constraint(equalTo: gameRatingsCountIconImageView.bottomAnchor, constant: 10),
+                gameTimeIconImageView.widthAnchor.constraint(equalToConstant: iconImageViewSize),
+                gameTimeIconImageView.heightAnchor.constraint(equalToConstant: iconImageViewSize)
+           ]
+           
+           let gameTimeLabelConstraints = [
+                gameTimeLabel.topAnchor.constraint(equalTo: gameTimeIconImageView.topAnchor),
+                gameTimeLabel.leadingAnchor.constraint(equalTo: gameTimeIconImageView.trailingAnchor, constant: 5),
            ]
           
            
@@ -148,11 +178,14 @@ class GameListTableViewCell: UITableViewCell {
            NSLayoutConstraint.activate(gameImageViewConstraints)
            NSLayoutConstraint.activate(gameNameLabelConstraints)
            NSLayoutConstraint.activate(gameReleaseDateLabelConstraints)
-           NSLayoutConstraint.activate(gamePlatformLabelConstraints)
-           NSLayoutConstraint.activate(gameTimeIconImageViewConstraints)
-           NSLayoutConstraint.activate(gameTimeLabelConstraints)
+           NSLayoutConstraint.activate(gameRatingsCountIconImageViewConstraints)
+           NSLayoutConstraint.activate(gameRatingsCountLabelConstraints)
            NSLayoutConstraint.activate(gameRatingImageViewConstraints)
            NSLayoutConstraint.activate(gameRatingLabelConstraints)
+           NSLayoutConstraint.activate(gameTimeIconImageViewConstraints)
+           NSLayoutConstraint.activate(gameTimeLabelConstraints)
+           NSLayoutConstraint.activate(gamePlatformLabelConstraints)
+
 
          
 
@@ -163,11 +196,14 @@ class GameListTableViewCell: UITableViewCell {
         addSubview(gameImageView)
         addSubview(gameNameLabel)
         addSubview(gameReleaseDateLabel)
-        addSubview(gamePlatformLabel)
         addSubview(gameTimeIconImageView)
         addSubview(gameTimeLabel)
         addSubview(gameRatingIconImageView)
         addSubview(gameRatingLabel)
+        addSubview(gameRatingsCountIconImageView)
+        addSubview(gameRatingsCountLabel)
+        addSubview(gamePlatformLabel)
+
     }
     
     // If there is no image, the "photo" image will be used to provide a consistent structure
@@ -176,6 +212,8 @@ class GameListTableViewCell: UITableViewCell {
         gameReleaseDateLabel.text = game.releaseDate
         gameTimeLabel.text = String(game.playtime ?? 0)
         gameRatingLabel.text = String(game.rating ?? 0.0)
+        gameRatingsCountLabel.text = String(game.ratingsCount ?? 0)
+        
         gameImageView.sd_setImage(with: URL(string: game.imageURL ?? ""))
         let platforms = game.platforms?.map { $0.platform.name }.joined(separator: ",") ?? ""
         gamePlatformLabel.text = "Platforms:".localized() + platforms
