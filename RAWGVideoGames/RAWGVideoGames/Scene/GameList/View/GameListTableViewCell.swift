@@ -103,6 +103,15 @@ class GameListTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let gamePlatformsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+    }()
+    
 
     
     // MARK: Configure UI Components
@@ -115,7 +124,8 @@ class GameListTableViewCell: UITableViewCell {
             gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 20),
             gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             gameImageView.widthAnchor.constraint(equalToConstant: gameImageViewSize),
-            gameImageView.heightAnchor.constraint(equalToConstant: gameImageViewSize)
+            gameImageView.heightAnchor.constraint(equalToConstant: gameImageViewSize),
+            gameImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ]
         
         let gameNameLabelConstraints = [
@@ -128,6 +138,12 @@ class GameListTableViewCell: UITableViewCell {
             gameReleaseDateLabel.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor, constant: 5),
             gameReleaseDateLabel.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
             gameReleaseDateLabel.widthAnchor.constraint(equalToConstant: contentView.width - gameImageViewSize)
+        ]
+        
+        let gamePlatformsStackViewConstraints = [
+            gamePlatformsStackView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
+            gamePlatformsStackView.topAnchor.constraint(equalTo: gameReleaseDateLabel.bottomAnchor,constant: 10),
+            gamePlatformsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ]
       
         let gameRatingsCountIconImageViewConstraints = [
@@ -164,12 +180,14 @@ class GameListTableViewCell: UITableViewCell {
         let gameTimeLabelConstraints = [
             gameTimeLabel.topAnchor.constraint(equalTo: gameTimeIconImageView.topAnchor),
             gameTimeLabel.leadingAnchor.constraint(equalTo: gameTimeIconImageView.trailingAnchor, constant: 5)
+           
         ]
         
         
         NSLayoutConstraint.activate(gameImageViewConstraints)
         NSLayoutConstraint.activate(gameNameLabelConstraints)
         NSLayoutConstraint.activate(gameReleaseDateLabelConstraints)
+        NSLayoutConstraint.activate(gamePlatformsStackViewConstraints)
         NSLayoutConstraint.activate(gameRatingsCountIconImageViewConstraints)
         NSLayoutConstraint.activate(gameRatingsCountLabelConstraints)
         NSLayoutConstraint.activate(gameRatingImageViewConstraints)
@@ -190,10 +208,8 @@ class GameListTableViewCell: UITableViewCell {
             imageView.image = UIImage(systemName: imageName)
             imageView.tintColor = .label
             
-            addSubview(imageView)
+            gamePlatformsStackView.addArrangedSubview(imageView)
             
-            imageView.topAnchor.constraint(equalTo: gameReleaseDateLabel.bottomAnchor,constant: 10).isActive = true
-            imageView.leadingAnchor.constraint(equalTo: gameReleaseDateLabel.leadingAnchor, constant: iconImageViewSize * CGFloat(renderedIconImageViewCount) + CGFloat(renderedIconImageViewCount) * 5).isActive = true
             imageView.widthAnchor.constraint(equalToConstant: iconImageViewSize).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: iconImageViewSize).isActive = true
             
@@ -207,6 +223,7 @@ class GameListTableViewCell: UITableViewCell {
         addSubview(gameImageView)
         addSubview(gameNameLabel)
         addSubview(gameReleaseDateLabel)
+        addSubview(gamePlatformsStackView)
         addSubview(gameTimeIconImageView)
         addSubview(gameTimeLabel)
         addSubview(gameRatingIconImageView)
@@ -231,6 +248,7 @@ class GameListTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         gameImageView.image = nil
+        gamePlatformsStackView.arrangedSubviews.forEach({$0.removeFromSuperview()})
 
     }
     
