@@ -32,7 +32,7 @@ final class GameListViewController: BaseViewController {
             gameListTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
             gameListTableView.delegate = self
             gameListTableView.dataSource = self
-            gameListTableView.estimatedRowHeight = UITableView.automaticDimension
+            gameListTableView.estimatedRowHeight = 150
         }
     }
     
@@ -140,7 +140,7 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 150
     }
 }
 

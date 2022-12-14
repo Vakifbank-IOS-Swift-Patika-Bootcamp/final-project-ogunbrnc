@@ -39,14 +39,6 @@ class GameListTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let gamePlatformLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.textColor = .label
-        label.font = .systemFont(ofSize: 16, weight: .regular)
-        return label
-    }()
     
     private let gameTimeIconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -115,7 +107,7 @@ class GameListTableViewCell: UITableViewCell {
     
     // MARK: Configure UI Components
     private func configureConstraints() {
-        let gameImageViewSize = contentView.width / 2
+        let gameImageViewSize = contentView.width / 2 - 40
         let iconImageViewSize: CGFloat = 16.0
         let platformIconImageViewSize: CGFloat = 22.0
         
@@ -171,17 +163,8 @@ class GameListTableViewCell: UITableViewCell {
         
         let gameTimeLabelConstraints = [
             gameTimeLabel.topAnchor.constraint(equalTo: gameTimeIconImageView.topAnchor),
-            gameTimeLabel.leadingAnchor.constraint(equalTo: gameTimeIconImageView.trailingAnchor, constant: 5),
+            gameTimeLabel.leadingAnchor.constraint(equalTo: gameTimeIconImageView.trailingAnchor, constant: 5)
         ]
-        
-        
-        let gamePlatformLabelConstraints = [
-            gamePlatformLabel.leadingAnchor.constraint(equalTo: gameImageView.leadingAnchor),
-            gamePlatformLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20),
-            gamePlatformLabel.widthAnchor.constraint(equalToConstant: contentView.width)
-        ]
-        
-        
         
         
         NSLayoutConstraint.activate(gameImageViewConstraints)
@@ -193,7 +176,6 @@ class GameListTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(gameRatingLabelConstraints)
         NSLayoutConstraint.activate(gameTimeIconImageViewConstraints)
         NSLayoutConstraint.activate(gameTimeLabelConstraints)
-        NSLayoutConstraint.activate(gamePlatformLabelConstraints)
 
    }
     private func configurePlatformImageViews(gamePlatforms: [Platform]) {
@@ -231,7 +213,6 @@ class GameListTableViewCell: UITableViewCell {
         addSubview(gameRatingLabel)
         addSubview(gameRatingsCountIconImageView)
         addSubview(gameRatingsCountLabel)
-        addSubview(gamePlatformLabel)
 
     }
     
