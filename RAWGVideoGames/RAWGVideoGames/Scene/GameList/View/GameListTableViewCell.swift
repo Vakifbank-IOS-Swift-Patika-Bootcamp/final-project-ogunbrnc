@@ -80,7 +80,7 @@ class GameListTableViewCell: UITableViewCell {
     // If there is no image, the "photo" image will be used to provide a consistent structure
     func configureCell(game: GameModel){
         gameNameLabel.text = game.name
-        gameImageView.sd_setImage(with: URL(string: game.imageURL ?? ""),placeholderImage: UIImage(systemName: "photo"),options: .continueInBackground)
+        gameImageView.sd_setImage(with: URL(string: game.imageURL ?? ""))
         
         let platforms = game.platforms?.map { $0.platform.name }.joined(separator: ",") ?? ""
         gamePlatformLabel.text = "Platforms:".localized() + platforms
