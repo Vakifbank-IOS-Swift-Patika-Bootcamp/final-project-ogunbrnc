@@ -56,22 +56,17 @@ final class Client {
         return task
     }
     
-    class func getGames(with paginationURLString: String = Endpoints.games.stringValue,completion: @escaping (Result<GetGamesResponseModel,Error>) -> Void) {
-        guard let paginationURL = URL(string: paginationURLString) else { return }
-        taskForGETRequest(url: paginationURL, responseType: GetGamesResponseModel.self) { responseModel, error in
-            guard let responseModel = responseModel else {
+    class func getGames(by: String = "", with paginationURLString: String = Endpoints.games.stringValue, completion: @escaping (Result<GetGamesResponseModel,Error>)-> Void) {
+        var requestURL = paginationURLString
+        if by != "" {
+            requestURL += "&ordering=\(by)"
+        }
+       
+        taskForGETRequest(url: URL(string: requestURL)! , responseType: GetGamesResponseModel.self) { responseModel, error in
+            guard let responseModel = responseModel else{
                 return
             }
             completion(.success(responseModel))
-        }
-    }
-    
-    
-    class func getGamesSorted(by: String, completion: @escaping ([GameModel]?, Error?) -> Void) {
-
-        let sortedURL = Endpoints.games.stringValue + "&ordering=\(by)"
-        taskForGETRequest(url: URL(string: sortedURL)! , responseType: GetGamesResponseModel.self) { responseModel, error in
-            completion(responseModel?.results, error)
         }
     }
     
