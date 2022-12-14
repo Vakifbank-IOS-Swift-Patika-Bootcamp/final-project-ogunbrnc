@@ -20,6 +20,8 @@ final class GameListViewController: BaseViewController {
     private let sortButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+        button.tintColor = .label
         return button
     }()
     
@@ -101,7 +103,6 @@ final class GameListViewController: BaseViewController {
         
         
         sortButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
-        sortButton.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
 
         configureSearchController()
