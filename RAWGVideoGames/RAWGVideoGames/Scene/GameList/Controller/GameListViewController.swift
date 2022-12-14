@@ -10,19 +10,29 @@ import UIKit
 final class GameListViewController: BaseViewController {
     
     private let searchController = UISearchController()
+    private var sortingPickerView  = UIPickerView()
+    private let sortButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+        button.tintColor = .label
+        return button
+    }()
     
     private var currentSorting: String?
     private var selectedSortingRow: Int = 0
     private var sortingOptions: [String] = []
     private var toolBar = UIToolbar()
-    private var sortingPickerView  = UIPickerView()
+   
+    
+    
     
     @IBOutlet private weak var gameListTableView: UITableView! {
         didSet {
             gameListTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
             gameListTableView.delegate = self
             gameListTableView.dataSource = self
-            gameListTableView.estimatedRowHeight = UITableView.automaticDimension
+            gameListTableView.estimatedRowHeight = 150
         }
     }
     
@@ -34,14 +44,15 @@ final class GameListViewController: BaseViewController {
        searchController.searchBar.delegate = self
            
    }
-    private func configurePickerviews(){
+    private func configurePickerview(){
         sortingOptions = viewModel.getSortingOptions()
         
         sortingPickerView = UIPickerView()
         sortingPickerView.delegate = self
         sortingPickerView.dataSource = self
-        sortingPickerView.backgroundColor = UIColor.label
-        sortingPickerView.setValue(UIColor.systemBackground, forKey: "textColor")
+        
+        sortingPickerView.backgroundColor = .systemBackground
+        sortingPickerView.setValue(UIColor.label, forKey: "textColor")
         sortingPickerView.autoresizingMask = .flexibleWidth
         sortingPickerView.contentMode = .center
         sortingPickerView.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
@@ -50,9 +61,22 @@ final class GameListViewController: BaseViewController {
     
     private func configureToolbar() {
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
-        toolBar.barStyle = .black
-        toolBar.items = [UIBarButtonItem(title: "Done".localized(), style: .done, target: self, action: #selector(onDoneButtonTapped))]
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = .label
+        toolBar.sizeToFit()
+        
+        
+        let doneButton = UIBarButtonItem(title: "Done".localized(), style: .done, target: self, action: #selector(onDoneButtonTapped))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace,target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel".localized(), style: .done, target: self, action: #selector(onCancelButtonTapped))
+        toolBar.setItems([cancelButton,spaceButton,doneButton], animated: false)
         self.view.addSubview(toolBar)
+    }
+    
+    @objc func onCancelButtonTapped() {
+        toolBar.removeFromSuperview()
+        sortingPickerView.removeFromSuperview()
     }
     
     @objc func onDoneButtonTapped() {
@@ -69,10 +93,10 @@ final class GameListViewController: BaseViewController {
     
     @objc func addTapped() {
         
-        configurePickerviews()
+        configurePickerview()
         configureToolbar()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
@@ -80,7 +104,9 @@ final class GameListViewController: BaseViewController {
         indicatorView.startAnimating()
         viewModel.fetchGames()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Order by".localized(), style: .plain, target: self, action: #selector(addTapped))
+        
+        sortButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
 
         configureSearchController()
         
@@ -102,18 +128,25 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "GameListTableViewCell",for: indexPath) as? GameListTableViewCell, let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
-       cell.configureCell(game: model)
-       return cell
+        cell.configureCell(game: model)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GameDetailViewController") as? GameDetailViewController else { return }
-            detailVC.gameId = viewModel.getGameId(at: indexPath.row)
-            navigationController?.pushViewController(detailVC, animated: true)
+        detailVC.gameId = viewModel.getGameId(at: indexPath.row)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.getGameCount() - 1 {
+            viewModel.fetchMoreGames()
+        }
     }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 150
     }
 }
 
@@ -154,7 +187,7 @@ extension GameListViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent  component: Int) {
         selectedSortingRow = row
-        
     }
+    
 }
 

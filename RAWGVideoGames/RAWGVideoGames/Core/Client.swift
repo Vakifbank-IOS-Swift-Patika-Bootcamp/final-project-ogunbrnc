@@ -56,9 +56,13 @@ final class Client {
         return task
     }
     
-    class func getGames(completion: @escaping ([GameModel]?, Error?) -> Void) {
-        taskForGETRequest(url: Endpoints.games.url, responseType: GetGamesResponseModel.self) { responseModel, error in
-            completion(responseModel?.results, error)
+    class func getGames(with paginationURLString: String = Endpoints.games.stringValue,completion: @escaping (Result<GetGamesResponseModel,Error>) -> Void) {
+        guard let paginationURL = URL(string: paginationURLString) else { return }
+        taskForGETRequest(url: paginationURL, responseType: GetGamesResponseModel.self) { responseModel, error in
+            guard let responseModel = responseModel else {
+                return
+            }
+            completion(.success(responseModel))
         }
     }
     

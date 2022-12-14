@@ -23,6 +23,7 @@
 		71A5D4212944A711000B4E53 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D4202944A711000B4E53 /* CoreDataManager.swift */; };
 		71AACCCF2948A05400EEE387 /* GameNoteReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCCE2948A05400EEE387 /* GameNoteReminderTableViewCell.swift */; };
 		71AACCD22948BA3700EEE387 /* RAWGVideoGames.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCD02948BA3700EEE387 /* RAWGVideoGames.xcdatamodeld */; };
+		71AACCD42949DC8E00EEE387 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCD32949DC8E00EEE387 /* UIViewExtension.swift */; };
 		71C1400429432BE000B85AD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1400329432BE000B85AD6 /* AppDelegate.swift */; };
 		71C1400629432BE000B85AD6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1400529432BE000B85AD6 /* SceneDelegate.swift */; };
 		71C1400829432BE000B85AD6 /* GameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C1400729432BE000B85AD6 /* GameListViewController.swift */; };
@@ -80,6 +81,7 @@
 		71A5D4202944A711000B4E53 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		71AACCCE2948A05400EEE387 /* GameNoteReminderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNoteReminderTableViewCell.swift; sourceTree = "<group>"; };
 		71AACCD12948BA3700EEE387 /* RAWGVideoGames.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RAWGVideoGames.xcdatamodel; sourceTree = "<group>"; };
+		71AACCD32949DC8E00EEE387 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		71C1400029432BE000B85AD6 /* RAWGVideoGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RAWGVideoGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C1400329432BE000B85AD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71C1400529432BE000B85AD6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				7167276E29467DBB00F8527F /* StringExtension.swift */,
+				71AACCD32949DC8E00EEE387 /* UIViewExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				71C140D62943676E00B85AD6 /* GetGamesResponseModel.swift in Sources */,
 				71C140D229435CC100B85AD6 /* Client.swift in Sources */,
 				71A5D41F29448DD2000B4E53 /* GameDetailViewController.swift in Sources */,
+				71AACCD42949DC8E00EEE387 /* UIViewExtension.swift in Sources */,
 				71C140DC294373E700B85AD6 /* GameListViewModel.swift in Sources */,
 				71AACCCF2948A05400EEE387 /* GameNoteReminderTableViewCell.swift in Sources */,
 				71C1400629432BE000B85AD6 /* SceneDelegate.swift in Sources */,
