@@ -11,7 +11,7 @@ struct GameModel: Decodable {
     let id: Int
     let name: String
     let playtime: Int?
-    let platforms: [Platform]?
+    let parentPlatforms: [Platform]?
     let releaseDate: String?
     let imageURL: String?
     let rating: Double?
@@ -23,7 +23,7 @@ struct GameModel: Decodable {
         case id
         case name
         case playtime
-        case platforms
+        case parentPlatforms = "parent_platforms"
         case releaseDate = "released"
         case imageURL = "background_image"
         case rating
