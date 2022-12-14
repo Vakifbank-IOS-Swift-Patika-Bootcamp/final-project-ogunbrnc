@@ -40,14 +40,15 @@ final class GameListViewController: BaseViewController {
        searchController.searchBar.delegate = self
            
    }
-    private func configurePickerviews(){
+    private func configurePickerview(){
         sortingOptions = viewModel.getSortingOptions()
         
         sortingPickerView = UIPickerView()
         sortingPickerView.delegate = self
         sortingPickerView.dataSource = self
-        sortingPickerView.backgroundColor = UIColor.label
-        sortingPickerView.setValue(UIColor.systemBackground, forKey: "textColor")
+        
+        sortingPickerView.backgroundColor = .systemBackground
+        sortingPickerView.setValue(UIColor.label, forKey: "textColor")
         sortingPickerView.autoresizingMask = .flexibleWidth
         sortingPickerView.contentMode = .center
         sortingPickerView.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
@@ -56,9 +57,21 @@ final class GameListViewController: BaseViewController {
     
     private func configureToolbar() {
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
-        toolBar.barStyle = .black
-        toolBar.items = [UIBarButtonItem(title: "Done".localized(), style: .done, target: self, action: #selector(onDoneButtonTapped))]
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = .label
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done".localized(), style: .done, target: self, action: #selector(onDoneButtonTapped))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel".localized(), style: .done, target: self, action: #selector(onCancelButtonTapped))
+        toolBar.setItems([cancelButton,spaceButton,doneButton], animated: false)
         self.view.addSubview(toolBar)
+    }
+    
+    @objc func onCancelButtonTapped() {
+        toolBar.removeFromSuperview()
+        sortingPickerView.removeFromSuperview()
     }
     
     @objc func onDoneButtonTapped() {
@@ -75,7 +88,7 @@ final class GameListViewController: BaseViewController {
     
     @objc func addTapped() {
         
-        configurePickerviews()
+        configurePickerview()
         configureToolbar()
     }
 
