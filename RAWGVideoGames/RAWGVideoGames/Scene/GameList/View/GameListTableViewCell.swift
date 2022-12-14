@@ -57,12 +57,31 @@ class GameListTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let gameRatingIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "star")
+        imageView.tintColor = .label
+
+        return imageView
+    }()
+    
+    private let gameRatingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
 
     
     // MARK: Configure UI Components
        private func configureConstraints() {
            
            let gameImageViewSize = contentView.width / 2
+           let iconImageViewSize: CGFloat = 16.0
            
            let gameImageViewConstraints = [
                 gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 20),
@@ -80,13 +99,25 @@ class GameListTableViewCell: UITableViewCell {
            let gameTimeIconImageViewConstraints = [
                 gameTimeIconImageView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
                 gameTimeIconImageView.topAnchor.constraint(equalTo: gameNameLabel.bottomAnchor,constant: 10),
-                gameTimeIconImageView.widthAnchor.constraint(equalToConstant: 16),
-                gameTimeIconImageView.heightAnchor.constraint(equalToConstant: 16)
+                gameTimeIconImageView.widthAnchor.constraint(equalToConstant: iconImageViewSize),
+                gameTimeIconImageView.heightAnchor.constraint(equalToConstant: iconImageViewSize)
            ]
            
            let gameTimeLabelConstraints = [
                 gameTimeLabel.topAnchor.constraint(equalTo: gameTimeIconImageView.topAnchor),
                 gameTimeLabel.leadingAnchor.constraint(equalTo: gameTimeIconImageView.trailingAnchor, constant: 5),
+           ]
+           
+           let gameRatingImageViewConstraints = [
+                gameRatingIconImageView.leadingAnchor.constraint(equalTo: gameTimeLabel.trailingAnchor, constant: 10),
+                gameRatingIconImageView.topAnchor.constraint(equalTo: gameTimeLabel.topAnchor),
+                gameRatingIconImageView.widthAnchor.constraint(equalToConstant: iconImageViewSize),
+                gameRatingIconImageView.heightAnchor.constraint(equalToConstant: iconImageViewSize)
+           ]
+           
+           let gameRatingLabelConstraints = [
+                gameRatingLabel.topAnchor.constraint(equalTo: gameRatingIconImageView.topAnchor),
+                gameRatingLabel.leadingAnchor.constraint(equalTo: gameRatingIconImageView.trailingAnchor, constant: 5),
            ]
           
            
@@ -102,6 +133,8 @@ class GameListTableViewCell: UITableViewCell {
            NSLayoutConstraint.activate(gamePlatformLabelConstraints)
            NSLayoutConstraint.activate(gameTimeIconImageViewConstraints)
            NSLayoutConstraint.activate(gameTimeLabelConstraints)
+           NSLayoutConstraint.activate(gameRatingImageViewConstraints)
+           NSLayoutConstraint.activate(gameRatingLabelConstraints)
 
          
 
@@ -114,15 +147,16 @@ class GameListTableViewCell: UITableViewCell {
         addSubview(gamePlatformLabel)
         addSubview(gameTimeIconImageView)
         addSubview(gameTimeLabel)
+        addSubview(gameRatingIconImageView)
+        addSubview(gameRatingLabel)
     }
     
     // If there is no image, the "photo" image will be used to provide a consistent structure
     func configureCell(game: GameModel){
         gameNameLabel.text = game.name
         gameTimeLabel.text = String(game.playtime ?? 0)
+        gameRatingLabel.text = String(game.rating ?? 0.0)
         gameImageView.sd_setImage(with: URL(string: game.imageURL ?? ""))
-        
-        
         let platforms = game.platforms?.map { $0.platform.name }.joined(separator: ",") ?? ""
         gamePlatformLabel.text = "Platforms:".localized() + platforms
     }
