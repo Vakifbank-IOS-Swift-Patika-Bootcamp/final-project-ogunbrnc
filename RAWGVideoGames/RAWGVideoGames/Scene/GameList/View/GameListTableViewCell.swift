@@ -62,18 +62,19 @@ class GameListTableViewCell: UITableViewCell {
     // MARK: Configure UI Components
        private func configureConstraints() {
            
+           let gameImageViewSize = contentView.width / 2
+           
            let gameImageViewConstraints = [
                 gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 20),
                 gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                gameImageView.widthAnchor.constraint(equalToConstant: 175 ),
-                gameImageView.heightAnchor.constraint(equalToConstant: 175)
+                gameImageView.widthAnchor.constraint(equalToConstant: gameImageViewSize),
+                gameImageView.heightAnchor.constraint(equalToConstant: gameImageViewSize)
            ]
            
            let gameNameLabelConstraints = [
                 gameNameLabel.topAnchor.constraint(equalTo: gameImageView.topAnchor),
                 gameNameLabel.leadingAnchor.constraint(equalTo: gameImageView.trailingAnchor, constant: 20),
-                gameNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
-
+                gameNameLabel.widthAnchor.constraint(equalToConstant: contentView.width - gameImageViewSize)
            ]
           
            let gameTimeIconImageViewConstraints = [
@@ -91,8 +92,8 @@ class GameListTableViewCell: UITableViewCell {
            
            let gamePlatformLabelConstraints = [
                 gamePlatformLabel.leadingAnchor.constraint(equalTo: gameImageView.leadingAnchor),
-                gamePlatformLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                gamePlatformLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20)
+                gamePlatformLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20),
+                gamePlatformLabel.widthAnchor.constraint(equalToConstant: contentView.width)
            ]
        
            
