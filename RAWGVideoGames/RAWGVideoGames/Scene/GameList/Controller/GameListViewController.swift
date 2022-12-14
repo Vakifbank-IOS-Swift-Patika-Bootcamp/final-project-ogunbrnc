@@ -138,6 +138,12 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
         detailVC.gameId = viewModel.getGameId(at: indexPath.row)
         navigationController?.pushViewController(detailVC, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.getGameCount() - 1 {
+            viewModel.fetchMoreGames()
+        }
+    }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
@@ -181,7 +187,7 @@ extension GameListViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent  component: Int) {
         selectedSortingRow = row
-        
     }
+    
 }
 

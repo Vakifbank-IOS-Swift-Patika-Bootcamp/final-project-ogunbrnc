@@ -238,7 +238,7 @@ class GameListTableViewCell: UITableViewCell {
         gameImageView.sd_setImage(with: URL(string: game.imageURL ?? ""))
         gameNameLabel.text = game.name
         gameReleaseDateLabel.text = game.releaseDate
-        gameTimeLabel.text = String(game.playtime ?? 0)
+        gameTimeLabel.text = String(game.playtime ?? 0) + "min".localized()
         gameRatingLabel.text = String(game.rating ?? 0.0)
         gameRatingsCountLabel.text = String(game.ratingsCount ?? 0)
         

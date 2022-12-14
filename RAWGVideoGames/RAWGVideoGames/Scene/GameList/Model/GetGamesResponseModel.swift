@@ -9,4 +9,5 @@ import Foundation
 
 struct GetGamesResponseModel: Decodable {
     let results: [GameModel]
+    let next: String
 }
