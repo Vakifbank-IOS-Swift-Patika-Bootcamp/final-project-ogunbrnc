@@ -17,6 +17,12 @@ final class GameListViewController: BaseViewController {
     private var toolBar = UIToolbar()
     private var sortingPickerView  = UIPickerView()
     
+    private let sortButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
+        return button
+    }()
+    
     @IBOutlet private weak var gameListTableView: UITableView! {
         didSet {
             gameListTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
@@ -80,7 +86,10 @@ final class GameListViewController: BaseViewController {
         indicatorView.startAnimating()
         viewModel.fetchGames()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Order by".localized(), style: .plain, target: self, action: #selector(addTapped))
+        
+        sortButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
+        sortButton.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
 
         configureSearchController()
         
