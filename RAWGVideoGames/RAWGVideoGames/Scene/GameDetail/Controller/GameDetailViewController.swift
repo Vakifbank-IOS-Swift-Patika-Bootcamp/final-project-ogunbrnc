@@ -88,7 +88,11 @@ extension GameDetailViewController: GameDetailViewModelDelegate {
         gameRatingRecommendedLabel.text = String(viewModel.getGameRatingRecommendedCount())
         gameRatingMehLabel.text = String(viewModel.getGameRatingMehCount())
         gameRatingSkipLabel.text = String(viewModel.getGameRatingSkipCount())
-
+        gamePlatformLabel.text = viewModel.getGamePlatform()
+        gameTagsLabel.text = viewModel.getGameTag()
+        gameGenresLabel.text = viewModel.getGameGenre()
+        gameDescriptionLabel.text = viewModel.getGameDescription()
+        
         configureFavoriteButton()
         indicatorView.stopAnimating()
 
