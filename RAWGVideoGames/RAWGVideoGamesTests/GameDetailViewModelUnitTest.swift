@@ -54,6 +54,18 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         //Then
         XCTAssertEqual(viewModel.getGamePlatform(), "PC,PlayStation,Xbox")
     }
+    
+    func testGetGameGenre() {
+        //Given
+        XCTAssertEqual(viewModel.getGameGenre(),"")
+        
+        //When
+        viewModel.fetchGameDetail(id: 3498)
+        waitForExpectations(timeout: 10)
+
+        //Then
+        XCTAssertEqual(viewModel.getGameGenre(), "Action,Adventure")
+    }
 
 }
 
