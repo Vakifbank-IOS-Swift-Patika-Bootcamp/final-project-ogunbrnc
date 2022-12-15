@@ -30,6 +30,45 @@ final class GameListViewModelUnitTest: XCTestCase {
         XCTAssertEqual(viewModel.getGameCount(), 20)
     }
     
+    func testGetGameIndexZero() {
+        XCTAssertNil(viewModel.getGame(at: 0))
+        
+        viewModel.fetchGames()
+        waitForExpectations(timeout: 10)
+        
+        let itemAtZero = viewModel.getGame(at: 0)
+        XCTAssertEqual(itemAtZero?.id, 3498)
+        XCTAssertEqual(itemAtZero?.name, "Grand Theft Auto V")
+        XCTAssertEqual(itemAtZero?.playtime, 72)
+        
+        let parentPlatforms:[Platform]? = [
+            Platform(platform: PlatformInfo(id: 1, name: "PC", slug: "pc")),
+            Platform(platform: PlatformInfo(id: 2, name: "PlayStation", slug: "playstation")),
+            Platform(platform: PlatformInfo(id: 3, name: "Xbox", slug: "xbox"))
+        ]
+        XCTAssertEqual(itemAtZero?.parentPlatforms, parentPlatforms)
+        XCTAssertEqual(itemAtZero?.releaseDate, "2013-09-17")
+        XCTAssertEqual(itemAtZero?.imageURL, "https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg")
+        XCTAssertEqual(itemAtZero?.rating, 4.47)
+        
+        let ratings: [Rating] = [
+            Rating(id: 5, title: "exceptional", count: 3613, percent: 59.1),
+            Rating(id: 4, title: "recommended", count: 2003, percent: 32.77),
+            Rating(id: 3, title: "meh", count: 385, percent: 6.3),
+            Rating(id: 1, title: "skip", count: 112, percent: 1.83),
+        ]
+        XCTAssertEqual(itemAtZero?.ratings, ratings)
+        XCTAssertEqual(itemAtZero?.ratingsCount, 6037)
+        
+        let genres: [Genre] = [
+            Genre(id: 4, name: "Action", slug: "action"),
+            Genre(id: 3, name: "Adventure", slug: "adventure")
+        ]
+        XCTAssertEqual(itemAtZero?.genres, genres)
+
+
+    }
+    
 
 }
 

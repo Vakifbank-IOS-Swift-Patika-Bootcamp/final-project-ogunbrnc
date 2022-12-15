@@ -37,6 +37,8 @@ struct Platform: Decodable {
     let platform: PlatformInfo
 }
 
+
+
 struct PlatformInfo: Decodable {
     let id: Int
     let name: String
@@ -54,4 +56,23 @@ struct Genre: Decodable {
     let id: Int
     let name: String
     let slug: String
+}
+
+
+extension Platform: Equatable {
+    static func == (lhs: Platform, rhs: Platform) -> Bool {
+        return lhs.platform.id == rhs.platform.id
+    }
+}
+
+extension Rating: Equatable {
+    static func == (lhs: Rating, rhs: Rating) -> Bool {
+        return lhs.id == rhs.id && lhs.count == rhs.count && lhs.title == rhs.title && lhs.percent == rhs.percent
+    }
+}
+
+extension Genre: Equatable {
+    static func == (lhs: Genre, rhs: Genre) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
