@@ -89,7 +89,7 @@ final class GameListViewModelUnitTest: XCTestCase {
         XCTAssertEqual(itemAtZero?.genres, genres)
     }
 
-    func testGetSortingOptionsCount() {
+    func testGetSortingOptions() {
         let sortingOptions = ["Relevance".localized(),
                               "Date added".localized(),
                               "Name".localized(),
