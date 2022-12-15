@@ -30,6 +30,18 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         //Then
         XCTAssertEqual(viewModel.getGameImageURL(),imageURL)
     }
+    
+    func testGetGameName() {
+        //Given
+        XCTAssertEqual(viewModel.getGameName(),"")
+        
+        //When
+        viewModel.fetchGameDetail(id: 3498)
+        waitForExpectations(timeout: 10)
+
+        //Then
+        XCTAssertEqual(viewModel.getGameName(),"Grand Theft Auto V")
+    }
 
 }
 
