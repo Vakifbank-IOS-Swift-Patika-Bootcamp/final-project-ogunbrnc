@@ -18,7 +18,7 @@ protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
 class GameNoteAddingEditingViewController: UIViewController {
 
     @IBOutlet weak var gameNameTextField: UITextField!
-    @IBOutlet weak var gameNoteTextField: UITextView!
+    @IBOutlet weak var gameNoteTextView: UITextView!
     @IBOutlet weak var noteTypeSegmentedControl: UISegmentedControl!
     
     private let gameNoteReminderDatePicker: UIDatePicker =  {
@@ -39,7 +39,6 @@ class GameNoteAddingEditingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         viewModel.delegate = self
         viewModel.getNote(noteId: noteId)
         configureSegmentedControl()
@@ -52,7 +51,7 @@ class GameNoteAddingEditingViewController: UIViewController {
     
     private func configureDatePickerConstraints () {
         gameNoteReminderDatePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        gameNoteReminderDatePicker.topAnchor.constraint(equalTo: gameNoteTextField.bottomAnchor, constant: 20).isActive = true
+        gameNoteReminderDatePicker.topAnchor.constraint(equalTo: gameNoteTextView.bottomAnchor, constant: 20).isActive = true
     }
     
     @objc private func noteTypeSegmentedControlValueChanged (_ sender: UISegmentedControl) {
@@ -67,7 +66,7 @@ class GameNoteAddingEditingViewController: UIViewController {
     @IBAction func saveNoteClicked(_ sender: Any) {
         guard let gameName = gameNameTextField.text,
               !gameName.isEmpty,
-              let gameNote = gameNoteTextField.text,
+              let gameNote = gameNoteTextView.text,
               !gameNote.isEmpty else {
             return
         }
@@ -82,13 +81,14 @@ class GameNoteAddingEditingViewController: UIViewController {
     }
 }
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
-    func didNoteLoaded(gameNote: GameNote?,pageViewMode: PageViewMode) {
+    func didNoteLoaded(gameNote: GameNote?, pageViewMode: PageViewMode) {
         if pageViewMode == .edit {
-            guard let gameNote = gameNote,
-                  let scheduledReminderDate = gameNote.noteScheduledReminderDate else { return }
-            gameNoteTextField.text = gameNote.noteContent
+            guard let gameNote = gameNote else { return }
+            
+            gameNoteTextView.text = gameNote.noteContent
             gameNameTextField.text = gameNote.gameName
             if gameNote.noteHasReminder {
+                guard let scheduledReminderDate = gameNote.noteScheduledReminderDate else { return }
                 noteTypeSegmentedControl.selectedSegmentIndex = 1
                 gameNoteReminderDatePicker.date = scheduledReminderDate
                 view.addSubview(gameNoteReminderDatePicker)

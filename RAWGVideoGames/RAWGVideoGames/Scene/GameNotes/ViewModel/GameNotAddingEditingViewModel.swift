@@ -33,9 +33,8 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
     weak var delegate: GameNoteAddingEditingViewModelDelegate?
     private var gameNote: GameNote?
     
-    init(notificationManager: NotificationProtocol = LocalNotificationManager.shared, gameNote: GameNote? = nil) {
+    init(notificationManager: NotificationProtocol = LocalNotificationManager.shared) {
         self.notificationManager = notificationManager
-        self.gameNote = gameNote
     }
     
     func getNote(noteId: UUID?) {

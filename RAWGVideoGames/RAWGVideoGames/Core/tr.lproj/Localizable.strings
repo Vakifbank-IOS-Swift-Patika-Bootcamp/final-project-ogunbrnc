@@ -1,4 +1,5 @@
 "There are no notes. \n You can add new note using the + button." = "Not bulunmamaktadır.\n Yeni not eklemek için + butonunu kullanabilirsiniz";
+"There are no reminders. \n You can add new reminders using the + button." = "Hatırlatıcı bulunmamaktadır.\n Yeni hatırlatıcı eklemek için + butonunu kullanabilirsiniz";
 "There are no games in your favorite list.\n You can add games to favorite list using detail page." = "Favori listenizde oyun bulunmamaktadır.\n Oyunların detay sayfasından favoriye oyun ekleyebilirsiniz.";
 "Platforms:" = "Platformlar: ";
 "Order by" = "Sırala";
@@ -9,5 +10,10 @@
 "Popularity" = "Popülerliğe göre";
 "Average rating" = "Ortalama değerlendirmeye göre";
 "Done" = "Sırala";
+"Cancel" = "İptal";
 "min" = "dk";
+"Platforms" = "Platformlar";
+"Tags" = "Etiketler";
+"Genres" = "Türler";
+"About" = "Hakkında";
 

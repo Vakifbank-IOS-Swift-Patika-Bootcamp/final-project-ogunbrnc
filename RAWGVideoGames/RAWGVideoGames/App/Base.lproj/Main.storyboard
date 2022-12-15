@@ -292,7 +292,7 @@
                     </view>
                     <connections>
                         <outlet property="gameNameTextField" destination="YM0-cY-42I" id="aE3-uG-Fh0"/>
-                        <outlet property="gameNoteTextField" destination="S6w-ae-1DO" id="Oww-uq-SVL"/>
+                        <outlet property="gameNoteTextView" destination="S6w-ae-1DO" id="Oww-uq-SVL"/>
                         <outlet property="noteTypeSegmentedControl" destination="Ofu-ec-I5f" id="mR8-Lw-Hxg"/>
                     </connections>
                 </viewController>
