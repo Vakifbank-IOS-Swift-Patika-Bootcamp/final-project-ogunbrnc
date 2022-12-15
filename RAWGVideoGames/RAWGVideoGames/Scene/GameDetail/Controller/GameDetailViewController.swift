@@ -7,7 +7,15 @@
 
 import UIKit
 
-class GameDetailViewController: UIViewController {
+class GameDetailViewController: BaseViewController {
+    
+    @IBOutlet weak var gameRatingAverageLabel: UILabel!
+    @IBOutlet weak var gameRatingCountLabel: UILabel!
+    @IBOutlet weak var gameTimeLabel: UILabel!
+    @IBOutlet weak var gameRatingSkipLabel: UILabel!
+    @IBOutlet weak var gameRatingMehLabel: UILabel!
+    @IBOutlet weak var gameRatingRecommendedLabel: UILabel!
+    @IBOutlet weak var gameRatingExceptionalLabel: UILabel!
     @IBOutlet weak var gameImageView: UIImageView!
     @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var gamePlatformLabel: UILabel!
@@ -62,8 +70,10 @@ class GameDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         guard let id = gameId else { return }
+        
+        indicatorView.startAnimating()
+
         viewModel.delegate = self
         viewModel.fetchGameDetail(id: id)
     }
@@ -75,15 +85,22 @@ extension GameDetailViewController: GameDetailViewModelDelegate {
     func gameLoaded() {
         
         gameNameLabel.text = viewModel.getGameName()
-        gamePlatformLabel.text = viewModel.getGamePlatform()
-        gameGenresLabel.text = viewModel.getGameGenre()
-        gameDateLabel.text = viewModel.getGameReleaseDate()
-        gameTagsLabel.text = viewModel.getGameTag()
-        gameDescriptionLabel.text = viewModel.getGameDescription()
         guard let url = viewModel.getGameImageURL() else { return }
         gameImageView.sd_setImage(with: url,placeholderImage: UIImage(systemName: "photo"),options: .continueInBackground)
+        gameRatingExceptionalLabel.text = String(viewModel.getGameRatingExceptionalCount())
+        gameRatingRecommendedLabel.text = String(viewModel.getGameRatingRecommendedCount())
+        gameRatingMehLabel.text = String(viewModel.getGameRatingMehCount())
+        gameRatingSkipLabel.text = String(viewModel.getGameRatingSkipCount())
+        gamePlatformLabel.text = viewModel.getGamePlatform()
+        gameTagsLabel.text = viewModel.getGameTag()
+        gameGenresLabel.text = viewModel.getGameGenre()
+        gameDescriptionLabel.text = viewModel.getGameDescription()
+        gameTimeLabel.text = String(viewModel.getGameTime())
+        gameRatingCountLabel.text = String(viewModel.getGameRatingCount())
+        gameRatingAverageLabel.text = String(viewModel.getGameRatingAverage())
         
         configureFavoriteButton()
+        indicatorView.stopAnimating()
 
 
     }

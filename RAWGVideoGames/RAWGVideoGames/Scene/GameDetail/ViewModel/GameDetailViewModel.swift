@@ -17,6 +17,13 @@ protocol GameDetailViewModelProtocol {
     func getGameReleaseDate() -> String
     func getGameTag() -> String
     func getGameDescription() -> String
+    func getGameRatingExceptionalCount() -> Int
+    func getGameRatingRecommendedCount() -> Int
+    func getGameRatingMehCount() -> Int
+    func getGameRatingSkipCount() -> Int
+    func getGameRatingAverage() -> Double
+    func getGameTime() -> Int
+    func getGameRatingCount() -> Int
     func isItFavoriteGame() -> Bool
     func addGameToFavoriteList(completion: (Bool) -> ())
     func deleteGameFromFavoriteList(completion: (Bool) -> ())
@@ -50,11 +57,11 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func getGamePlatform() -> String {
-        return game?.parentPlatforms.map{$0.platform.name}.joined(separator: "\n") ?? ""
+        return game?.parentPlatforms.map{$0.platform.name}.joined(separator: ",") ?? ""
     }
     
     func getGameGenre() -> String {
-        game?.genres.map{$0.name}.joined(separator: "\n") ?? ""
+        game?.genres.map{$0.name}.joined(separator: ",") ?? ""
     }
     
     func getGameReleaseDate() -> String {
@@ -63,11 +70,39 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     
     func getGameTag() -> String {
         let tagCount = 5
-        return game?.tags[0..<tagCount].map{$0.name}.joined(separator: "\n") ?? ""
+        return game?.tags[0..<tagCount].map{$0.name}.joined(separator: ",") ?? ""
     }
     
     func getGameDescription() -> String {
         game?.descriptionRaw ?? ""
+    }
+    
+    func getGameRatingExceptionalCount() -> Int {
+        game?.ratings.filter {$0.title == "exceptional"}.first?.count ?? 0
+    }
+    
+    func getGameRatingRecommendedCount() -> Int {
+        game?.ratings.filter {$0.title == "recommended"}.first?.count ?? 0
+    }
+    
+    func getGameRatingMehCount() -> Int {
+        game?.ratings.filter {$0.title == "meh"}.first?.count ?? 0
+    }
+    
+    func getGameRatingSkipCount() -> Int {
+        game?.ratings.filter {$0.title == "skip"}.first?.count ?? 0
+    }
+    
+    func getGameRatingAverage() -> Double {
+        game?.rating ?? 0.0
+    }
+    
+    func getGameTime() -> Int {
+        game?.playtime ?? 0
+    }
+    
+    func getGameRatingCount() -> Int {
+        game?.ratingsCount ?? 0
     }
     
     func isItFavoriteGame() -> Bool {
