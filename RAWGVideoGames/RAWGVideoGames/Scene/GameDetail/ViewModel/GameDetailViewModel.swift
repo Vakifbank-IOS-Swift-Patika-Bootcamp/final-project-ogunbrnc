@@ -17,6 +17,11 @@ protocol GameDetailViewModelProtocol {
     func getGameReleaseDate() -> String
     func getGameTag() -> String
     func getGameDescription() -> String
+    func getGameRatingExceptionalCount() -> Int
+    func getGameRatingRecommendedCount() -> Int
+    func getGameRatingMehCount() -> Int
+    func getGameRatingSkipCount() -> Int
+
     func isItFavoriteGame() -> Bool
     func addGameToFavoriteList(completion: (Bool) -> ())
     func deleteGameFromFavoriteList(completion: (Bool) -> ())
@@ -68,6 +73,22 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     
     func getGameDescription() -> String {
         game?.descriptionRaw ?? ""
+    }
+    
+    func getGameRatingExceptionalCount() -> Int {
+        game?.ratings.filter {$0.title == "exceptional"}.first?.count ?? 0
+    }
+    
+    func getGameRatingRecommendedCount() -> Int {
+        game?.ratings.filter {$0.title == "recommended"}.first?.count ?? 0
+    }
+    
+    func getGameRatingMehCount() -> Int {
+        game?.ratings.filter {$0.title == "meh"}.first?.count ?? 0
+    }
+    
+    func getGameRatingSkipCount() -> Int {
+        game?.ratings.filter {$0.title == "skip"}.first?.count ?? 0
     }
     
     func isItFavoriteGame() -> Bool {

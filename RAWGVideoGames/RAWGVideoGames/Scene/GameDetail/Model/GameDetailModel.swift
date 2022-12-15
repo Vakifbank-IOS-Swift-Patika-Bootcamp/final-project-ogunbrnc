@@ -15,6 +15,7 @@ struct GameDetailModel: Decodable {
     let imageURL: String
     let parentPlatforms: [Platform]
     let genres: [Genre]
+    let ratings: [Rating]
     let tags: [Tag]
     
     enum CodingKeys: String, CodingKey {
@@ -25,6 +26,7 @@ struct GameDetailModel: Decodable {
         case imageURL = "background_image"
         case parentPlatforms = "parent_platforms"
         case genres
+        case ratings
         case tags
     }
 }
