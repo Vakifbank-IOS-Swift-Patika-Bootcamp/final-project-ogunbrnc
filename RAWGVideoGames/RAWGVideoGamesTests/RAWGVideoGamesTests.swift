@@ -15,10 +15,11 @@ final class GameListViewModelUnitTest: XCTestCase {
     override func setUpWithError() throws {
         viewModel = GameListViewModel()
         viewModel.delegate = self
-        fetchExpectation = expectation(description: "fetchGames")
     }
     
     func testGetGameIndexZero() {
+        fetchExpectation = expectation(description: "fetchGames")
+        
         XCTAssertNil(viewModel.getGame(at: 0))
         
         viewModel.fetchGames()
@@ -56,6 +57,8 @@ final class GameListViewModelUnitTest: XCTestCase {
     }
     
     func testGetSortedGameIndexZero() {
+        fetchExpectation = expectation(description: "fetchGames")
+        
         XCTAssertNil(viewModel.getGame(at: 0))
         
         viewModel.fetchGamesSorted(by: "Average rating".localized())
@@ -85,8 +88,15 @@ final class GameListViewModelUnitTest: XCTestCase {
         ]
         XCTAssertEqual(itemAtZero?.genres, genres)
     }
+
+    func testGetSortingOptionsIndexZero() {
+        let options:[String] = viewModel.getSortingOptions()
+        print(options.count)
+        XCTAssertEqual(options.count, 6)
+    }
     
     func testGetGameCount() throws {
+        fetchExpectation = expectation(description: "fetchGames")
         //Given
         XCTAssertEqual(viewModel.getGameCount(), 0)
         
@@ -97,9 +107,6 @@ final class GameListViewModelUnitTest: XCTestCase {
         //Then
         XCTAssertEqual(viewModel.getGameCount(), 20)
     }
-    
-    
-    
 
 }
 
