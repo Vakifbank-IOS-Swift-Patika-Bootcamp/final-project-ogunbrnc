@@ -209,7 +209,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="IxA-bQ-hIV">
-                                <rect key="frame" x="20" y="78.999999999999972" width="353" height="356.33333333333326"/>
+                                <rect key="frame" x="20" y="79" width="353" height="337.66666666666669"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="AP7-CM-zED">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="34"/>
@@ -246,7 +246,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="mTU-aO-NRW">
-                                        <rect key="frame" x="0.0" y="103.00000000000001" width="353" height="253.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="102.99999999999999" width="353" height="234.66666666666663"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPw-A9-XXr">
                                                 <rect key="frame" x="158" y="0.0" width="37" height="20.333333333333332"/>
@@ -254,24 +254,23 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2U0-6w-Yns">
-                                                <rect key="frame" x="20" y="53.333333333333343" width="313" height="200"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="bk3-Xg-BBe"/>
-                                                </constraints>
+                                            <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="S6w-ae-1DO">
+                                                <rect key="frame" x="0.0" y="53.333333333333329" width="353" height="181.33333333333337"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="2U0-6w-Yns" secondAttribute="trailing" constant="20" id="MMy-j6-gHZ"/>
-                                            <constraint firstItem="2U0-6w-Yns" firstAttribute="leading" secondItem="mTU-aO-NRW" secondAttribute="leading" constant="20" id="eSw-2Q-Ocm"/>
+                                            <constraint firstItem="S6w-ae-1DO" firstAttribute="leading" secondItem="mTU-aO-NRW" secondAttribute="leadingMargin" id="Kl8-Qq-EcM"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98n-51-6AN">
-                                <rect key="frame" x="145.66666666666666" y="753.66666666666663" width="102" height="34.333333333333371"/>
+                                <rect key="frame" x="100" y="683.66666666666663" width="193" height="34.333333333333371"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Save Note"/>
                                 <connections>
@@ -283,21 +282,23 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="IxA-bQ-hIV" firstAttribute="leading" secondItem="lZg-pk-UpL" secondAttribute="leading" constant="20" id="2Ic-MS-cC8"/>
-                            <constraint firstItem="98n-51-6AN" firstAttribute="centerX" secondItem="fms-eQ-jgp" secondAttribute="centerX" id="8mY-36-dow"/>
+                            <constraint firstItem="lZg-pk-UpL" firstAttribute="bottom" secondItem="98n-51-6AN" secondAttribute="bottom" constant="100" id="84B-H2-YZ2"/>
+                            <constraint firstItem="lZg-pk-UpL" firstAttribute="trailing" secondItem="98n-51-6AN" secondAttribute="trailing" constant="100" id="8KU-Nz-HUz"/>
                             <constraint firstItem="lZg-pk-UpL" firstAttribute="trailing" secondItem="IxA-bQ-hIV" secondAttribute="trailing" constant="20" id="KvT-Rb-cGB"/>
-                            <constraint firstItem="lZg-pk-UpL" firstAttribute="bottom" secondItem="98n-51-6AN" secondAttribute="bottom" constant="30" id="idR-TM-ueG"/>
                             <constraint firstItem="IxA-bQ-hIV" firstAttribute="top" secondItem="lZg-pk-UpL" secondAttribute="top" constant="20" id="nnx-2s-o1b"/>
+                            <constraint firstItem="98n-51-6AN" firstAttribute="leading" secondItem="lZg-pk-UpL" secondAttribute="leading" constant="100" id="qnD-AB-wFv"/>
+                            <constraint firstAttribute="bottom" secondItem="IxA-bQ-hIV" secondAttribute="bottom" constant="435.33333333333331" id="sPO-fo-cZh"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="gameNameTextField" destination="YM0-cY-42I" id="aE3-uG-Fh0"/>
-                        <outlet property="gameNoteTextField" destination="2U0-6w-Yns" id="uZd-OS-aGL"/>
+                        <outlet property="gameNoteTextView" destination="S6w-ae-1DO" id="Oww-uq-SVL"/>
                         <outlet property="noteTypeSegmentedControl" destination="Ofu-ec-I5f" id="mR8-Lw-Hxg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iWV-Yc-jxD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2874" y="1382"/>
+            <point key="canvasLocation" x="2872.5190839694656" y="1381.6901408450706"/>
         </scene>
         <!--Game Detail View Controller-->
         <scene sceneID="fmj-99-QMV">
@@ -629,6 +630,9 @@
         <image name="timer" catalog="system" width="128" height="123"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

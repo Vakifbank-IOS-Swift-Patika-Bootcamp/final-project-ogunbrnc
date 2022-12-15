@@ -27,7 +27,6 @@ class GameNoteListViewController: UIViewController {
     private let noNoteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "There are no notes. \n You can add new note using the + button.".localized()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .label
@@ -56,19 +55,35 @@ class GameNoteListViewController: UIViewController {
             floatingActionButton.heightAnchor.constraint(equalToConstant: 50),
             floatingActionButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20),
             floatingActionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-                                                   
         ]
         
         NSLayoutConstraint.activate(floatingActionButtonConstraints)
     }
         
     private func configureNoNoteLabel(){
-        if viewModel.getGameNotesCount() == 0 {
+        let noteCount: Int
+        let noNoteLabelContent: String
+        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
+            noteCount = viewModel.getGameNotesCount()
+            noNoteLabelContent = "There are no notes. \n You can add new note using the + button.".localized()
+        }
+        else {
+            noteCount = viewModel.getGameNotesHasReminderCount()
+            noNoteLabelContent = "There are no reminders. \n You can add new reminders using the + button.".localized()
+        }
+        
+        if noteCount == 0 {
+            noNoteLabel.text = noNoteLabelContent
             view.addSubview(noNoteLabel)
-            noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            noNoteLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+            noNoteLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
             noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         }
+        else {
+            noNoteLabel.removeFromSuperview()
+        }
     }
+    
     
     private func configureButtons() {
         floatingActionButton.addTarget(self, action: #selector(didTapAddNote), for: .touchUpInside)
@@ -80,27 +95,11 @@ class GameNoteListViewController: UIViewController {
     }
     
     @objc func handleSegmentChange() {
-        let noteCount: Int
-        if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
-            noteCount = viewModel.getGameNotesCount()
-        }
-        else {
-            noteCount = viewModel.getGameNotesHasReminderCount()
-        }
-        
-        if noteCount == 0 {
-            view.addSubview(noNoteLabel)
-            noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        }
-        else {
-            noNoteLabel.removeFromSuperview()
-        }
-        
-        
+        configureNoNoteLabel()
         notesTableView.reloadData()
     }
     
+
     // MARK: UIButton Action
     @objc private func didTapAddNote() {
         guard let noteAddingEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
@@ -171,21 +170,19 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
         
         if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
             note = viewModel.getGameNote(at: indexPath.row)
-            
         } else {
             note = viewModel.getGameNoteHasReminder(at: indexPath.row)
-            let isEditable = viewModel.checkEditable(note: note!)
-            if !isEditable {
+            if !viewModel.isEditable(note: note!){
                 return
             }
-            
         }
         
         guard let noteAddingOrEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
                    fatalError("View Controller not found")
-               }
+           }
         noteAddingOrEditingViewController.delegate = self
         noteAddingOrEditingViewController.noteId = note?.id
+        
         navigationController?.present(noteAddingOrEditingViewController, animated: true)
     }
     
@@ -214,10 +211,9 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
 
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
     func didAddReminder(gameNote: GameNote) {
-        if viewModel.getGameNotesHasReminderCount() == 0 {
-            noNoteLabel.removeFromSuperview()
-        }
         viewModel.add(reminder: gameNote)
+        configureNoNoteLabel()
+
     }
     
     func didUpdateReminder(gameNote: GameNote) {
@@ -225,10 +221,9 @@ extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegat
     }
     
     func didAddNote(gameNote: GameNote) {
-        if viewModel.getGameNotesCount() == 0 {
-            noNoteLabel.removeFromSuperview()
-        }
         viewModel.add(note: gameNote)
+        configureNoNoteLabel()
+
     }
     
     func didUpdateNote(gameNote: GameNote) {
