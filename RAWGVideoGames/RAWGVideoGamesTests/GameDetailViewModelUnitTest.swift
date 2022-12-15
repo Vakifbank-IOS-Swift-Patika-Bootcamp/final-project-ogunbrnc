@@ -164,7 +164,17 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         XCTAssertEqual(viewModel.getGameRatingAverage(), 4.47)
     }
     
-    
+    func testGetGameTime() {
+        //Given
+        XCTAssertEqual(viewModel.getGameTime(),0)
+        
+        //When
+        viewModel.fetchGameDetail(id: 3498)
+        waitForExpectations(timeout: 10)
+
+        //Then
+        XCTAssertEqual(viewModel.getGameTime(), 72)
+    }
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
