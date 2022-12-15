@@ -90,9 +90,17 @@ final class GameListViewModelUnitTest: XCTestCase {
     }
 
     func testGetSortingOptionsCount() {
-        let options:[String] = viewModel.getSortingOptions()
-
-        XCTAssertEqual(options.count, 6)
+        let sortingOptions = ["Relevance".localized(),
+                              "Date added".localized(),
+                              "Name".localized(),
+                              "Release date".localized(),
+                              "Popularity".localized(),
+                              "Average rating".localized()].sorted()
+        
+        let options:[String] = viewModel.getSortingOptions().sorted()
+         
+     
+        XCTAssertEqual(options,sortingOptions)
     }
     
     func testGetGameCount() throws {
