@@ -89,9 +89,9 @@ final class GameListViewModelUnitTest: XCTestCase {
         XCTAssertEqual(itemAtZero?.genres, genres)
     }
 
-    func testGetSortingOptionsIndexZero() {
+    func testGetSortingOptionsCount() {
         let options:[String] = viewModel.getSortingOptions()
-        print(options.count)
+
         XCTAssertEqual(options.count, 6)
     }
     
@@ -106,6 +106,20 @@ final class GameListViewModelUnitTest: XCTestCase {
         
         //Then
         XCTAssertEqual(viewModel.getGameCount(), 20)
+    }
+    
+    func testGetGameIdIndexZero() {
+        fetchExpectation = expectation(description: "fetchGames")
+        //Given
+        XCTAssertEqual(viewModel.getGameCount(), 0)
+        
+        //When
+        viewModel.fetchGames()
+        waitForExpectations(timeout: 10)
+        
+        //Then
+        XCTAssertEqual(viewModel.getGameId(at: 0), 3498)
+        
     }
 
 }
