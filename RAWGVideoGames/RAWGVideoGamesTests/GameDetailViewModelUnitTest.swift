@@ -78,7 +78,18 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         //Then
         XCTAssertEqual(viewModel.getGameReleaseDate(), "2013-09-17")
     }
+    
+    func testGetGameTag() {
+        //Given
+        XCTAssertEqual(viewModel.getGameTag(),"")
+        
+        //When
+        viewModel.fetchGameDetail(id: 3498)
+        waitForExpectations(timeout: 10)
 
+        //Then
+        XCTAssertEqual(viewModel.getGameTag(), "Singleplayer,Steam Achievements,Multiplayer,Atmospheric,Full controller support")
+    }
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
