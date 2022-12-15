@@ -66,6 +66,18 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         //Then
         XCTAssertEqual(viewModel.getGameGenre(), "Action,Adventure")
     }
+    
+    func testGetGameReleaseDate() {
+        //Given
+        XCTAssertEqual(viewModel.getGameReleaseDate(),"")
+        
+        //When
+        viewModel.fetchGameDetail(id: 3498)
+        waitForExpectations(timeout: 10)
+
+        //Then
+        XCTAssertEqual(viewModel.getGameReleaseDate(), "2013-09-17")
+    }
 
 }
 
