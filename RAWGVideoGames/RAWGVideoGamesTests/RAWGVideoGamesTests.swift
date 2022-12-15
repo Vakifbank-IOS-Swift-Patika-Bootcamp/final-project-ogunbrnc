@@ -18,18 +18,6 @@ final class GameListViewModelUnitTest: XCTestCase {
         fetchExpectation = expectation(description: "fetchGames")
     }
     
-    func testGetGameCount() throws {
-        //Given
-        XCTAssertEqual(viewModel.getGameCount(), 0)
-        
-        //When
-        viewModel.fetchGames()
-        waitForExpectations(timeout: 10)
-        
-        //Then
-        XCTAssertEqual(viewModel.getGameCount(), 20)
-    }
-    
     func testGetGameIndexZero() {
         XCTAssertNil(viewModel.getGame(at: 0))
         
@@ -65,9 +53,52 @@ final class GameListViewModelUnitTest: XCTestCase {
             Genre(id: 3, name: "Adventure", slug: "adventure")
         ]
         XCTAssertEqual(itemAtZero?.genres, genres)
-
-
     }
+    
+    func testGetSortedGameIndexZero() {
+        XCTAssertNil(viewModel.getGame(at: 0))
+        
+        viewModel.fetchGamesSorted(by: "Average rating".localized())
+        waitForExpectations(timeout: 10)
+        
+        let itemAtZero = viewModel.getGame(at: 0)
+        XCTAssertEqual(itemAtZero?.id, 894438)
+        XCTAssertEqual(itemAtZero?.name, "Lil Gator Game")
+        XCTAssertEqual(itemAtZero?.playtime, 0)
+        
+        let parentPlatforms:[Platform]? = [
+            Platform(platform: PlatformInfo(id: 1, name: "PC", slug: "pc")),
+            Platform(platform: PlatformInfo(id: 7, name: "Nintendo", slug: "nintendo")),
+        ]
+        
+      
+        XCTAssertEqual(itemAtZero?.parentPlatforms, parentPlatforms)
+        XCTAssertEqual(itemAtZero?.releaseDate, "2022-12-14")
+        XCTAssertEqual(itemAtZero?.imageURL, "https://media.rawg.io/media/games/376/37628262db021ad21f81ec8d4b0ded03.jpg")
+        XCTAssertEqual(itemAtZero?.rating, 0.0)
+        let ratings: [Rating] = []
+        XCTAssertEqual(itemAtZero?.ratings, ratings)
+        XCTAssertEqual(itemAtZero?.ratingsCount, 0)
+        
+        let genres: [Genre] = [
+            Genre(id: 3, name: "Adventure", slug: "adventure")
+        ]
+        XCTAssertEqual(itemAtZero?.genres, genres)
+    }
+    
+    func testGetGameCount() throws {
+        //Given
+        XCTAssertEqual(viewModel.getGameCount(), 0)
+        
+        //When
+        viewModel.fetchGames()
+        waitForExpectations(timeout: 10)
+        
+        //Then
+        XCTAssertEqual(viewModel.getGameCount(), 20)
+    }
+    
+    
     
 
 }
