@@ -116,6 +116,18 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         //Then
         XCTAssertEqual(viewModel.getGameRatingExceptionalCount(), 3613)
     }
+    
+    func testGetGameRatingRecommendedCount() {
+        //Given
+        XCTAssertEqual(viewModel.getGameRatingRecommendedCount(),0)
+        
+        //When
+        viewModel.fetchGameDetail(id: 3498)
+        waitForExpectations(timeout: 10)
+
+        //Then
+        XCTAssertEqual(viewModel.getGameRatingRecommendedCount(), 2003)
+    }
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
