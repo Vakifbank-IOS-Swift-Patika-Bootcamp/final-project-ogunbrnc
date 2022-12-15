@@ -9,6 +9,9 @@ import UIKit
 
 class GameDetailViewController: BaseViewController {
     
+    @IBOutlet weak var gameRatingAverageLabel: UILabel!
+    @IBOutlet weak var gameRatingCountLabel: UILabel!
+    @IBOutlet weak var gameTimeLabel: UILabel!
     @IBOutlet weak var gameRatingSkipLabel: UILabel!
     @IBOutlet weak var gameRatingMehLabel: UILabel!
     @IBOutlet weak var gameRatingRecommendedLabel: UILabel!
@@ -92,6 +95,9 @@ extension GameDetailViewController: GameDetailViewModelDelegate {
         gameTagsLabel.text = viewModel.getGameTag()
         gameGenresLabel.text = viewModel.getGameGenre()
         gameDescriptionLabel.text = viewModel.getGameDescription()
+        gameTimeLabel.text = String(viewModel.getGameTime())
+        gameRatingCountLabel.text = String(viewModel.getGameRatingCount())
+        gameRatingAverageLabel.text = String(viewModel.getGameRatingAverage())
         
         configureFavoriteButton()
         indicatorView.stopAnimating()
