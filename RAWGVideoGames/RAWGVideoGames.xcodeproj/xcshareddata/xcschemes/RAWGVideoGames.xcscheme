@@ -20,13 +20,38 @@
                ReferencedContainer = "container:RAWGVideoGames.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "71C1402229432BE100B85AD6"
+               BuildableName = "RAWGVideoGamesUITests.xctest"
+               BlueprintName = "RAWGVideoGamesUITests"
+               ReferencedContainer = "container:RAWGVideoGames.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "71C13FFF29432BE000B85AD6"
+            BuildableName = "RAWGVideoGames.app"
+            BlueprintName = "RAWGVideoGames"
+            ReferencedContainer = "container:RAWGVideoGames.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO"
@@ -36,17 +61,6 @@
                BlueprintIdentifier = "71C1401829432BE100B85AD6"
                BuildableName = "RAWGVideoGamesTests.xctest"
                BlueprintName = "RAWGVideoGamesTests"
-               ReferencedContainer = "container:RAWGVideoGames.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "71C1402229432BE100B85AD6"
-               BuildableName = "RAWGVideoGamesUITests.xctest"
-               BlueprintName = "RAWGVideoGamesUITests"
                ReferencedContainer = "container:RAWGVideoGames.xcodeproj">
             </BuildableReference>
          </TestableReference>

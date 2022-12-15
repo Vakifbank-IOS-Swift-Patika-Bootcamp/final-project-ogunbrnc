@@ -29,8 +29,8 @@ final class GameListViewModel: GameListViewModelProtocol {
     
     weak var delegate: GameListViewModelDelegate?
     private var nextURL: String?
-    private var games: [GameModel] = []
-    private var searchedGames: [GameModel] = []
+    private var games: [GameModel]?
+    private var searchedGames: [GameModel]?
     private let sortingOptionsMapping: [String:String] = [
         "Relevance".localized():"relevance",
         "Date added".localized():"created",
@@ -41,7 +41,7 @@ final class GameListViewModel: GameListViewModelProtocol {
     ]
     
     func searchGame(with text: String) {
-        searchedGames = games.filter {
+        searchedGames = games?.filter {
             $0.name.replacingOccurrences(of: " ", with: "").lowercased().contains(text.replacingOccurrences(of: " ", with: "").lowercased())}
         delegate?.gamesLoaded()
     }
@@ -107,8 +107,8 @@ final class GameListViewModel: GameListViewModelProtocol {
         switch result {
         case .success(let responseModel):
             self.nextURL = responseModel.next
-            self.games.append(contentsOf: responseModel.results)
-            self.searchedGames.append(contentsOf: responseModel.results)
+            self.games?.append(contentsOf: responseModel.results)
+            self.searchedGames?.append(contentsOf: responseModel.results)
             self.delegate?.gamesLoaded()
         case .failure(let error):
             print(error.localizedDescription)
@@ -116,15 +116,15 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func getGameCount() -> Int {
-        searchedGames.count
+        searchedGames?.count ?? 0
     }
     
     func getGame(at index: Int) -> GameModel? {
-        searchedGames[index]
+        searchedGames?[index]
     }
     
     func getGameId(at index: Int) -> Int? {
-        searchedGames[index].id
+        searchedGames?[index].id
     }
     
 }
