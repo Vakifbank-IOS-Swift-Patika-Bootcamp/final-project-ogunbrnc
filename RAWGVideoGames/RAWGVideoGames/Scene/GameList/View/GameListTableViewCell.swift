@@ -8,18 +8,32 @@
 import UIKit
 import SDWebImage
 
+enum parentPlatformsImage: String {
+    case pc
+    case playstation
+    case xbox
+    case ios
+    case mac
+    
+    var imageSystemName: String {
+        switch self {
+        case .pc:
+            return "laptopcomputer"
+        case .playstation:
+            return "playstation.logo"
+        case .xbox:
+            return "xbox.logo"
+        case .ios:
+            return "apple.logo"
+        case .mac:
+            return "macpro.gen1"
+        }
+    }
+}
+
 class GameListTableViewCell: UITableViewCell {
 
     static var identifier = "GameListTableViewCell"
-    
-    private let parentPlatformImageNameMapping: [String:String] = [
-        "pc":"laptopcomputer",
-        "playstation":"playstation.logo",
-        "xbox":"xbox.logo",
-        "ios":"apple.logo",
-        "mac": "macpro.gen1"
-    ]
-    
     
     // MARK: UI Components
     private let gameImageView: UIImageView = {
@@ -112,8 +126,6 @@ class GameListTableViewCell: UITableViewCell {
         return stackView
     }()
     
-
-    
     // MARK: Configure UI Components
     private func configureConstraints() {
         let gameImageViewSize = contentView.width / 2 - 40
@@ -201,7 +213,7 @@ class GameListTableViewCell: UITableViewCell {
         var renderedIconImageViewCount = 0
         
         gamePlatforms.forEach {platformInfo in
-            guard let imageName = parentPlatformImageNameMapping[platformInfo.platform.slug] else { return }
+            guard let imageName = parentPlatformsImage(rawValue: platformInfo.platform.slug)?.imageSystemName else { return }
             
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
