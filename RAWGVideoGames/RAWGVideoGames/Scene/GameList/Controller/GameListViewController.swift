@@ -140,7 +140,7 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.getGameCount() - 1 {
+        if indexPath.row == viewModel.getGameCount() - 1 && !viewModel.isSearching() {
             viewModel.fetchMoreGames()
         }
     }

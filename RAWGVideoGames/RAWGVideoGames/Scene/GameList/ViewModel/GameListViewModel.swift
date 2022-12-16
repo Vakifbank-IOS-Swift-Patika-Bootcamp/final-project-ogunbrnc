@@ -12,7 +12,7 @@ protocol GameListViewModelProtocol {
     func fetchGames()
     func fetchMoreGames()
     func fetchGamesSorted(by filter: String)
-    func fetchGamesSortedMore(by filter: String)
+    func isSearching() -> Bool
     func searchGame(with text: String)
     func searchGameCancel()
     func getSortingOptions() -> [String]
@@ -28,6 +28,7 @@ protocol GameListViewModelDelegate: AnyObject {
 final class GameListViewModel: GameListViewModelProtocol {
     
     weak var delegate: GameListViewModelDelegate?
+    private var searching: Bool = false
     private var nextURL: String?
     private var games: [GameModel]?
     private var searchedGames: [GameModel]?
@@ -40,15 +41,21 @@ final class GameListViewModel: GameListViewModelProtocol {
         "Average rating".localized():"rating",
     ]
     
+    func isSearching() -> Bool {
+        searching
+    }
     func searchGame(with text: String) {
+        searching = true
         searchedGames = games?.filter {
             $0.name.replacingOccurrences(of: " ", with: "").lowercased().contains(text.replacingOccurrences(of: " ", with: "").lowercased())}
         delegate?.gamesLoaded()
     }
     
     func searchGameCancel() {
+        searching = false
         searchedGames = games
         delegate?.gamesLoaded()
+
     }
     
     func getSortingOptions() -> [String] {
@@ -67,7 +74,6 @@ final class GameListViewModel: GameListViewModelProtocol {
         Client.getGames(with: nextURL){ [weak self] result in
             guard let self = self else { return }
             self.handleFetchGetMoreGamesResponse(result: result)
-            
         }
    }
     
@@ -76,18 +82,6 @@ final class GameListViewModel: GameListViewModelProtocol {
         Client.getGames(by: sortedParam){ [weak self] result in
             guard let self = self else { return }
             self.handleFetchGetGamesResponse(result: result)
-            
-        }
-    }
-    
-    func fetchGamesSortedMore(by filter: String) {
-        guard let nextURL = nextURL,
-              let sortedParam = sortingOptionsMapping[filter] else { return }
-
-        Client.getGames(by: sortedParam,with: nextURL){ [weak self] result in
-            guard let self = self else { return }
-            self.handleFetchGetGamesResponse(result: result)
-            
         }
     }
     
