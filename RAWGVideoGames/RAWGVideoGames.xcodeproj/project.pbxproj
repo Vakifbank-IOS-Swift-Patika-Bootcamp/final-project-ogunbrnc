@@ -18,6 +18,7 @@
 		7167276F29467DBB00F8527F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167276E29467DBB00F8527F /* StringExtension.swift */; };
 		7167277A2946817300F8527F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7167277C2946817300F8527F /* Localizable.strings */; };
 		7167277F29471D6F00F8527F /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167277E29471D6F00F8527F /* LocalNotificationManager.swift */; };
+		71677FF9294C6FD000AEE426 /* IconLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71677FF8294C6FD000AEE426 /* IconLabelStackView.swift */; };
 		71A5D41D2943F9B2000B4E53 /* GameDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D41C2943F9B2000B4E53 /* GameDetailViewModel.swift */; };
 		71A5D41F29448DD2000B4E53 /* GameDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D41E29448DD2000B4E53 /* GameDetailViewController.swift */; };
 		71A5D4212944A711000B4E53 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A5D4202944A711000B4E53 /* CoreDataManager.swift */; };
@@ -95,6 +96,7 @@
 		7167277B2946817300F8527F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7167277D2946817600F8527F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7167277E29471D6F00F8527F /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
+		71677FF8294C6FD000AEE426 /* IconLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelStackView.swift; sourceTree = "<group>"; };
 		71A5D41C2943F9B2000B4E53 /* GameDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailViewModel.swift; sourceTree = "<group>"; };
 		71A5D41E29448DD2000B4E53 /* GameDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailViewController.swift; sourceTree = "<group>"; };
 		71A5D4202944A711000B4E53 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				71C140E229438A0400B85AD6 /* GameListTableViewCell.swift */,
+				71677FF8294C6FD000AEE426 /* IconLabelStackView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				71C1400629432BE000B85AD6 /* SceneDelegate.swift in Sources */,
 				71C140D429435DB800B85AD6 /* Constants.swift in Sources */,
 				7167277F29471D6F00F8527F /* LocalNotificationManager.swift in Sources */,
+				71677FF9294C6FD000AEE426 /* IconLabelStackView.swift in Sources */,
 				716727572944BCD500F8527F /* FavoriteGameListViewModel.swift in Sources */,
 				7167276F29467DBB00F8527F /* StringExtension.swift in Sources */,
 				71AACCD22948BA3700EEE387 /* RAWGVideoGames.xcdatamodeld in Sources */,
