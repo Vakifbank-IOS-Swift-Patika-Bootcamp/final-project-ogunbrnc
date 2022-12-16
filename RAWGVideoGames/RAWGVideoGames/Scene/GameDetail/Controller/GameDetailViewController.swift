@@ -22,9 +22,9 @@ final class GameDetailViewController: BaseViewController {
     @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var gamePlatformLabel: UILabel!
     @IBOutlet weak var gameGenresLabel: UILabel!
-    @IBOutlet weak var gameDateLabel: UILabel!
     @IBOutlet weak var gameTagsLabel: UILabel!
     @IBOutlet weak var gameDescriptionLabel: UILabel!
+    
     
     // MARK: Variable Declarations
     private var favoriteButton = UIButton(type: .custom)

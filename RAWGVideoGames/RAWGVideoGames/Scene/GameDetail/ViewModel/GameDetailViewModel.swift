@@ -39,6 +39,12 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     
     weak var delegate: GameDetailViewModelDelegate?
     private var game: GameDetailModel?
+    private var databaseManager: DatabaseManager
+    
+    init(game: GameDetailModel? = nil, databaseManager: DatabaseManager = CoreDataManager.shared) {
+        self.game = game
+        self.databaseManager = databaseManager
+    }
     
     func fetchGameDetail(id: Int) {
         Client.getGameDetail(movieId: id) { [weak self] result in
@@ -114,7 +120,8 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func isItFavoriteGame() -> Bool {
-        CoreDataManager.shared.isFavorite(id: game!.id)
+        guard let gameId = game?.id else { return false }
+        return databaseManager.isFavorite(id: gameId)
     }
     
     func addGameToFavoriteList(completion: (Bool) -> ()) {

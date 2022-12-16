@@ -8,9 +8,38 @@
 import UIKit
 import CoreData
 
-final class CoreDataManager {
+protocol DatabaseManager {
+    func isFavorite(id gameId: Int) -> Bool
+    func getFavoriteGames() -> [FavoriteGame]
+    func addToFavorite(id: Int, gameName: String, gameImageURL: String) -> FavoriteGame?
+    func deleteFromFavorite(id gameId: Int) -> Bool
+    func getNote(noteId: UUID) -> GameNote?
+    func getNotes() -> [GameNote]
+    func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date?) -> GameNote?
+    func updateNote(noteContent: String,noteScheduledReminderDate: Date?,gameNoteId: UUID)
+}
+
+extension DatabaseManager {
+    func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil ) -> GameNote? {
+        addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: noteHasReminder, noteScheduledReminderDate: noteScheduledReminderDate)
+    }
+    func updateNote(noteContent: String,noteScheduledReminderDate: Date? ,gameNoteId: UUID){
+        updateNote(noteContent: noteContent, noteScheduledReminderDate: noteScheduledReminderDate, gameNoteId: gameNoteId)
+    }
+}
+
+final class CoreDataManager:DatabaseManager {
     static let shared = CoreDataManager()
     private let managedContext: NSManagedObjectContext!
+        
+    private init(managedContext: NSManagedObjectContext? = nil) {
+        if let managedContext {
+            self.managedContext = managedContext
+        } else {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            self.managedContext = appDelegate.persistentContainer.viewContext
+        }
+    }
     
     private init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
