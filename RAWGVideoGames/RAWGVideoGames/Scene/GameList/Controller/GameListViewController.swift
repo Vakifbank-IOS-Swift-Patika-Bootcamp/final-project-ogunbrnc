@@ -74,7 +74,7 @@ final class GameListViewController: BaseViewController {
         self.view.addSubview(toolBar)
     }
     
-    // MARK: 
+    // MARK: Selector Functions
     @objc func onCancelButtonTapped() {
         toolBar.removeFromSuperview()
         sortingPickerView.removeFromSuperview()
@@ -93,10 +93,11 @@ final class GameListViewController: BaseViewController {
     }
     
     @objc func addTapped() {
-        
         configurePickerview()
         configureToolbar()
     }
+    
+    // MARK: Life Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +116,7 @@ final class GameListViewController: BaseViewController {
     }
 }
 
+// MARK: GameListViewModelDelegate extension
 extension GameListViewController: GameListViewModelDelegate {
     func gamesLoaded() {
         gameListTableView.reloadData()
@@ -125,6 +127,7 @@ extension GameListViewController: GameListViewModelDelegate {
     }
 }
 
+// MARK: Tableview Delegate, Datasource extension
 extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getGameCount()
@@ -148,7 +151,7 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
             viewModel.fetchGames()
         }
         else if indexPath.row == viewModel.getGameCount() - 1 && viewModel.isSearching() {
-            viewModel.fetchSearchedGames(with: "")
+            viewModel.fetchSearchedGames()
         }
     }
    
@@ -157,6 +160,7 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: Searchbar Delegate extension
 extension GameListViewController: UISearchResultsUpdating, UISearchBarDelegate{
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else {
@@ -181,6 +185,7 @@ extension GameListViewController: UISearchResultsUpdating, UISearchBarDelegate{
     }
 }
 
+// MARK: Pickerview Delegate, Datasource extension
 extension GameListViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

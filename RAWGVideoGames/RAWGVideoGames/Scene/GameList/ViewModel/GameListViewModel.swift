@@ -19,6 +19,10 @@ protocol GameListViewModelProtocol {
     func getGame(at index: Int) -> GameModel?
     func getGameId(at index: Int) -> Int?
 }
+//This default text value is for the pagination. We will call fetchSearchedGames function with no argument to fetch more data with same searchParam
+extension GameListViewModelProtocol {
+    func fetchSearchedGames(with text: String = ""){ fetchSearchedGames(with: text) }
+}
 
 protocol GameListViewModelDelegate: AnyObject {
     func gamesLoaded()
@@ -73,6 +77,7 @@ final class GameListViewModel: GameListViewModelProtocol {
     
     func fetchSearchedGames(with text: String) {
         searching = true
+        //if we call fetchSearchedGames function to get more game with same search param, this will be empty and we will use current searchParam
         if !text.isEmpty {
             searchParam = text.replacingOccurrences(of: " ", with: "").lowercased()
         }
@@ -82,9 +87,11 @@ final class GameListViewModel: GameListViewModelProtocol {
             switch result {
             case .success(let responseModel):
                 self.nextURL = responseModel.next
+                //we get more data for the same search param.
                 if text.isEmpty {
                     self.games.append(contentsOf: responseModel.results)
                 }
+                //we searched for the first time.
                 else {
                     self.games = responseModel.results
                 }
