@@ -125,7 +125,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func addGameToFavoriteList(completion: (Bool) -> ()) {
-        if let favoriteGame = CoreDataManager.shared.addToFavorite(id: game!.id, gameName: game!.name, gameImageURL: game!.imageURL) {
+        if let favoriteGame = databaseManager.addToFavorite(id: game!.id, gameName: game!.name, gameImageURL: game!.imageURL) {
             let favoriteGameDatadict:[String: FavoriteGame] = ["favoriteGame": favoriteGame]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameAdded"), object: nil, userInfo: favoriteGameDatadict)
             completion(true)
@@ -135,7 +135,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func deleteGameFromFavoriteList(completion: (Bool) -> ()) {
-        if CoreDataManager.shared.deleteFromFavorite(id: game!.id) {
+        if databaseManager.deleteFromFavorite(id: game!.id) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil, userInfo: nil)
             completion(true)
         } else {

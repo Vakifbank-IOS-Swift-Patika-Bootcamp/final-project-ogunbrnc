@@ -41,11 +41,6 @@ final class CoreDataManager:DatabaseManager {
         }
     }
     
-    private init() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        managedContext = appDelegate.persistentContainer.viewContext
-    }
-    
     func isFavorite(id gameId: Int) -> Bool {
         let fetchNote: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
         fetchNote.predicate = NSPredicate(format: "gameId = %@", String(gameId))
