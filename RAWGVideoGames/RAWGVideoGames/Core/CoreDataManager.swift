@@ -23,7 +23,7 @@ extension DatabaseManager {
     func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil ) -> GameNote? {
         addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: noteHasReminder, noteScheduledReminderDate: noteScheduledReminderDate)
     }
-    func updateNote(noteContent: String,noteScheduledReminderDate: Date? ,gameNoteId: UUID){
+    func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil ,gameNoteId: UUID){
         updateNote(noteContent: noteContent, noteScheduledReminderDate: noteScheduledReminderDate, gameNoteId: gameNoteId)
     }
 }
