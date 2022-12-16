@@ -97,8 +97,7 @@ final class GameListTableViewCell: UITableViewCell {
             gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 20),
             gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             gameImageView.widthAnchor.constraint(equalToConstant: gameImageViewSize),
-            gameImageView.heightAnchor.constraint(equalToConstant: gameImageViewSize),
-            gameImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            gameImageView.heightAnchor.constraint(equalToConstant: gameImageViewSize)
         ]
         
         let gameNameLabelConstraints = [
@@ -116,7 +115,7 @@ final class GameListTableViewCell: UITableViewCell {
         let gamePlatformsStackViewConstraints = [
             gamePlatformsStackView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
             gamePlatformsStackView.topAnchor.constraint(equalTo: gameReleaseDateLabel.bottomAnchor,constant: 10),
-            gamePlatformsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            gamePlatformsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ]
         
         let gameRatingCountIconLabelStackViewConstraints = [
@@ -129,11 +128,15 @@ final class GameListTableViewCell: UITableViewCell {
         let gameRatingAverageIconLabelStackViewConstraints = [
             gameRatingAverageIconLabelStackView.leadingAnchor.constraint(equalTo: gameRatingCountIconLabelStackView.trailingAnchor, constant: 10),
             gameRatingAverageIconLabelStackView.topAnchor.constraint(equalTo: gameRatingCountIconLabelStackView.topAnchor),
+            gameRatingAverageIconLabelStackView.widthAnchor.constraint(equalToConstant: 80),
+            gameRatingCountIconLabelStackView.heightAnchor.constraint(equalToConstant: 15)
         ]
         
         let gameTimeIconLabelStackViewConstraints = [
             gameTimeIconLabelStackView.leadingAnchor.constraint(equalTo: gameNameLabel.leadingAnchor),
-            gameTimeIconLabelStackView.topAnchor.constraint(equalTo: gameRatingCountIconLabelStackView.bottomAnchor, constant: 10)
+            gameTimeIconLabelStackView.topAnchor.constraint(equalTo: gameRatingCountIconLabelStackView.bottomAnchor, constant: 10),
+            gameTimeIconLabelStackView.widthAnchor.constraint(equalToConstant: 80),
+            gameTimeIconLabelStackView.heightAnchor.constraint(equalToConstant: 15)
         ]
         
         
