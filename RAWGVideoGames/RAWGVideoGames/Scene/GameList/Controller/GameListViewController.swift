@@ -147,6 +147,9 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == viewModel.getGameCount() - 1 && !viewModel.isSearching() {
             viewModel.fetchGames()
         }
+        else if indexPath.row == viewModel.getGameCount() - 1 && viewModel.isSearching() {
+            viewModel.fetchSearchedGames(with: "")
+        }
     }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -160,7 +163,7 @@ extension GameListViewController: UISearchResultsUpdating, UISearchBarDelegate{
             return
         }
         if !(text.isEmpty) {
-            viewModel.searchGame(with: text)
+            viewModel.fetchSearchedGames(with: text)
         }
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -169,12 +172,12 @@ extension GameListViewController: UISearchResultsUpdating, UISearchBarDelegate{
             return
         }
         if !(text.isEmpty) {
-            viewModel.searchGame(with: text)
+            viewModel.fetchSearchedGames(with: text)
         }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchController.isActive = false
-        viewModel.searchGameCancel()
+        viewModel.fetchSearchedGamesCancel()
     }
 }
 

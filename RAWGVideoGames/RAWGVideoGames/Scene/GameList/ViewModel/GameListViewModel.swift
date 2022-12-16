@@ -11,9 +11,9 @@ protocol GameListViewModelProtocol {
     var delegate: GameListViewModelDelegate? { get set }
     func fetchGames()
     func fetchGamesSorted(by filter: String)
+    func fetchSearchedGames(with text: String)
+    func fetchSearchedGamesCancel()
     func isSearching() -> Bool
-    func searchGame(with text: String)
-    func searchGameCancel()
     func getSortingOptions() -> [String]
     func getGameCount() -> Int
     func getGame(at index: Int) -> GameModel?
@@ -29,9 +29,11 @@ final class GameListViewModel: GameListViewModelProtocol {
     
     weak var delegate: GameListViewModelDelegate?
     private var searching: Bool = false
+    private var sortParam: String = ""
+    private var searchParam: String = ""
     private var nextURL: String? = ""
     private var games: [GameModel] = []
-    private var searchedGames: [GameModel] = []
+    private var tempGames: [GameModel] = []
     private let sortingOptionsMapping: [String:String] = [
         "Relevance".localized():"relevance",
         "Date added".localized():"created",
@@ -41,36 +43,18 @@ final class GameListViewModel: GameListViewModelProtocol {
         "Average rating".localized():"rating",
     ]
     
-    func isSearching() -> Bool {
-        searching
-    }
-    
-    func searchGame(with text: String) {
-        searching = true
-        searchedGames = games.filter {
-            $0.name.replacingOccurrences(of: " ", with: "").lowercased().contains(text.replacingOccurrences(of: " ", with: "").lowercased())}
-        delegate?.gamesLoaded()
-    }
-    
-    func searchGameCancel() {
-        searching = false
-        searchedGames = games
-        delegate?.gamesLoaded()
-    }
-    
     func getSortingOptions() -> [String] {
         return [String] (sortingOptionsMapping.keys)
     }
     
     func fetchGames() {
         guard let nextURL = nextURL else { return }
-        Client.getGames(with: nextURL){ [weak self] result in
+        Client.getGames(by:sortParam,with: nextURL){ [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let responseModel):
                 self.nextURL = responseModel.next
                 self.games.append(contentsOf: responseModel.results)
-                self.searchedGames.append(contentsOf: responseModel.results)
                 self.delegate?.gamesLoaded()
             case .failure(let error):
                 self.delegate?.gamesLoadingError(error: error)
@@ -79,14 +63,31 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func fetchGamesSorted(by filter: String) {
-        guard let sortedParam = sortingOptionsMapping[filter] else { return }
-        Client.getGames(by: sortedParam,with: ""){ [weak self] result in
+        guard let sortParam = sortingOptionsMapping[filter] else { return }
+        self.sortParam = sortParam
+        nextURL = ""
+        
+        games = []
+        fetchGames()
+    }
+    
+    func fetchSearchedGames(with text: String) {
+        searching = true
+        if !text.isEmpty {
+            searchParam = text.replacingOccurrences(of: " ", with: "").lowercased()
+        }
+        guard let nextURL = nextURL else { return }
+        Client.getGames(with: nextURL,search: searchParam){ [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let responseModel):
                 self.nextURL = responseModel.next
-                self.games = responseModel.results
-                self.searchedGames = responseModel.results
+                if text.isEmpty {
+                    self.games.append(contentsOf: responseModel.results)
+                }
+                else {
+                    self.games = responseModel.results
+                }
                 self.delegate?.gamesLoaded()
             case .failure(let error):
                 self.delegate?.gamesLoadingError(error: error)
@@ -94,15 +95,28 @@ final class GameListViewModel: GameListViewModelProtocol {
         }
     }
     
+    func fetchSearchedGamesCancel() {
+        searching = false
+        nextURL = ""
+        sortParam = ""
+        games = []
+        
+        fetchGames()
+    }
+    
+    func isSearching() -> Bool {
+        searching
+    }
+    
     func getGameCount() -> Int {
-        searchedGames.count
+        games.count
     }
     
     func getGame(at index: Int) -> GameModel? {
-        searchedGames[index]
+        games[index]
     }
     
     func getGameId(at index: Int) -> Int? {
-        searchedGames[index].id
+        games[index].id
     }
 }

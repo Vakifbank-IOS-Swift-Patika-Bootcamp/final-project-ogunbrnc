@@ -56,13 +56,16 @@ final class Client {
         return task
     }
     
-    class func getGames(by: String = "", with urlString: String, completion: @escaping (Result<GetGamesResponseModel,Error>)-> Void) {
+    class func getGames(by orderString: String = "", with urlString: String, search searchString: String = "", completion: @escaping (Result<GetGamesResponseModel,Error>)-> Void) {
         var requestURLString = urlString
         if urlString.isEmpty {
             requestURLString = Endpoints.games.stringValue
         }
-        if !by.isEmpty {
-            requestURLString += "&ordering=\(by)"
+        if !orderString.isEmpty {
+            requestURLString += "&ordering=\(orderString)"
+        }
+        if !searchString.isEmpty {
+            requestURLString += "&search=\(searchString)"
         }
         
         guard let requestURL = URL(string: requestURLString) else { return }
