@@ -9,6 +9,7 @@ import UIKit
 
 final class GameListViewController: BaseViewController {
     
+    // MARK: UI Components
     private let searchController = UISearchController()
     private var sortingPickerView  = UIPickerView()
     private let sortButton: UIButton = {
@@ -19,14 +20,7 @@ final class GameListViewController: BaseViewController {
         return button
     }()
     
-    private var currentSorting: String?
-    private var selectedSortingRow: Int = 0
-    private var sortingOptions: [String] = []
-    private var toolBar = UIToolbar()
-   
-    
-    
-    
+    // MARK: IBaction
     @IBOutlet private weak var gameListTableView: UITableView! {
         didSet {
             gameListTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
@@ -36,8 +30,14 @@ final class GameListViewController: BaseViewController {
         }
     }
     
+    // MARK: Variable Declarations
+    private var currentSorting: String?
+    private var selectedSortingRow: Int = 0
+    private var sortingOptions: [String] = []
+    private var toolBar = UIToolbar()
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
-    
+   
+    // MARK: Configure UI Components
     private func configureSearchController(){
        navigationItem.searchController = searchController
        searchController.searchResultsUpdater = self
@@ -74,6 +74,7 @@ final class GameListViewController: BaseViewController {
         self.view.addSubview(toolBar)
     }
     
+    // MARK: 
     @objc func onCancelButtonTapped() {
         toolBar.removeFromSuperview()
         sortingPickerView.removeFromSuperview()
@@ -119,6 +120,9 @@ extension GameListViewController: GameListViewModelDelegate {
         gameListTableView.reloadData()
         indicatorView.stopAnimating()
     }
+    func gamesLoadingError(error: Error) {
+        showAlert(title: "Error occured".localized(), message: error.localizedDescription)
+    }
 }
 
 extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -141,7 +145,7 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == viewModel.getGameCount() - 1 && !viewModel.isSearching() {
-            viewModel.fetchMoreGames()
+            viewModel.fetchGames()
         }
     }
    

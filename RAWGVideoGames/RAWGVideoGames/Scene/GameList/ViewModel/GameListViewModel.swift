@@ -10,7 +10,6 @@ import Foundation
 protocol GameListViewModelProtocol {
     var delegate: GameListViewModelDelegate? { get set }
     func fetchGames()
-    func fetchMoreGames()
     func fetchGamesSorted(by filter: String)
     func isSearching() -> Bool
     func searchGame(with text: String)
@@ -23,15 +22,16 @@ protocol GameListViewModelProtocol {
 
 protocol GameListViewModelDelegate: AnyObject {
     func gamesLoaded()
+    func gamesLoadingError(error: Error)
 }
 
 final class GameListViewModel: GameListViewModelProtocol {
     
     weak var delegate: GameListViewModelDelegate?
     private var searching: Bool = false
-    private var nextURL: String?
-    private var games: [GameModel]?
-    private var searchedGames: [GameModel]?
+    private var nextURL: String? = ""
+    private var games: [GameModel] = []
+    private var searchedGames: [GameModel] = []
     private let sortingOptionsMapping: [String:String] = [
         "Relevance".localized():"relevance",
         "Date added".localized():"created",
@@ -44,9 +44,10 @@ final class GameListViewModel: GameListViewModelProtocol {
     func isSearching() -> Bool {
         searching
     }
+    
     func searchGame(with text: String) {
         searching = true
-        searchedGames = games?.filter {
+        searchedGames = games.filter {
             $0.name.replacingOccurrences(of: " ", with: "").lowercased().contains(text.replacingOccurrences(of: " ", with: "").lowercased())}
         delegate?.gamesLoaded()
     }
@@ -55,7 +56,6 @@ final class GameListViewModel: GameListViewModelProtocol {
         searching = false
         searchedGames = games
         delegate?.gamesLoaded()
-
     }
     
     func getSortingOptions() -> [String] {
@@ -63,62 +63,46 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func fetchGames() {
-        Client.getGames(){ [weak self] result in
-            guard let self = self else { return }
-            self.handleFetchGetGamesResponse(result: result)
-        }
-    }
-    
-    func fetchMoreGames(){
         guard let nextURL = nextURL else { return }
         Client.getGames(with: nextURL){ [weak self] result in
             guard let self = self else { return }
-            self.handleFetchGetMoreGamesResponse(result: result)
+            switch result {
+            case .success(let responseModel):
+                self.nextURL = responseModel.next
+                self.games.append(contentsOf: responseModel.results)
+                self.searchedGames.append(contentsOf: responseModel.results)
+                self.delegate?.gamesLoaded()
+            case .failure(let error):
+                self.delegate?.gamesLoadingError(error: error)
+            }
         }
-   }
+    }
     
     func fetchGamesSorted(by filter: String) {
         guard let sortedParam = sortingOptionsMapping[filter] else { return }
-        Client.getGames(by: sortedParam){ [weak self] result in
+        Client.getGames(by: sortedParam,with: ""){ [weak self] result in
             guard let self = self else { return }
-            self.handleFetchGetGamesResponse(result: result)
-        }
-    }
-    
-    private func handleFetchGetGamesResponse(result: Result<GetGamesResponseModel, Error>) {
-        switch result {
-        case .success(let responseModel):
-            self.nextURL = responseModel.next
-            self.games = responseModel.results
-            self.searchedGames = responseModel.results
-            self.delegate?.gamesLoaded()
-        case .failure(let error):
-            print(error.localizedDescription)
-        }
-    }
-    
-    private func handleFetchGetMoreGamesResponse(result: Result<GetGamesResponseModel, Error>) {
-        switch result {
-        case .success(let responseModel):
-            self.nextURL = responseModel.next
-            self.games?.append(contentsOf: responseModel.results)
-            self.searchedGames?.append(contentsOf: responseModel.results)
-            self.delegate?.gamesLoaded()
-        case .failure(let error):
-            print(error.localizedDescription)
+            switch result {
+            case .success(let responseModel):
+                self.nextURL = responseModel.next
+                self.games = responseModel.results
+                self.searchedGames = responseModel.results
+                self.delegate?.gamesLoaded()
+            case .failure(let error):
+                self.delegate?.gamesLoadingError(error: error)
+            }
         }
     }
     
     func getGameCount() -> Int {
-        searchedGames?.count ?? 0
+        searchedGames.count
     }
     
     func getGame(at index: Int) -> GameModel? {
-        searchedGames?[index]
+        searchedGames[index]
     }
     
     func getGameId(at index: Int) -> Int? {
-        searchedGames?[index].id
+        searchedGames[index].id
     }
-    
 }
