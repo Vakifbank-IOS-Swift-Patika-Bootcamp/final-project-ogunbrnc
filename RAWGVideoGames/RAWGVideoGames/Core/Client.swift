@@ -62,7 +62,7 @@ final class Client {
             requestURLString = Endpoints.games.stringValue
         }
         if !orderString.isEmpty {
-            requestURLString += "&ordering=\(orderString)"
+            requestURLString += "&ordering=-\(orderString)"
         }
         if !searchString.isEmpty {
             requestURLString += "&search=\(searchString)"
