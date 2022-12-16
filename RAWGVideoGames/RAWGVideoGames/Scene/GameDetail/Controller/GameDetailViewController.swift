@@ -88,6 +88,10 @@ final class GameDetailViewController: BaseViewController {
 
 // MARK: GameDetailViewModelDelegate extension
 extension GameDetailViewController: GameDetailViewModelDelegate {
+    func gameLoadingError(error: Error) {
+        showAlert(title: "Error occured".localized(), message: error.localizedDescription)
+    }
+    
     func gameLoaded() {
         
         gameNameLabel.text = viewModel.getGameName()

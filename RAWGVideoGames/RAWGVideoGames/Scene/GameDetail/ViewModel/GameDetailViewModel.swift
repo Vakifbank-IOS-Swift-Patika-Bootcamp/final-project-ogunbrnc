@@ -32,6 +32,7 @@ protocol GameDetailViewModelProtocol {
 
 protocol GameDetailViewModelDelegate: AnyObject {
     func gameLoaded()
+    func gameLoadingError(error: Error)
 }
 
 final class GameDetailViewModel: GameDetailViewModelProtocol {
@@ -40,10 +41,17 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     private var game: GameDetailModel?
     
     func fetchGameDetail(id: Int) {
-        Client.getGameDetail(movieId: id) { [weak self] gameDetail, error in
+        Client.getGameDetail(movieId: id) { [weak self] result in
             guard let self = self else { return }
-            self.game = gameDetail
-            self.delegate?.gameLoaded()
+            switch result {
+            case .success(let gameDetail):
+                self.game = gameDetail
+                self.delegate?.gameLoaded()
+            case .failure(let error):
+                self.delegate?.gameLoadingError(error: error)
+            }
+            
+           
         }
     }
     

@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum ClientError: Error {
+    case failedToFetchData
+}
+
 final class Client {
     
     enum Endpoints {
@@ -78,9 +82,13 @@ final class Client {
         }
     }
     
-    class func getGameDetail(movieId: Int,completion: @escaping (GameDetailModel?, Error?) -> Void) {
-        taskForGETRequest(url: Endpoints.gameDetail(movieId).url, responseType: GameDetailModel.self) { response, error in
-            completion(response, error)
+    class func getGameDetail(movieId: Int,completion: @escaping (Result<GameDetailModel,Error>)-> Void ) {
+        taskForGETRequest(url: Endpoints.gameDetail(movieId).url, responseType: GameDetailModel.self) { responseModel, error in
+            guard let responseModel = responseModel, error == nil else{
+                completion(.failure(ClientError.failedToFetchData))
+                return
+            }
+            completion(.success(responseModel))
         }
     }
     
