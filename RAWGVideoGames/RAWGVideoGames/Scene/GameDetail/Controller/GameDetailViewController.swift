@@ -8,8 +8,9 @@
 import UIKit
 import SDWebImage
 
-class GameDetailViewController: BaseViewController {
+final class GameDetailViewController: BaseViewController {
     
+    // MARK: IBOutlets
     @IBOutlet weak var gameRatingAverageLabel: UILabel!
     @IBOutlet weak var gameRatingCountLabel: UILabel!
     @IBOutlet weak var gameTimeLabel: UILabel!
@@ -21,16 +22,16 @@ class GameDetailViewController: BaseViewController {
     @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var gamePlatformLabel: UILabel!
     @IBOutlet weak var gameGenresLabel: UILabel!
-    @IBOutlet weak var gameDateLabel: UILabel!
     @IBOutlet weak var gameTagsLabel: UILabel!
     @IBOutlet weak var gameDescriptionLabel: UILabel!
     
-    private var favoriteButton = UIButton(type: .custom)
     
+    // MARK: Variable Declarations
+    private var favoriteButton = UIButton(type: .custom)
     var gameId: Int?
     private var viewModel: GameDetailViewModelProtocol = GameDetailViewModel()
     
-    
+    // MARK: Selector Functions
     @objc func addFavoriteTapped() {
         viewModel.addGameToFavoriteList {result in
             if result {
@@ -51,6 +52,7 @@ class GameDetailViewController: BaseViewController {
         }
     }
 
+    // MARK: Configure UI Components
     private func configureFavoriteButton() {
         
         if viewModel.isItFavoriteGame() {
@@ -69,6 +71,7 @@ class GameDetailViewController: BaseViewController {
         
     }
     
+    // MARK: Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let id = gameId else { return }
@@ -82,7 +85,13 @@ class GameDetailViewController: BaseViewController {
     
     
 }
+
+// MARK: GameDetailViewModelDelegate extension
 extension GameDetailViewController: GameDetailViewModelDelegate {
+    func gameLoadingError(error: Error) {
+        showAlert(title: "Error occured".localized(), message: error.localizedDescription)
+    }
+    
     func gameLoaded() {
         
         gameNameLabel.text = viewModel.getGameName()

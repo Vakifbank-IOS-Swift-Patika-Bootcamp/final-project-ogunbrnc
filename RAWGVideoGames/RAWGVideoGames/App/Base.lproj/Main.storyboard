@@ -317,8 +317,8 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JY0-Jo-xp6">
                                                 <rect key="frame" x="20" y="20.000000000000028" width="353" height="501.66666666666674"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="NpX-33-aSn">
-                                                        <rect key="frame" x="0.0" y="1.6666666666666572" width="353" height="253"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NpX-33-aSn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="256"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="256" id="aqI-U8-Gdd"/>
                                                         </constraints>
@@ -624,7 +624,6 @@
         <image name="gamecontroller" catalog="system" width="128" height="79"/>
         <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
         <image name="note" catalog="system" width="128" height="107"/>
-        <image name="photo" catalog="system" width="128" height="93"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="timer" catalog="system" width="128" height="123"/>

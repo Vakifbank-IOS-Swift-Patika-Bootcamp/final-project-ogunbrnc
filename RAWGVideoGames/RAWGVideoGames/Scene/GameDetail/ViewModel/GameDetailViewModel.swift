@@ -32,18 +32,32 @@ protocol GameDetailViewModelProtocol {
 
 protocol GameDetailViewModelDelegate: AnyObject {
     func gameLoaded()
+    func gameLoadingError(error: Error)
 }
 
 final class GameDetailViewModel: GameDetailViewModelProtocol {
     
     weak var delegate: GameDetailViewModelDelegate?
     private var game: GameDetailModel?
+    private var databaseManager: DatabaseManager
+    
+    init(game: GameDetailModel? = nil, databaseManager: DatabaseManager = CoreDataManager.shared) {
+        self.game = game
+        self.databaseManager = databaseManager
+    }
     
     func fetchGameDetail(id: Int) {
-        Client.getGameDetail(movieId: id) { [weak self] gameDetail, error in
+        Client.getGameDetail(movieId: id) { [weak self] result in
             guard let self = self else { return }
-            self.game = gameDetail
-            self.delegate?.gameLoaded()
+            switch result {
+            case .success(let gameDetail):
+                self.game = gameDetail
+                self.delegate?.gameLoaded()
+            case .failure(let error):
+                self.delegate?.gameLoadingError(error: error)
+            }
+            
+           
         }
     }
     
@@ -106,11 +120,12 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func isItFavoriteGame() -> Bool {
-        CoreDataManager.shared.isFavorite(id: game!.id)
+        guard let gameId = game?.id else { return false }
+        return databaseManager.isFavorite(id: gameId)
     }
     
     func addGameToFavoriteList(completion: (Bool) -> ()) {
-        if let favoriteGame = CoreDataManager.shared.addToFavorite(id: game!.id, gameName: game!.name, gameImageURL: game!.imageURL) {
+        if let favoriteGame = databaseManager.addToFavorite(id: game!.id, gameName: game!.name, gameImageURL: game!.imageURL) {
             let favoriteGameDatadict:[String: FavoriteGame] = ["favoriteGame": favoriteGame]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameAdded"), object: nil, userInfo: favoriteGameDatadict)
             completion(true)
@@ -120,7 +135,7 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func deleteGameFromFavoriteList(completion: (Bool) -> ()) {
-        if CoreDataManager.shared.deleteFromFavorite(id: game!.id) {
+        if databaseManager.deleteFromFavorite(id: game!.id) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil, userInfo: nil)
             completion(true)
         } else {
