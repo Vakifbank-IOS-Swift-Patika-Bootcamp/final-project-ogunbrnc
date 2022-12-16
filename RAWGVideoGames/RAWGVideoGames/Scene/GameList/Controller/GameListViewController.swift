@@ -42,8 +42,9 @@ final class GameListViewController: BaseViewController {
        navigationItem.searchController = searchController
        searchController.searchResultsUpdater = self
        searchController.searchBar.delegate = self
-           
-   }
+        
+    }
+    
     private func configurePickerview(){
         sortingOptions = viewModel.getSortingOptions()
         
@@ -74,6 +75,11 @@ final class GameListViewController: BaseViewController {
         self.view.addSubview(toolBar)
     }
     
+    private func configureNavigationButton() {
+        sortButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+    }
+    
     // MARK: Selector Functions
     @objc func onCancelButtonTapped() {
         toolBar.removeFromSuperview()
@@ -99,6 +105,8 @@ final class GameListViewController: BaseViewController {
     
     // MARK: Life Cycle Methods
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
@@ -106,12 +114,8 @@ final class GameListViewController: BaseViewController {
         indicatorView.startAnimating()
         viewModel.fetchGames()
         
-        
-        sortButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
-
         configureSearchController()
-        
+        configureNavigationButton()
 
     }
 }
