@@ -9,6 +9,7 @@ import UIKit
 
 final class GameListViewController: BaseViewController {
     
+    // MARK: UI Components
     private let searchController = UISearchController()
     private var sortingPickerView  = UIPickerView()
     private let sortButton: UIButton = {
@@ -19,14 +20,7 @@ final class GameListViewController: BaseViewController {
         return button
     }()
     
-    private var currentSorting: String?
-    private var selectedSortingRow: Int = 0
-    private var sortingOptions: [String] = []
-    private var toolBar = UIToolbar()
-   
-    
-    
-    
+    // MARK: IBaction
     @IBOutlet private weak var gameListTableView: UITableView! {
         didSet {
             gameListTableView.register(GameListTableViewCell.self, forCellReuseIdentifier: GameListTableViewCell.identifier)
@@ -36,14 +30,21 @@ final class GameListViewController: BaseViewController {
         }
     }
     
+    // MARK: Variable Declarations
+    private var currentSorting: String?
+    private var selectedSortingRow: Int = 0
+    private var sortingOptions: [String] = []
+    private var toolBar = UIToolbar()
     private var viewModel: GameListViewModelProtocol = GameListViewModel()
-    
+   
+    // MARK: Configure UI Components
     private func configureSearchController(){
        navigationItem.searchController = searchController
        searchController.searchResultsUpdater = self
        searchController.searchBar.delegate = self
-           
-   }
+        
+    }
+    
     private func configurePickerview(){
         sortingOptions = viewModel.getSortingOptions()
         
@@ -74,6 +75,12 @@ final class GameListViewController: BaseViewController {
         self.view.addSubview(toolBar)
     }
     
+    private func configureNavigationButton() {
+        sortButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+    }
+    
+    // MARK: Selector Functions
     @objc func onCancelButtonTapped() {
         toolBar.removeFromSuperview()
         sortingPickerView.removeFromSuperview()
@@ -92,10 +99,13 @@ final class GameListViewController: BaseViewController {
     }
     
     @objc func addTapped() {
-        
         configurePickerview()
         configureToolbar()
     }
+    
+    // MARK: Life Cycle Methods
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,23 +114,24 @@ final class GameListViewController: BaseViewController {
         indicatorView.startAnimating()
         viewModel.fetchGames()
         
-        
-        sortButton.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
-
         configureSearchController()
-        
+        configureNavigationButton()
 
     }
 }
 
+// MARK: GameListViewModelDelegate extension
 extension GameListViewController: GameListViewModelDelegate {
     func gamesLoaded() {
         gameListTableView.reloadData()
         indicatorView.stopAnimating()
     }
+    func gamesLoadingError(error: Error) {
+        showAlert(title: "Error occured".localized(), message: error.localizedDescription)
+    }
 }
 
+// MARK: Tableview Delegate, Datasource extension
 extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getGameCount()
@@ -140,23 +151,27 @@ extension GameListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.getGameCount() - 1 {
-            viewModel.fetchMoreGames()
+        if indexPath.row == viewModel.getGameCount() - 1 && !viewModel.isSearching() {
+            viewModel.fetchGames()
+        }
+        else if indexPath.row == viewModel.getGameCount() - 1 && viewModel.isSearching() {
+            viewModel.fetchSearchedGames()
         }
     }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 175
     }
 }
 
+// MARK: Searchbar Delegate extension
 extension GameListViewController: UISearchResultsUpdating, UISearchBarDelegate{
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else {
             return
         }
         if !(text.isEmpty) {
-            viewModel.searchGame(with: text)
+            viewModel.fetchSearchedGames(with: text)
         }
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -165,15 +180,16 @@ extension GameListViewController: UISearchResultsUpdating, UISearchBarDelegate{
             return
         }
         if !(text.isEmpty) {
-            viewModel.searchGame(with: text)
+            viewModel.fetchSearchedGames(with: text)
         }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchController.isActive = false
-        viewModel.searchGameCancel()
+        viewModel.fetchSearchedGamesCancel()
     }
 }
 
+// MARK: Pickerview Delegate, Datasource extension
 extension GameListViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

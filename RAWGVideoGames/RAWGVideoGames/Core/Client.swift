@@ -56,13 +56,21 @@ final class Client {
         return task
     }
     
-    class func getGames(by: String = "", with paginationURLString: String = Endpoints.games.stringValue, completion: @escaping (Result<GetGamesResponseModel,Error>)-> Void) {
-        var requestURL = paginationURLString
-        if by != "" {
-            requestURL += "&ordering=\(by)"
+    class func getGames(by orderString: String = "", with urlString: String, search searchString: String = "", completion: @escaping (Result<GetGamesResponseModel,Error>)-> Void) {
+        var requestURLString = urlString
+        if urlString.isEmpty {
+            requestURLString = Endpoints.games.stringValue
         }
+        if !orderString.isEmpty {
+            requestURLString += "&ordering=-\(orderString)"
+        }
+        if !searchString.isEmpty {
+            requestURLString += "&search=\(searchString)"
+        }
+        
+        guard let requestURL = URL(string: requestURLString) else { return }
        
-        taskForGETRequest(url: URL(string: requestURL)! , responseType: GetGamesResponseModel.self) { responseModel, error in
+        taskForGETRequest(url: requestURL , responseType: GetGamesResponseModel.self) { responseModel, error in
             guard let responseModel = responseModel else{
                 return
             }
