@@ -53,7 +53,6 @@ final class GameListViewModel: GameListViewModelProtocol {
     
     func fetchGames() {
         guard let nextURL = nextURL else { return }
-        print("Next URL: \(nextURL)")
         Client.getGames(by:sortParam,with: nextURL){ [weak self] result in
             guard let self = self else { return }
             switch result {

@@ -387,16 +387,8 @@
 				71C140EC2943D0AD00B85AD6 /* Controller */,
 				71C140EB2943D0AA00B85AD6 /* Model */,
 				71C140EA2943D0A600B85AD6 /* ViewModel */,
-				71C140E92943D0A200B85AD6 /* View */,
 			);
 			path = GameDetail;
-			sourceTree = "<group>";
-		};
-		71C140E92943D0A200B85AD6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		71C140EA2943D0A600B85AD6 /* ViewModel */ = {
