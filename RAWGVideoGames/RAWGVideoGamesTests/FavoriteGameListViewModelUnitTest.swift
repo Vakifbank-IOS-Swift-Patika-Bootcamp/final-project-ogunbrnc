@@ -35,19 +35,9 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
         guard let favoriteGame = game as? FavoriteGame,
               let favoriteGameDeleted = deletedGame as? FavoriteGame else { return }
         
-        games = [4,favoriteGameDeleted]
+        games = [favoriteGame,favoriteGameDeleted]
         viewModel = FavoriteGameListViewModel(games: games)
         viewModel.delegate = self
-    }
-    
-    func testFetchGamesIndexZero() {
-        fetchExpectation = expectation(description: "fetchGame")
-                
-        viewModel.fetchGames()
-        waitForExpectations(timeout: 10)
-        
-        XCTAssertEqual(viewModel.getGameId(at: 0),3498)
-
     }
     
     func testNewGameAddedToFavorites() {
@@ -62,6 +52,9 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
         let lastIndex = viewModel.getGameCount() - 1
         
         XCTAssertEqual(viewModel.getGameId(at: lastIndex), Int(favoriteGame.gameId))
+        
+        // remove last favorite item
+        viewModel.deleteGameFromFavoriteList(index: lastIndex) { result in }
         
     }
     
