@@ -5,6 +5,7 @@
 //  Created by Ogün Birinci on 16.12.2022.
 //
 
+@testable import RAWGVideoGames
 import XCTest
 
 final class GameDetailViewModelUnitTest: XCTestCase {
@@ -190,6 +191,10 @@ final class GameDetailViewModelUnitTest: XCTestCase {
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
+    func gameLoadingError(error: Error) {
+        fetchExpectation.fulfill()
+    }
+    
     func gameLoaded() {
         fetchExpectation.fulfill()
     }

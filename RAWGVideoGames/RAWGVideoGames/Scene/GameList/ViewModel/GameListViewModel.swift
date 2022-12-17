@@ -53,6 +53,7 @@ final class GameListViewModel: GameListViewModelProtocol {
     
     func fetchGames() {
         guard let nextURL = nextURL else { return }
+        print(sortParam)
         Client.getGames(by:sortParam,with: nextURL){ [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -76,10 +77,11 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func fetchSearchedGames(with text: String) {
+        print(text)
         searching = true
         //if we call fetchSearchedGames function to get more game with same search param, this will be empty and we will use current searchParam
         if !text.isEmpty {
-            searchParam = text.replacingOccurrences(of: " ", with: "").lowercased()
+            searchParam = text.replacingOccurrences(of: " ", with: "-").lowercased()
         }
         guard let nextURL = nextURL else { return }
         Client.getGames(with: nextURL,search: searchParam){ [weak self] result in
@@ -119,10 +121,16 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func getGame(at index: Int) -> GameModel? {
-        games[index]
+        if games.count > index {
+            return games[index]
+        }
+        return nil
     }
     
     func getGameId(at index: Int) -> Int? {
-        games[index].id
+        if games.count > index {
+            return games[index].id
+        }
+        return nil
     }
 }
