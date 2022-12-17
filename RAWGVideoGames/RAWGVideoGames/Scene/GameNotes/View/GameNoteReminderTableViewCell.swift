@@ -94,20 +94,13 @@ class GameNoteReminderTableViewCell: UITableViewCell {
         
         let currentDate = Date.now
         gameNameLabel.text = model.gameName
-        gameNoteDateLabel.text = dateToString(noteDate)
+        gameNoteDateLabel.text = noteDate.toFormattedString()
         gameNoteContentLabel.text = model.noteContent
         let imageName = currentDate > noteScheduledDate  ? "checkmark.circle" : "clock"
         gameReminderScheduledTimeImageView.image = UIImage(systemName: imageName)
         
     }
-    
-    // dateToString function take date argument and convert to
-    private func dateToString(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm E, d MMM y"
-        return dateFormatter.string(from: date)
-    }
-    
+
     // MARK: Life Cycle Methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

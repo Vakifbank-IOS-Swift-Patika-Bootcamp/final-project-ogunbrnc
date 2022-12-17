@@ -38,7 +38,6 @@ class GameNoteListTableViewCell: UITableViewCell {
         return label
     }()
     
-    
     // MARK: Configure UI Components
     private func configureConstraints() {
             
@@ -75,16 +74,9 @@ class GameNoteListTableViewCell: UITableViewCell {
     // Season and episode will be used seperated by "." to be more readable.
     func configure(with model: GameNote){
         gameNameLabel.text = model.gameName
-        gameNoteDateLabel.text = dateToString(model.noteDate ?? Date())
+        gameNoteDateLabel.text = model.noteDate?.toFormattedString()
         gameNoteContentLabel.text = model.noteContent
         
-    }
-    
-    // dateToString function take date argument and convert to
-    private func dateToString(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm E, d MMM y"
-        return dateFormatter.string(from: date)
     }
     
     // MARK: Life Cycle Methods

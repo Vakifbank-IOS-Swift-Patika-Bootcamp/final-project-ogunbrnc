@@ -35,11 +35,15 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     
     private var notificationManager: NotificationProtocol
     weak var delegate: GameNoteListViewModelDelegate?
-    
+    private var databaseManager: DatabaseManager
+
     private var gameNotes: [GameNote]?
     private var gameNotesHasReminder: [GameNote]?
     
-    init(notificationManager: NotificationProtocol = LocalNotificationManager.shared, gameNotes: [GameNote]? = nil) {
+    init(databaseManager: DatabaseManager = CoreDataManager.shared,
+         notificationManager: NotificationProtocol = LocalNotificationManager.shared,
+         gameNotes: [GameNote]? = nil) {
+        self.databaseManager = databaseManager
         self.notificationManager = notificationManager
         self.gameNotes = gameNotes
     }
@@ -50,7 +54,7 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     }
     
     func fetchGameNotes() {
-        let gameNotesReminders = CoreDataManager.shared.getNotes()
+        let gameNotesReminders = databaseManager.getNotes()
         gameNotes = gameNotesReminders.filter { !$0.noteHasReminder}
         gameNotesHasReminder = gameNotesReminders.filter { $0.noteHasReminder }
         delegate?.gameNotesLoaded()
@@ -105,7 +109,7 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     }
     
     func delete(id: UUID){
-        let success = CoreDataManager.shared.deleteNote(id: id)
+        let success = databaseManager.deleteNote(id: id)
         if success {
             //since game id string is equal to empty string after deletion from coredata, we remove the one whose id is equal to empty string.
             if let index = gameNotes?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {
@@ -115,7 +119,7 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         }
     }
     func deleteReminder(id: UUID) {
-        let success = CoreDataManager.shared.deleteNote(id: id)
+        let success = databaseManager.deleteNote(id: id)
         if success {
             notificationManager.deleteScheduledNotification(id: id)
             if let index = gameNotesHasReminder?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {

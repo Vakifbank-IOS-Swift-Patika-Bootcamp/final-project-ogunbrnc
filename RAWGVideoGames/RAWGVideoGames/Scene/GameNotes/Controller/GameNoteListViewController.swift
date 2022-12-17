@@ -7,12 +7,13 @@
 
 import UIKit
 
-class GameNoteListViewController: UIViewController {
+final class GameNoteListViewController: BaseViewController {
     
-    //MARK: UI Components
+    //MARK: IBOutlets
     @IBOutlet private weak var notesTableView: UITableView!
     @IBOutlet private weak var notesRemindersSegmentedControl: UISegmentedControl!
     
+    //MARK: UI Components
     private let floatingActionButton: UIButton = {
         let floatingButton = UIButton()
         floatingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -33,10 +34,11 @@ class GameNoteListViewController: UIViewController {
         return label
     }()
     
+    //MARK: Variable Declarations
     private var viewModel: GameNoteListViewModelProtocol = GameNoteListViewModel()
 
     
-    // MARK: Configure Views
+    // MARK: Configure UI Components
     private func configureSubViews() {
         view.addSubview(floatingActionButton)
     }
@@ -94,13 +96,12 @@ class GameNoteListViewController: UIViewController {
         notesRemindersSegmentedControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
     }
     
+    //MARK: Selector Functions
     @objc func handleSegmentChange() {
         configureNoNoteLabel()
         notesTableView.reloadData()
     }
     
-
-    // MARK: UIButton Action
     @objc private func didTapAddNote() {
         guard let noteAddingEditingViewController = self.storyboard?.instantiateViewController(withIdentifier: "GameNoteAddingEditingViewController") as? GameNoteAddingEditingViewController else {
             fatalError("View Controller not found")
@@ -109,6 +110,7 @@ class GameNoteListViewController: UIViewController {
         navigationController?.present(noteAddingEditingViewController, animated: true)
     }
 
+    //MARK: Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -125,13 +127,14 @@ class GameNoteListViewController: UIViewController {
 
 }
 
+// MARK: GameNoteListViewModelDelegate Extension
 extension GameNoteListViewController: GameNoteListViewModelDelegate {
     func gameNotesLoaded() {
         notesTableView.reloadData()
     }
 }
 
-//MARK: TableView Extension
+//MARK: TableView Delegate, DataSource Extension
 extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if notesRemindersSegmentedControl.selectedSegmentIndex == 0 {
@@ -173,6 +176,7 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
         } else {
             note = viewModel.getGameNoteHasReminder(at: indexPath.row)
             if !viewModel.isEditable(note: note!){
+                showAlert(title: "Not Editable".localized(), message: "Out of date reminder cannot be edited".localized())
                 return
             }
         }
@@ -209,6 +213,7 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
     }
 }
 
+//MARK: GameNoteAddingEditingViewControllerDelegate Extension
 extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegate {
     func didAddReminder(gameNote: GameNote) {
         viewModel.add(reminder: gameNote)

@@ -16,7 +16,14 @@ protocol DatabaseManager {
     func getNote(noteId: UUID) -> GameNote?
     func getNotes() -> [GameNote]
     func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date?) -> GameNote?
-    func updateNote(noteContent: String,noteScheduledReminderDate: Date?,gameNoteId: UUID)
+    func updateNote(noteContent: String,noteScheduledReminderDate: Date? ,gameNoteId: UUID) -> GameNote?
+    func deleteNote(id: UUID) -> Bool
+}
+
+extension DatabaseManager {
+    func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil ,gameNoteId: UUID) -> GameNote? {
+        updateNote(noteContent: noteContent, noteScheduledReminderDate: noteScheduledReminderDate, gameNoteId: gameNoteId)
+    }
 }
 
 extension DatabaseManager {
