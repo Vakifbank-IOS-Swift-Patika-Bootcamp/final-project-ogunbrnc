@@ -96,12 +96,34 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         XCTAssertEqual(viewModel.getGameRatingCount(), 6040)
     }
     
+    func testIsItFavoriteGame() {
+        XCTAssertFalse(viewModel.isItFavoriteGame())
+        
+        viewModel.addGameToFavoriteList { result in
+            if result {
+                XCTAssertTrue(viewModel.isItFavoriteGame())
+            }
+        }
+        
+        viewModel.deleteGameFromFavoriteList { result in
+            if result {
+                XCTAssertFalse(viewModel.isItFavoriteGame())
+            }
+        }
+        
+    }
+    
     func testAddGameToFavoriteList() {
         viewModel.addGameToFavoriteList { result in
             XCTAssertEqual(result, true)
         }
     }
     
+    func testDeleteGameFromFavoriteList() {
+        viewModel.deleteGameFromFavoriteList { result in
+            XCTAssertEqual(result, true)
+        }
+    }
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
