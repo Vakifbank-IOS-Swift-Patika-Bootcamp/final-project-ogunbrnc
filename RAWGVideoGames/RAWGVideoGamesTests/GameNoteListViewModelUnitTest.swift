@@ -52,6 +52,11 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         XCTAssertTrue(viewModel.isEditable(note: noteWithReminder))
     }
     
+    func testIsEditableWithoutReminder() {
+        guard let note = gameNote as? GameNote else { return }
+        XCTAssertFalse(viewModel.isEditable(note: note))
+    }
+    
     
 }
 
