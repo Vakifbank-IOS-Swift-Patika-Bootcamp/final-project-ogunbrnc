@@ -124,6 +124,29 @@ final class GameDetailViewModelUnitTest: XCTestCase {
             XCTAssertEqual(result, true)
         }
     }
+    
+    func testGameDetailsWithInvalidID() {
+        let viewModelWithInvalidID =  GameDetailViewModel()
+
+        XCTAssertNil(viewModelWithInvalidID.getGameImageURL())
+        XCTAssertEqual(viewModelWithInvalidID.getGameName(), "")
+        XCTAssertEqual(viewModelWithInvalidID.getGamePlatform(), "")
+        XCTAssertEqual(viewModelWithInvalidID.getGameGenre(), "")
+        XCTAssertEqual(viewModelWithInvalidID.getGameReleaseDate(), "")
+        XCTAssertEqual(viewModelWithInvalidID.getGameTag(),"")
+        XCTAssertEqual(viewModelWithInvalidID.getGameDescription(), "")
+        XCTAssertEqual(viewModelWithInvalidID.getGameRatingExceptionalCount(), 0)
+        XCTAssertEqual(viewModelWithInvalidID.getGameRatingRecommendedCount(), 0)
+        XCTAssertEqual(viewModelWithInvalidID.getGameRatingMehCount(), 0)
+        XCTAssertEqual(viewModelWithInvalidID.getGameRatingSkipCount(), 0)
+        XCTAssertEqual(viewModelWithInvalidID.getGameRatingAverage(), 0)
+        XCTAssertEqual(viewModelWithInvalidID.getGameTime(), 0)
+        XCTAssertEqual(viewModelWithInvalidID.getGameRatingCount(), 0)
+
+
+    }
+    
+    
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
