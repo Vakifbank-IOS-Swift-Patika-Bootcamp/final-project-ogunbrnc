@@ -15,19 +15,20 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
     var viewModel: FavoriteGameListViewModel!
     var fetchExpectation: XCTestExpectation!
     var games: [FavoriteGame]?
+    var game: NSManagedObject!
     
     override func setUpWithError() throws {
         let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
-        let game = NSManagedObject(entity: entity, insertInto: managedContext)
+        game = NSManagedObject(entity: entity, insertInto: managedContext)
         
         game.setValue(3498, forKeyPath: "gameId")
         game.setValue("https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg", forKey: "imageURL")
         game.setValue("Grand Theft Auto V", forKey: "name")
-        guard let gameEntity = game as? FavoriteGame else { return }
+        guard let favoriteGame = game as? FavoriteGame else { return }
         
         games = [FavoriteGame(entity: entity, insertInto: managedContext)]
-        viewModel = FavoriteGameListViewModel(games: [gameEntity])
+        viewModel = FavoriteGameListViewModel(games: [favoriteGame])
         viewModel.delegate = self
     }
     
@@ -39,6 +40,21 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
         
         XCTAssertEqual(viewModel.getGameId(at: 0),3498)
 
+    }
+    
+    func testNewGameAddedToFavorites() {
+        fetchExpectation = expectation(description: "fetchGame")
+
+        guard let favoriteGame = game as? FavoriteGame else { return }
+
+        viewModel.newGameAddedToFavorites(game: favoriteGame)
+        
+        waitForExpectations(timeout: 10)
+
+        let lastIndex = viewModel.getGameCount() - 1
+        
+        XCTAssertEqual(viewModel.getGameId(at: lastIndex), Int(favoriteGame.gameId))
+        
     }
 }
 
