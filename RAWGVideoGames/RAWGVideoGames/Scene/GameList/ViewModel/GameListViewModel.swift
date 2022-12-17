@@ -32,12 +32,11 @@ protocol GameListViewModelDelegate: AnyObject {
 final class GameListViewModel: GameListViewModelProtocol {
     
     weak var delegate: GameListViewModelDelegate?
-    private var searching: Bool = false
-    private var sortParam: String = ""
-    private var searchParam: String = ""
-    private var nextURL: String? = ""
-    private var games: [GameModel] = []
-    private var tempGames: [GameModel] = []
+    private var searching: Bool
+    private var sortParam: String
+    private var searchParam: String
+    private var nextURL: String?
+    private var games: [GameModel]
     private let sortingOptionsMapping: [String:String] = [
         "Relevance".localized():"relevance",
         "Date added".localized():"created",
@@ -47,13 +46,24 @@ final class GameListViewModel: GameListViewModelProtocol {
         "Average rating".localized():"rating",
     ]
     
+    init(games: [GameModel] = [],
+         nextURL: String? = "",
+         searchParam: String = "",
+         sortParam: String = "",
+         searching: Bool = false ) {
+        self.games = games
+        self.nextURL = nextURL
+        self.searchParam = searchParam
+        self.sortParam = sortParam
+        self.searching = searching
+    }
+    
     func getSortingOptions() -> [String] {
         return [String] (sortingOptionsMapping.keys)
     }
     
     func fetchGames() {
         guard let nextURL = nextURL else { return }
-        print(sortParam)
         Client.getGames(by:sortParam,with: nextURL){ [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -77,7 +87,6 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func fetchSearchedGames(with text: String) {
-        print(text)
         searching = true
         //if we call fetchSearchedGames function to get more game with same search param, this will be empty and we will use current searchParam
         if !text.isEmpty {

@@ -11,10 +11,12 @@ import XCTest
 final class GameListViewModelUnitTest: XCTestCase {
 
     var viewModel: GameListViewModel!
+    var viewModelInvalidNextURL: GameListViewModel!
     var fetchExpectation: XCTestExpectation!
     
     override func setUpWithError() throws {
         viewModel = GameListViewModel()
+        viewModelInvalidNextURL = GameListViewModel(nextURL: nil)
         viewModel.delegate = self
     }
     
@@ -28,6 +30,15 @@ final class GameListViewModelUnitTest: XCTestCase {
         
         let itemAtZero = viewModel.getGame(at: 0)
         XCTAssertEqual(itemAtZero?.id, 3498)
+    }
+    
+    func testFetchGameInvalidNextURLIndexZero() {
+        XCTAssertNil(viewModelInvalidNextURL.getGame(at: 0))
+        
+        viewModelInvalidNextURL.fetchGames()
+        
+        let itemAtZero = viewModelInvalidNextURL.getGame(at: 0)
+        XCTAssertNil(itemAtZero?.id)
     }
     
     func testFetchGamesSortedIndexZero() {
@@ -52,6 +63,18 @@ final class GameListViewModelUnitTest: XCTestCase {
     }
     
     func testFetchSearchedGamesIndexZero() {
+        fetchExpectation = expectation(description: "fetchGames")
+        
+        XCTAssertNil(viewModel.getGame(at: 0))
+        
+        viewModel.fetchSearchedGames(with: "Grand Theft Auto Vice")
+        waitForExpectations(timeout: 10)
+        
+        let itemAtZero = viewModel.getGame(at: 0)
+        XCTAssertEqual(itemAtZero?.id, 430)
+    }
+    
+    func testFetchSearchedGamesInvalidNextURLIndexZero() {
         fetchExpectation = expectation(description: "fetchGames")
         
         XCTAssertNil(viewModel.getGame(at: 0))
