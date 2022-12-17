@@ -29,6 +29,18 @@ final class GameDetailViewModelFetchUnitTest: XCTestCase {
         XCTAssertEqual(viewModel.getGameName(), "Grand Theft Auto V")
 
     }
+    
+    func testFetchGameDetailInvalidID() {
+        fetchExpectation = expectation(description: "fetchGame")
+
+        viewModel.fetchGameDetail(id: 12345678)
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertEqual(viewModel.getGameName(), "")
+
+    }
+    
+    
 }
 
 extension GameDetailViewModelFetchUnitTest: GameDetailViewModelDelegate {

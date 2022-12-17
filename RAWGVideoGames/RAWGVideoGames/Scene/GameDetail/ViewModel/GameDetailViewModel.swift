@@ -56,8 +56,6 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
             case .failure(let error):
                 self.delegate?.gameLoadingError(error: error)
             }
-            
-           
         }
     }
     
