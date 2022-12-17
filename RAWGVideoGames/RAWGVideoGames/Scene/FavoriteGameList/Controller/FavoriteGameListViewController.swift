@@ -9,6 +9,7 @@ import UIKit
 
 class FavoriteGameListViewController: UIViewController {
 
+    // MARK: IBOutlets
     @IBOutlet weak var favoriteGamesTableView: UITableView! {
         didSet {
             favoriteGamesTableView.register(FavoriteGameListTableViewCell.self, forCellReuseIdentifier: FavoriteGameListTableViewCell.identifier)
@@ -17,8 +18,8 @@ class FavoriteGameListViewController: UIViewController {
             favoriteGamesTableView.estimatedRowHeight = UITableView.automaticDimension
         }
     }
-    private var viewModel: FavoriteGameListViewModelProtocol = FavoriteGameListViewModel()
     
+    // MARK: UI Components
     private let noFavoriteGameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +30,10 @@ class FavoriteGameListViewController: UIViewController {
         return label
     }()
     
+    // MARK: Variable Declarations
+    private var viewModel: FavoriteGameListViewModelProtocol = FavoriteGameListViewModel()
+
+    // MARK: UI Configurations
     private func configureNoNoteLabel(){
         if viewModel.getGameCount() == 0 {
             view.addSubview(noFavoriteGameLabel)
@@ -43,6 +48,7 @@ class FavoriteGameListViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameDeleted), name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil)
     }
 
+    // MARK: Selector Functions
     @objc func favoriteGameAdded(_ notification: NSNotification) {
         //game is added to the favorite list for the first time
         if viewModel.getGameCount() == 0 {
@@ -61,7 +67,7 @@ class FavoriteGameListViewController: UIViewController {
             configureNoNoteLabel()
         }
     }
-
+    // MARK: Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,13 +78,14 @@ class FavoriteGameListViewController: UIViewController {
     }
     
 }
-
+// MARK: FavoriteGameListViewModelDelegate Extension
 extension FavoriteGameListViewController: FavoriteGameListViewModelDelegate {
     func gamesLoaded() {
         favoriteGamesTableView.reloadData()
     }
 }
 
+// MARK: TableView Delegate, DataSource Extension
 extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getGameCount()

@@ -212,7 +212,6 @@
 			children = (
 				71A5D4262944B9CA000B4E53 /* View */,
 				71A5D4252944B9C6000B4E53 /* ViewModel */,
-				71A5D4242944B9C2000B4E53 /* Model */,
 				71A5D4232944B9BD000B4E53 /* Controller */,
 			);
 			path = FavoriteGameList;
@@ -224,13 +223,6 @@
 				716727542944BA4B00F8527F /* FavoriteGameListViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		71A5D4242944B9C2000B4E53 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		71A5D4252944B9C6000B4E53 /* ViewModel */ = {

@@ -43,13 +43,17 @@ final class GameDetailViewController: BaseViewController {
     }
     
     @objc func removeFavoriteTapped() {
-        viewModel.deleteGameFromFavoriteList {result in
+        viewModel.deleteGameFromFavoriteList { result in
             if result {
                 favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
                 favoriteButton.removeTarget(nil, action: nil, for: .allEvents)
                 favoriteButton.addTarget(self, action: #selector(addFavoriteTapped), for: .touchUpInside)
             }
         }
+    }
+    
+    @objc func favoriteGameDeleted() {
+        configureFavoriteButton()
     }
 
     // MARK: Configure UI Components
@@ -77,6 +81,8 @@ final class GameDetailViewController: BaseViewController {
         guard let id = gameId else { return }
         
         indicatorView.startAnimating()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameDeleted), name: NSNotification.Name(rawValue: "FavoriteGameDeletedInList"), object: nil)
 
         viewModel.delegate = self
         viewModel.fetchGameDetail(id: id)
