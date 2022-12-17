@@ -71,9 +71,8 @@ final class Client {
         if !searchString.isEmpty {
             requestURLString += "&search=\(searchString)"
         }
-        
+        print(requestURLString)
         guard let requestURL = URL(string: requestURLString) else { return }
-       
         taskForGETRequest(url: requestURL , responseType: GetGamesResponseModel.self) { responseModel, error in
             guard let responseModel = responseModel else{
                 return
