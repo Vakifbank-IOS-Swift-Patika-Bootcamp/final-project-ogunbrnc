@@ -84,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		7142B979294DF87B00E5A033 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		7142B97D294DFCDB00E5A033 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
 		716727542944BA4B00F8527F /* FavoriteGameListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListViewController.swift; sourceTree = "<group>"; };
 		716727562944BCD500F8527F /* FavoriteGameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListViewModel.swift; sourceTree = "<group>"; };
 		7167275A2944C5F600F8527F /* FavoriteGameListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListTableViewCell.swift; sourceTree = "<group>"; };
@@ -93,7 +94,6 @@
 		7167276929453F6400F8527F /* GameNotAddingEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNotAddingEditingViewModel.swift; sourceTree = "<group>"; };
 		7167276B29460EFD00F8527F /* GameNoteListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNoteListTableViewCell.swift; sourceTree = "<group>"; };
 		7167276E29467DBB00F8527F /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		7167277029467EBF00F8527F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
 		7167277129467EBF00F8527F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		7167277B2946817300F8527F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7167277D2946817600F8527F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -638,7 +638,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				71C1400A29432BE000B85AD6 /* Base */,
-				7167277029467EBF00F8527F /* tr */,
+				7142B97D294DFCDB00E5A033 /* tr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
