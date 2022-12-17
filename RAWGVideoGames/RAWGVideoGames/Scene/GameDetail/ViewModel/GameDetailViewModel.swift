@@ -56,8 +56,6 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
             case .failure(let error):
                 self.delegate?.gameLoadingError(error: error)
             }
-            
-           
         }
     }
     
@@ -83,8 +81,10 @@ final class GameDetailViewModel: GameDetailViewModelProtocol {
     }
     
     func getGameTag() -> String {
-        let tagCount = 5
-        return game?.tags[0..<tagCount].map{$0.name}.joined(separator: ",") ?? ""
+        let tagCount = game?.tags.count ?? 0
+        let numberOfTagsToShow = tagCount >= 5 ? 5 : tagCount
+        
+        return game?.tags[0..<numberOfTagsToShow].map{$0.name}.joined(separator: ",") ?? ""
     }
     
     func getGameDescription() -> String {
