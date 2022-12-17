@@ -15,12 +15,14 @@ protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
     func didUpdateReminder(gameNote: GameNote)
 }
 
-class GameNoteAddingEditingViewController: UIViewController {
+final class GameNoteAddingEditingViewController: BaseViewController {
 
+    //MARK: IBOutlets
     @IBOutlet weak var gameNameTextField: UITextField!
     @IBOutlet weak var gameNoteTextView: UITextView!
     @IBOutlet weak var noteTypeSegmentedControl: UISegmentedControl!
     
+    //MARK: UI Components
     private let gameNoteReminderDatePicker: UIDatePicker =  {
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         datePicker.translatesAutoresizingMaskIntoConstraints = false
@@ -30,21 +32,12 @@ class GameNoteAddingEditingViewController: UIViewController {
         return datePicker
     }()
     
+    //MARK: Variable Declarations
     var noteId: UUID?
-    
     weak var delegate: GameNoteAddingEditingViewControllerDelegate?
     private var viewModel: GameNoteAddingEditingViewModelProtocol = GameNoteAddingEditingViewModel()
 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        viewModel.delegate = self
-        viewModel.getNote(noteId: noteId)
-        configureSegmentedControl()
-        
-    }
-    
+    //MARK: Configure UI Components
     private func configureSegmentedControl(){
         noteTypeSegmentedControl.addTarget(self, action: #selector(noteTypeSegmentedControlValueChanged(_:)), for: .valueChanged)
     }
@@ -54,6 +47,7 @@ class GameNoteAddingEditingViewController: UIViewController {
         gameNoteReminderDatePicker.topAnchor.constraint(equalTo: gameNoteTextView.bottomAnchor, constant: 20).isActive = true
     }
     
+    //MARK: Selector Functions
     @objc private func noteTypeSegmentedControlValueChanged (_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             gameNoteReminderDatePicker.removeFromSuperview()
@@ -63,6 +57,7 @@ class GameNoteAddingEditingViewController: UIViewController {
         }
     }
 
+    //MARK: IBActions
     @IBAction func saveNoteClicked(_ sender: Any) {
         guard let gameName = gameNameTextField.text,
               !gameName.isEmpty,
@@ -76,7 +71,15 @@ class GameNoteAddingEditingViewController: UIViewController {
         } else {
             viewModel.saveReminder(gameName: gameName, reminderContent: gameNote, reminderDate: gameNoteReminderDatePicker.date)
         }
+    }
+    
+    //MARK: Life Cycle Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        viewModel.delegate = self
+        viewModel.getNote(noteId: noteId)
+        configureSegmentedControl()
         
     }
 }
