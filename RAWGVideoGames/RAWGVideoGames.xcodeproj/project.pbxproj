@@ -59,6 +59,8 @@
 /* Begin PBXFileReference section */
 		7142B979294DF87B00E5A033 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		7142B97D294DFCDB00E5A033 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
+		7142B988294E460400E5A033 /* RAWGVideoGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = RAWGVideoGames.app; path = "/Users/ogunbirinci/Desktop/final-project-ogunbrnc/RAWGVideoGames/build/Debug-iphoneos/RAWGVideoGames.app"; sourceTree = "<absolute>"; };
+		7142B989294E460400E5A033 /* RAWGVideoGamesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = RAWGVideoGamesTests.xctest; path = "/Users/ogunbirinci/Desktop/final-project-ogunbrnc/RAWGVideoGames/build/Debug/RAWGVideoGamesTests.xctest"; sourceTree = "<absolute>"; };
 		716727542944BA4B00F8527F /* FavoriteGameListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListViewController.swift; sourceTree = "<group>"; };
 		716727562944BCD500F8527F /* FavoriteGameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListViewModel.swift; sourceTree = "<group>"; };
 		7167275A2944C5F600F8527F /* FavoriteGameListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListTableViewCell.swift; sourceTree = "<group>"; };
@@ -78,7 +80,6 @@
 		71A5D4202944A711000B4E53 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		71AACCCE2948A05400EEE387 /* GameNoteReminderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNoteReminderTableViewCell.swift; sourceTree = "<group>"; };
 		71AACCD32949DC8E00EEE387 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		71C1400029432BE000B85AD6 /* RAWGVideoGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = RAWGVideoGames.app; path = "/Users/ogunbirinci/Desktop/final-project-ogunbrnc/RAWGVideoGames/build/Debug-iphoneos/RAWGVideoGames.app"; sourceTree = "<absolute>"; };
 		71C1400329432BE000B85AD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71C1400529432BE000B85AD6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		71C1400729432BE000B85AD6 /* GameListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +96,6 @@
 		71C140E62943BB6B00B85AD6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		71C140ED2943D29F00B85AD6 /* GameDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailModel.swift; sourceTree = "<group>"; };
 		EDE0ED39294E2E2F00D679EC /* RAWGVideoGames.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RAWGVideoGames.xcdatamodel; sourceTree = "<group>"; };
-		EDE0ED43294E315500D679EC /* RAWGVideoGamesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = RAWGVideoGamesTests.xctest; path = "/Users/ogunbirinci/Desktop/final-project-ogunbrnc/RAWGVideoGames/build/Debug/RAWGVideoGamesTests.xctest"; sourceTree = "<absolute>"; };
 		EDE0ED4C294E316E00D679EC /* GameDetailViewModelUnitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDetailViewModelUnitTest.swift; sourceTree = "<group>"; };
 		EDE0ED4D294E316F00D679EC /* GameListViewModelUnitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListViewModelUnitTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -366,7 +366,7 @@
 				EDE0ED3D294E301C00D679EC /* SDWebImage */,
 			);
 			productName = RAWGVideoGames;
-			productReference = 71C1400029432BE000B85AD6 /* RAWGVideoGames.app */;
+			productReference = 7142B988294E460400E5A033 /* RAWGVideoGames.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EDE0ED42294E315500D679EC /* RAWGVideoGamesTests */ = {
@@ -387,7 +387,7 @@
 				EDE0ED51294E31C300D679EC /* SDWebImage */,
 			);
 			productName = RAWGVideoGamesTests;
-			productReference = EDE0ED43294E315500D679EC /* RAWGVideoGamesTests.xctest */;
+			productReference = 7142B989294E460400E5A033 /* RAWGVideoGamesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
