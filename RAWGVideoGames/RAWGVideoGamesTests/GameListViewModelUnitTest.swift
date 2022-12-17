@@ -75,15 +75,12 @@ final class GameListViewModelUnitTest: XCTestCase {
     }
     
     func testFetchSearchedGamesInvalidNextURLIndexZero() {
-        fetchExpectation = expectation(description: "fetchGames")
+        XCTAssertNil(viewModelInvalidNextURL.getGame(at: 0))
         
-        XCTAssertNil(viewModel.getGame(at: 0))
+        viewModelInvalidNextURL.fetchSearchedGames(with: "Grand Theft Auto Vice")
         
-        viewModel.fetchSearchedGames(with: "Grand Theft Auto Vice")
-        waitForExpectations(timeout: 10)
-        
-        let itemAtZero = viewModel.getGame(at: 0)
-        XCTAssertEqual(itemAtZero?.id, 430)
+        let itemAtZero = viewModelInvalidNextURL.getGame(at: 0)
+        XCTAssertNil(itemAtZero?.id)
     }
     
     func testFetchSearchedGamesCancel() {
