@@ -100,7 +100,6 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
                 switch result {
                 case .success:
                     self.delegate?.didUpdateReminder(gameNote: gameNote)
-                    print("update edildi")
                 case .failure(let error):
                     self.delegate?.didAuthErrorOccur(error: error.localizedDescription)
                 }
