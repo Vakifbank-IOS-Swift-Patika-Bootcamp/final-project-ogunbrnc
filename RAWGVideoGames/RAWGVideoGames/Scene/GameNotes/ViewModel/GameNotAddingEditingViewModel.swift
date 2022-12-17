@@ -29,16 +29,20 @@ protocol GameNoteAddingEditingViewModelDelegate: AnyObject {
 }
 
 final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtocol {
-    private var notificationManager: NotificationProtocol
     weak var delegate: GameNoteAddingEditingViewModelDelegate?
+
+    private var notificationManager: NotificationProtocol
+    private var databaseManager: DatabaseManager
     private var gameNote: GameNote?
     
-    init(notificationManager: NotificationProtocol = LocalNotificationManager.shared) {
+    init(databaseManager: DatabaseManager = CoreDataManager.shared,
+         notificationManager: NotificationProtocol = LocalNotificationManager.shared) {
+        self.databaseManager = databaseManager
         self.notificationManager = notificationManager
     }
     
     func getNote(noteId: UUID?) {
-        gameNote = CoreDataManager.shared.getNote(noteId: noteId ?? UUID())
+        gameNote = databaseManager.getNote(noteId: noteId ?? UUID())
         let pageViewMode: PageViewMode = gameNote == nil ? .add : .edit
         delegate?.didNoteLoaded(gameNote: gameNote,pageViewMode: pageViewMode)
     }
@@ -47,19 +51,18 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         
         //adding new note
         if gameNote == nil {
-            if let gameNote =  CoreDataManager.shared.addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: false) {
+            if let gameNote =  databaseManager.addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: false) {
                 delegate?.didAddNote(gameNote: gameNote)
             }
         }
         //updating note
         else {
             guard let gameNoteId = gameNote?.id else { return }
-            
             if gameNote?.noteContent == noteContent {
                 return
             }
             
-            if let updatedGameNote = CoreDataManager.shared.updateNote(noteContent: noteContent, gameNoteId: gameNoteId) {
+            if let updatedGameNote = databaseManager.updateNote(noteContent: noteContent, gameNoteId: gameNoteId) {
                 delegate?.didUpdateNote(gameNote: updatedGameNote)
             }
         }
