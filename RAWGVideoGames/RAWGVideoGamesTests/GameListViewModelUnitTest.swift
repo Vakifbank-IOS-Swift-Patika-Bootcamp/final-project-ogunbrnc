@@ -42,6 +42,15 @@ final class GameListViewModelUnitTest: XCTestCase {
         XCTAssertEqual(itemAtZero?.id, 3498)
     }
     
+    func testFetchGamesSortedWithInvalidSortingIndexZero() {
+        XCTAssertNil(viewModel.getGame(at: 0))
+        
+        viewModel.fetchGamesSorted(by: "".localized())
+        
+        let itemAtZero = viewModel.getGame(at: 0)
+        XCTAssertNil(itemAtZero?.id)
+    }
+    
     func testFetchSearchedGamesIndexZero() {
         fetchExpectation = expectation(description: "fetchGames")
         
