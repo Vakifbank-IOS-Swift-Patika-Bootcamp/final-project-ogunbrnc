@@ -70,7 +70,8 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     }
     
     func getGameId(at index: Int) -> Int? {
-        Int(games![index].gameId)
+        print(games)
+        return Int(games![index].gameId)
     }
     
 }

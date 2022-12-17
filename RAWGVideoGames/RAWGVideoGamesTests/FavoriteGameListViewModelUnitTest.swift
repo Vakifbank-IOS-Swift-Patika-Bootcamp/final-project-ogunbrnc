@@ -35,8 +35,8 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
         guard let favoriteGame = game as? FavoriteGame,
               let favoriteGameDeleted = deletedGame as? FavoriteGame else { return }
         
-        games = [FavoriteGame(entity: entity, insertInto: managedContext)]
-        viewModel = FavoriteGameListViewModel(games: [favoriteGame,favoriteGameDeleted])
+        games = [4,favoriteGameDeleted]
+        viewModel = FavoriteGameListViewModel(games: games)
         viewModel.delegate = self
     }
     
@@ -75,6 +75,20 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
         waitForExpectations(timeout: 10)
         
         XCTAssertEqual(viewModel.getGameCount(),gameCountBeforeDelete - 1)
+    }
+    
+    func testDeleteGameFromFavoriteList() {
+        guard let favoriteGame = game as? FavoriteGame else { return }
+
+        XCTAssertEqual(viewModel.getGameId(at: 0), Int(favoriteGame.gameId))
+        
+        let gameCountBeforeDelete = viewModel.getGameCount()
+
+        viewModel.deleteGameFromFavoriteList(index: 0) { result in
+            if result {
+                XCTAssertEqual(viewModel.getGameCount(), gameCountBeforeDelete - 1)
+            }
+        }
     }
 }
 
