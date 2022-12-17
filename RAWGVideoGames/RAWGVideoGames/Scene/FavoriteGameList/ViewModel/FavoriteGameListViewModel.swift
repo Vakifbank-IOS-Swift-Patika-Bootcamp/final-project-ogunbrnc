@@ -25,6 +25,12 @@ protocol FavoriteGameListViewModelDelegate: AnyObject {
 final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     weak var delegate: FavoriteGameListViewModelDelegate?
     private var games: [FavoriteGame]?
+    private var databaseManager: DatabaseManager
+    
+    init(games: [FavoriteGame]? = nil, databaseManager: DatabaseManager = CoreDataManager.shared) {
+        self.games = games
+        self.databaseManager = databaseManager
+    }
 
     func newGameAddedToFavorites(game: FavoriteGame) {
         games?.append(game)
@@ -41,7 +47,7 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     
     func deleteGameFromFavoriteList(index: Int, completion: (Bool) -> ()) {
         let gameId = getGameId(at: index)
-        if CoreDataManager.shared.deleteFromFavorite(id: gameId!) {
+        if databaseManager.deleteFromFavorite(id: gameId!) {
             games?.remove(at: index)
             completion(true)
         } else {
@@ -50,7 +56,7 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     }
 
     func fetchGames() {
-        games = CoreDataManager.shared.getFavoriteGames()
+        games = databaseManager.getFavoriteGames()
         delegate?.gamesLoaded()
     }
     
