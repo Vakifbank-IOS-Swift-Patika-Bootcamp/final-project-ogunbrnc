@@ -24,28 +24,17 @@ extension DatabaseManager {
     func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil ,gameNoteId: UUID) -> GameNote? {
         updateNote(noteContent: noteContent, noteScheduledReminderDate: noteScheduledReminderDate, gameNoteId: gameNoteId)
     }
-}
-
-extension DatabaseManager {
     func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil ) -> GameNote? {
         addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: noteHasReminder, noteScheduledReminderDate: noteScheduledReminderDate)
-    }
-    func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil ,gameNoteId: UUID){
-        updateNote(noteContent: noteContent, noteScheduledReminderDate: noteScheduledReminderDate, gameNoteId: gameNoteId)
     }
 }
 
 final class CoreDataManager:DatabaseManager {
-    static let shared = CoreDataManager()
-    private let managedContext: NSManagedObjectContext!
+    static let shared = CoreDataManager(managedContext: (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext)
+    private let managedContext: NSManagedObjectContext
         
-    private init(managedContext: NSManagedObjectContext? = nil) {
-        if let managedContext {
-            self.managedContext = managedContext
-        } else {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            self.managedContext = appDelegate.persistentContainer.viewContext
-        }
+    private init(managedContext: NSManagedObjectContext) {
+        self.managedContext = managedContext
     }
     
     func isFavorite(id gameId: Int) -> Bool {

@@ -5,6 +5,7 @@
 //  Created by Ogün Birinci on 16.12.2022.
 //
 
+@testable import RAWGVideoGames
 import XCTest
 
 final class GameDetailViewModelUnitTest: XCTestCase {
