@@ -119,10 +119,16 @@ final class GameListViewModel: GameListViewModelProtocol {
     }
     
     func getGame(at index: Int) -> GameModel? {
-        games[index]
+        if games.count > index {
+            return games[index]
+        }
+        return nil
     }
     
     func getGameId(at index: Int) -> Int? {
-        games[index].id
+        if games.count > index {
+            return games[index].id
+        }
+        return nil
     }
 }

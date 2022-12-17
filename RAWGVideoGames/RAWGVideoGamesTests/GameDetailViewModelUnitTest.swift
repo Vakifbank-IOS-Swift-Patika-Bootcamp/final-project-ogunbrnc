@@ -190,6 +190,10 @@ final class GameDetailViewModelUnitTest: XCTestCase {
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
+    func gameLoadingError(error: Error) {
+        fetchExpectation.fulfill()
+    }
+    
     func gameLoaded() {
         fetchExpectation.fulfill()
     }
