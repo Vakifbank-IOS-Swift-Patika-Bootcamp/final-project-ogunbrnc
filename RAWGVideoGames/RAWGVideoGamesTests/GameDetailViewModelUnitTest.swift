@@ -117,11 +117,39 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         viewModel.addGameToFavoriteList { result in
             XCTAssertEqual(result, true)
         }
+        
+        // after test, delete from favorite.
+        viewModel.deleteGameFromFavoriteList(completion: { result in })
+    }
+    
+    func testAddGameToFavoriteListIfAlreadyExists() {
+        
+        viewModel.addGameToFavoriteList(completion: { result in
+            XCTAssertEqual(result, true)
+        })
+        
+        viewModel.addGameToFavoriteList { result in
+            XCTAssertEqual(result, false)
+        }
+        
+        // after test, delete from favorite.
+        viewModel.deleteGameFromFavoriteList(completion: { result in })
     }
     
     func testDeleteGameFromFavoriteList() {
+        // add to favorite, before test.
+        viewModel.addGameToFavoriteList(completion: { result in
+            XCTAssertEqual(result, true)
+        })
+        
         viewModel.deleteGameFromFavoriteList { result in
             XCTAssertEqual(result, true)
+        }
+    }
+    
+    func testDeleteGameFromFavoriteIfNotExists() {
+        viewModel.deleteGameFromFavoriteList { result in
+            XCTAssertEqual(result, false)
         }
     }
     
