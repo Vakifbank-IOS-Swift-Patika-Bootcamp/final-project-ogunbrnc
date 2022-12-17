@@ -97,8 +97,11 @@ final class GameDetailViewModelUnitTest: XCTestCase {
     }
     
     func testAddGameToFavoriteList() {
-        
+        viewModel.addGameToFavoriteList { result in
+            XCTAssertEqual(result, true)
+        }
     }
+    
 }
 
 extension GameDetailViewModelUnitTest: GameDetailViewModelDelegate {
