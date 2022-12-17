@@ -81,7 +81,9 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         XCTAssertEqual(viewModel.getGameNoteId(at: 0), notes?[0].id)
     }
     
-    
+    func testGetGameNoteHasReminderId() {
+        XCTAssertEqual(viewModel.getGameNoteHasReminderId(at: 0), notesWithReminder?[0].id)
+    }
     
 }
 
