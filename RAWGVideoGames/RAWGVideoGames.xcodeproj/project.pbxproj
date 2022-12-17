@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7142B97A294DF87B00E5A033 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7142B979294DF87B00E5A033 /* DateExtension.swift */; };
 		716727552944BA4B00F8527F /* FavoriteGameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716727542944BA4B00F8527F /* FavoriteGameListViewController.swift */; };
 		716727572944BCD500F8527F /* FavoriteGameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716727562944BCD500F8527F /* FavoriteGameListViewModel.swift */; };
 		7167275B2944C5F600F8527F /* FavoriteGameListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167275A2944C5F600F8527F /* FavoriteGameListTableViewCell.swift */; };
@@ -82,6 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7142B979294DF87B00E5A033 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		716727542944BA4B00F8527F /* FavoriteGameListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListViewController.swift; sourceTree = "<group>"; };
 		716727562944BCD500F8527F /* FavoriteGameListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListViewModel.swift; sourceTree = "<group>"; };
 		7167275A2944C5F600F8527F /* FavoriteGameListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameListTableViewCell.swift; sourceTree = "<group>"; };
@@ -156,7 +158,6 @@
 		7167275E29452F6100F8527F /* GameNotes */ = {
 			isa = PBXGroup;
 			children = (
-				716727622945301300F8527F /* Model */,
 				716727612945301000F8527F /* View */,
 				716727602945300A00F8527F /* ViewModel */,
 				7167275F2945300000F8527F /* Controller */,
@@ -191,18 +192,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		716727622945301300F8527F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		7167276D29467D6B00F8527F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				7167276E29467DBB00F8527F /* StringExtension.swift */,
 				71AACCD32949DC8E00EEE387 /* UIViewExtension.swift */,
+				7142B979294DF87B00E5A033 /* DateExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -562,6 +557,7 @@
 				71C140D62943676E00B85AD6 /* GetGamesResponseModel.swift in Sources */,
 				71C140D229435CC100B85AD6 /* Client.swift in Sources */,
 				71A5D41F29448DD2000B4E53 /* GameDetailViewController.swift in Sources */,
+				7142B97A294DF87B00E5A033 /* DateExtension.swift in Sources */,
 				71AACCD42949DC8E00EEE387 /* UIViewExtension.swift in Sources */,
 				71C140DC294373E700B85AD6 /* GameListViewModel.swift in Sources */,
 				71AACCCF2948A05400EEE387 /* GameNoteReminderTableViewCell.swift in Sources */,
