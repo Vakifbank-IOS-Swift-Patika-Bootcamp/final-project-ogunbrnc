@@ -26,20 +26,21 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         
         gameNoteWithReminder = NSManagedObject(entity: entity, insertInto: managedContext)
         gameNoteWithReminder.setValue("Grand Theft Auto V", forKeyPath: "gameName")
-        gameNoteWithReminder.setValue(UUID(), forKeyPath: "id")
         gameNoteWithReminder.setValue("Note content", forKeyPath: "noteContent")
         gameNoteWithReminder.setValue(Date.now, forKeyPath: "noteDate")
-        gameNoteWithReminder.setValue(UUID(), forKey: "id")
+        gameNoteWithReminder.setValue(UUID(uuidString: "1"), forKey: "id")
         gameNoteWithReminder.setValue(Date.now.addingTimeInterval(5 * 60), forKey: "noteScheduledReminderDate")
+        gameNoteWithReminder.setValue(true, forKey: "noteHasReminder")
+        
         
         gameNote = NSManagedObject(entity: entity, insertInto: managedContext)
         gameNote.setValue("Grand Theft Auto 4", forKeyPath: "gameName")
-        gameNote.setValue(UUID(), forKeyPath: "id")
         gameNote.setValue("Note content", forKeyPath: "noteContent")
         gameNote.setValue(Date.now, forKeyPath: "noteDate")
-        gameNote.setValue(UUID(), forKey: "id")
+        gameNote.setValue(UUID(uuidString: "2"), forKey: "id")
         gameNote.setValue(nil, forKey: "noteScheduledReminderDate")
-        
+        gameNote.setValue(false, forKey: "noteHasReminder")
+
         
         if let noteWithReminder = gameNoteWithReminder as? GameNote,
            let note = gameNote as? GameNote {
@@ -74,6 +75,10 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
     
     func testGetGameNoteHasReminder() {
         XCTAssertEqual(viewModel.getGameNoteHasReminder(at: 0), notesWithReminder?[0])
+    }
+    
+    func testGetGameNoteId() {
+        XCTAssertEqual(viewModel.getGameNoteId(at: 0), notes?[0].id)
     }
     
     
