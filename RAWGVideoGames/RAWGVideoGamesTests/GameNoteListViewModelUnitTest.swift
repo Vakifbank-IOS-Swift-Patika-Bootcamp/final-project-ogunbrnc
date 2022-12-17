@@ -85,6 +85,18 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         XCTAssertEqual(viewModel.getGameNoteHasReminderId(at: 0), notesWithReminder?[0].id)
     }
     
+    func testAdd(){
+        fetchExpectation = expectation(description: "fetchGames")
+
+        guard let note = gameNote as? GameNote else { return }
+
+        viewModel.add(note: note)
+        
+        waitForExpectations(timeout: 10)
+
+        let lastIndex = viewModel.getGameNotesCount() - 1
+        XCTAssertEqual(note, viewModel.getGameNote(at: lastIndex))
+    }
 }
 
 extension GameNoteListViewModelUnitTest: GameNoteListViewModelDelegate {
