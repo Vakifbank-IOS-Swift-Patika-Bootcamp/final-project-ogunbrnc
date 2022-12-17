@@ -1,6 +1,10 @@
 "There are no notes. \n You can add new note using the + button." = "Not bulunmamaktadır.\n Yeni not eklemek için + butonunu kullanabilirsiniz";
 "There are no reminders. \n You can add new reminders using the + button." = "Hatırlatıcı bulunmamaktadır.\n Yeni hatırlatıcı eklemek için + butonunu kullanabilirsiniz";
 "There are no games in your favorite list.\n You can add games to favorite list using detail page." = "Favori listenizde oyun bulunmamaktadır.\n Oyunların detay sayfasından favoriye oyun ekleyebilirsiniz.";
+"Not Editable" = "Not Güncellenemez";
+"Not Saved" = "Kaydedilemedi";
+"All fields must be filled." = "Tüm alanlar doldurulmalıdır";
+"Out of date reminder cannot be edited" = "Tarihi geçmiş hatırlatıcı güncellenemez.";
 "Platforms:" = "Platformlar: ";
 "Order by" = "Sırala";
 "Relevance" = "Uygunluğa göre";

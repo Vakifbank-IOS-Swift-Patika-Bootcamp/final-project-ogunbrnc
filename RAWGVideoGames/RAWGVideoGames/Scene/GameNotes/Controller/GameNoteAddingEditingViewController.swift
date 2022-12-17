@@ -63,6 +63,7 @@ final class GameNoteAddingEditingViewController: BaseViewController {
               !gameName.isEmpty,
               let gameNote = gameNoteTextView.text,
               !gameNote.isEmpty else {
+            showAlert(title: "Not Saved".localized(), message: "All fields must be filled.".localized())
             return
         }
         

@@ -176,6 +176,7 @@ extension GameNoteListViewController: UITableViewDelegate, UITableViewDataSource
         } else {
             note = viewModel.getGameNoteHasReminder(at: indexPath.row)
             if !viewModel.isEditable(note: note!){
+                showAlert(title: "Not Editable".localized(), message: "Out of date reminder cannot be edited".localized())
                 return
             }
         }
