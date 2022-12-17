@@ -49,8 +49,9 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     }
     
     func isEditable(note: GameNote) -> Bool {
+        guard let noteScheduledReminderDate = note.noteScheduledReminderDate else { return false }
         let currentTime = Date.now
-        return note.noteScheduledReminderDate! > currentTime
+        return noteScheduledReminderDate > currentTime
     }
     
     func fetchGameNotes() {
