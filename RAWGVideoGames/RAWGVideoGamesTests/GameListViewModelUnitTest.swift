@@ -11,10 +11,12 @@ import XCTest
 final class GameListViewModelUnitTest: XCTestCase {
 
     var viewModel: GameListViewModel!
+    var viewModelNilNextURL: GameListViewModel!
     var fetchExpectation: XCTestExpectation!
     
     override func setUpWithError() throws {
         viewModel = GameListViewModel()
+        viewModelNilNextURL = GameListViewModel(nextURL: nil)
         viewModel.delegate = self
     }
     
@@ -30,6 +32,15 @@ final class GameListViewModelUnitTest: XCTestCase {
         XCTAssertEqual(itemAtZero?.id, 3498)
     }
     
+    func testFetchGamesNilNextURLIndexZero() {
+        XCTAssertNil(viewModelNilNextURL.getGame(at: 0))
+        
+        viewModelNilNextURL.fetchGames()
+        
+        let itemAtZero = viewModelNilNextURL.getGame(at: 0)
+        XCTAssertNil(itemAtZero?.id)
+    }
+    
     func testFetchGamesSortedIndexZero() {
         fetchExpectation = expectation(description: "fetchGames")
         
@@ -40,6 +51,15 @@ final class GameListViewModelUnitTest: XCTestCase {
         
         let itemAtZero = viewModel.getGame(at: 0)
         XCTAssertEqual(itemAtZero?.id, 3498)
+    }
+    
+    func testFetchGamesSortedWithInvalidSortingIndexZero() {
+        XCTAssertNil(viewModel.getGame(at: 0))
+        
+        viewModel.fetchGamesSorted(by: "".localized())
+        
+        let itemAtZero = viewModel.getGame(at: 0)
+        XCTAssertNil(itemAtZero?.id)
     }
     
     func testFetchSearchedGamesIndexZero() {
@@ -53,6 +73,28 @@ final class GameListViewModelUnitTest: XCTestCase {
         let itemAtZero = viewModel.getGame(at: 0)
         XCTAssertEqual(itemAtZero?.id, 430)
     }
+    
+    func testFetchSearchedGamesNilNextURLIndexZero() {
+        XCTAssertNil(viewModelNilNextURL.getGame(at: 0))
+        
+        viewModelNilNextURL.fetchSearchedGames(with: "Grand Theft Auto Vice")
+        
+        let itemAtZero = viewModelNilNextURL.getGame(at: 0)
+        XCTAssertNil(itemAtZero?.id)
+    }
+    
+    func testFetchSearchedGamesEmptyTextIndexZero() {
+        fetchExpectation = expectation(description: "fetchGames")
+        
+        XCTAssertNil(viewModel.getGame(at: 0))
+        
+        viewModel.fetchSearchedGames(with: "")
+        waitForExpectations(timeout: 10)
+        
+        let itemAtZero = viewModel.getGame(at: 0)
+        XCTAssertEqual(itemAtZero?.id, 3498)
+    }
+    
     
     func testFetchSearchedGamesCancel() {
         fetchExpectation = expectation(description: "fetchGames")
