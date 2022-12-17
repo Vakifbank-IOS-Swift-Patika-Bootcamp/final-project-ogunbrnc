@@ -10,7 +10,6 @@ import XCTest
 import CoreData
 
 final class FavoriteGameListViewModelUnitTest: XCTestCase {
-
     
     var viewModel: FavoriteGameListViewModel!
     var fetchExpectation: XCTestExpectation!
