@@ -89,8 +89,14 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
     }
     
     func testGetGame() {
+        XCTAssertEqual(Int(viewModel.getGame(at: 0)?.gameId ?? 0), Int(games?[0].gameId ?? 0))
+    }
+    
+    func testGetGameId() {
         XCTAssertEqual(viewModel.getGameId(at: 0), Int(games?[0].gameId ?? 0))
     }
+    
+    
 }
 
 extension FavoriteGameListViewModelUnitTest: FavoriteGameListViewModelDelegate {
