@@ -53,8 +53,6 @@ class FavoriteGameListTableViewCell: UITableViewCell {
     private func configureSubviews() {
         addSubview(gameImageView)
         addSubview(gameNameLabel)
-       
-            
     }
     
     // If there is no image, the "photo" image will be used to provide a consistent structure

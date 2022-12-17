@@ -49,6 +49,7 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
         let gameId = getGameId(at: index)
         if databaseManager.deleteFromFavorite(id: gameId!) {
             games?.remove(at: index)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FavoriteGameDeletedInList"), object: nil, userInfo: nil)
             completion(true)
         } else {
             completion(false)
