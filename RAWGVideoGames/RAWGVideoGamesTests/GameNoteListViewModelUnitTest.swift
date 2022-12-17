@@ -15,6 +15,8 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
     var gameNoteWithReminder: NSManagedObject!
     var gameNote: NSManagedObject!
     var notes: [GameNote]?
+    var notesWithReminder: [GameNote]?
+
 
 
     
@@ -41,8 +43,9 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         
         if let noteWithReminder = gameNoteWithReminder as? GameNote,
            let note = gameNote as? GameNote {
-            notes = [noteWithReminder,note]
-            viewModel = GameNoteListViewModel(gameNotes: notes)
+            notes = [note]
+            notesWithReminder = [noteWithReminder]
+            viewModel = GameNoteListViewModel(gameNotes: notes,gameNotesHasReminder: notesWithReminder)
             viewModel.delegate = self
         }
     }
@@ -60,6 +63,11 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
     func testGetGameNotesCount() {
         XCTAssertEqual(viewModel.getGameNotesCount(), notes?.count)
     }
+    
+    func testGetGameNotesHasReminderCount() {
+        XCTAssertEqual(viewModel.getGameNotesHasReminderCount(), notesWithReminder?.count)
+    }
+    
     
     
 }

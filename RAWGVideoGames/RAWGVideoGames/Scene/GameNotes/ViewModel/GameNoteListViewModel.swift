@@ -42,10 +42,13 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     
     init(databaseManager: DatabaseManager = CoreDataManager.shared,
          notificationManager: NotificationProtocol = LocalNotificationManager.shared,
-         gameNotes: [GameNote]? = nil) {
+         gameNotes: [GameNote]? = nil,
+         gameNotesHasReminder: [GameNote]? = nil
+    ) {
         self.databaseManager = databaseManager
         self.notificationManager = notificationManager
         self.gameNotes = gameNotes
+        self.gameNotesHasReminder = gameNotesHasReminder
     }
     
     func isEditable(note: GameNote) -> Bool {
