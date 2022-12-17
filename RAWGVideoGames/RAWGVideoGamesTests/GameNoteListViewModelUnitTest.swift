@@ -57,6 +57,10 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         XCTAssertFalse(viewModel.isEditable(note: note))
     }
     
+    func testGetGameNotesCount() {
+        XCTAssertEqual(viewModel.getGameNotesCount(), notes?.count)
+    }
+    
     
 }
 
