@@ -16,19 +16,27 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
     var fetchExpectation: XCTestExpectation!
     var games: [FavoriteGame]?
     var game: NSManagedObject!
+    var deletedGame: NSManagedObject!
     
     override func setUpWithError() throws {
         let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
-        game = NSManagedObject(entity: entity, insertInto: managedContext)
         
+        game = NSManagedObject(entity: entity, insertInto: managedContext)
         game.setValue(3498, forKeyPath: "gameId")
         game.setValue("https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg", forKey: "imageURL")
         game.setValue("Grand Theft Auto V", forKey: "name")
-        guard let favoriteGame = game as? FavoriteGame else { return }
+        
+        deletedGame = NSManagedObject(entity: entity, insertInto: managedContext)
+        deletedGame.setValue(0, forKeyPath: "gameId")
+        deletedGame.setValue("",forKey: "imageURL")
+        deletedGame.setValue("", forKey: "name")
+        
+        guard let favoriteGame = game as? FavoriteGame,
+              let favoriteGameDeleted = deletedGame as? FavoriteGame else { return }
         
         games = [FavoriteGame(entity: entity, insertInto: managedContext)]
-        viewModel = FavoriteGameListViewModel(games: [favoriteGame])
+        viewModel = FavoriteGameListViewModel(games: [favoriteGame,favoriteGameDeleted])
         viewModel.delegate = self
     }
     
@@ -55,6 +63,18 @@ final class FavoriteGameListViewModelUnitTest: XCTestCase {
         
         XCTAssertEqual(viewModel.getGameId(at: lastIndex), Int(favoriteGame.gameId))
         
+    }
+    
+    func testGameDeletedFromFavorites() {
+        fetchExpectation = expectation(description: "fetchGame")
+
+        let gameCountBeforeDelete = viewModel.getGameCount()
+
+        viewModel.gameDeletedFromFavorites()
+        
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertEqual(viewModel.getGameCount(),gameCountBeforeDelete - 1)
     }
 }
 
