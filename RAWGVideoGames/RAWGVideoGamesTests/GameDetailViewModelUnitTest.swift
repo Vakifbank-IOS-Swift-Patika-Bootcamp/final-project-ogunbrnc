@@ -39,16 +39,6 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         viewModel.delegate = self
     }
     
-    func testFetchGameDetail() {
-        fetchExpectation = expectation(description: "fetchGame")
-                
-        viewModel.fetchGameDetail(id: 3498)
-        waitForExpectations(timeout: 10)
-        
-        XCTAssertEqual(viewModel.getGameName(), "Grand Theft Auto V")
-
-    }
-    
     func testGetGameImageURL() {
         let imageURL = URL(string: "https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg")
         XCTAssertEqual(viewModel.getGameImageURL(),imageURL)
@@ -104,6 +94,10 @@ final class GameDetailViewModelUnitTest: XCTestCase {
     
     func testGetGameRatingCount() {
         XCTAssertEqual(viewModel.getGameRatingCount(), 6040)
+    }
+    
+    func testAddGameToFavoriteList() {
+        
     }
 }
 
