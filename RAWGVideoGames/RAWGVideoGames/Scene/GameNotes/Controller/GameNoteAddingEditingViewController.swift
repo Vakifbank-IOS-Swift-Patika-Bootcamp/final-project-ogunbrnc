@@ -68,6 +68,10 @@ final class GameNoteAddingEditingViewController: BaseViewController {
         }
         
         if noteTypeSegmentedControl.selectedSegmentIndex == 0 {
+            if viewModel.getNoteContent() == gameNote {
+                showAlert(title: "Not Saved".localized(), message: "Note content should be updated".localized())
+                return
+            }
             viewModel.saveNote(gameName: gameName, noteContent: gameNote)
         } else {
             viewModel.saveReminder(gameName: gameName, reminderContent: gameNote, reminderDate: gameNoteReminderDatePicker.date)

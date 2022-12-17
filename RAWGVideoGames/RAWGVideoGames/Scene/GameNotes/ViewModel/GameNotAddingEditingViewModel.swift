@@ -15,6 +15,7 @@ enum PageViewMode {
 protocol GameNoteAddingEditingViewModelProtocol {
     var delegate: GameNoteAddingEditingViewModelDelegate? { get set }
     func getNote(noteId: UUID?)
+    func getNoteContent() -> String
     func saveNote(gameName: String, noteContent: String)
     func saveReminder(gameName: String, reminderContent: String, reminderDate: Date)
 }
@@ -45,6 +46,10 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         gameNote = databaseManager.getNote(noteId: noteId ?? UUID())
         let pageViewMode: PageViewMode = gameNote == nil ? .add : .edit
         delegate?.didNoteLoaded(gameNote: gameNote,pageViewMode: pageViewMode)
+    }
+    
+    func getNoteContent() -> String {
+        gameNote?.noteContent ?? ""
     }
     
     func saveNote(gameName: String, noteContent: String) {
