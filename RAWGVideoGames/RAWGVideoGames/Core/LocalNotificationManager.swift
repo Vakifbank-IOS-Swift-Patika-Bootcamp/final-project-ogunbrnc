@@ -13,6 +13,13 @@ enum VoidResult {
     case failure(Error)
 }
 
+extension VoidResult: Equatable {
+    public static func == (lhs: VoidResult, rhs: VoidResult) -> Bool {
+        return true
+    }
+}
+
+
 enum LocalNotificationManagerError: Error {
     case notAuthorized
 }

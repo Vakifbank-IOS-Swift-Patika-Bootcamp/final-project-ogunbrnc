@@ -18,6 +18,7 @@ final class GameListViewModelUnitTest: XCTestCase {
         viewModel = GameListViewModel()
         viewModelNilNextURL = GameListViewModel(nextURL: nil)
         viewModel.delegate = self
+        viewModelNilNextURL.delegate = self
     }
     
     func testFetchGameIndexZero() {
