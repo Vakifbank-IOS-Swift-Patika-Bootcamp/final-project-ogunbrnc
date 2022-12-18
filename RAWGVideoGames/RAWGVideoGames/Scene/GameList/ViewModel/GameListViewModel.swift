@@ -90,7 +90,7 @@ final class GameListViewModel: GameListViewModelProtocol {
         searching = true
         //if we call fetchSearchedGames function to get more game with same search param, this will be empty and we will use current searchParam
         if !text.isEmpty {
-            searchParam = text.replacingOccurrences(of: " ", with: "-").lowercased()
+            searchParam = text.replacingOccurrences(of: " ", with: "+").lowercased()
         }
         guard let nextURL = nextURL else { return }
         Client.getGames(with: nextURL,search: searchParam){ [weak self] result in
