@@ -81,12 +81,12 @@ final class GameListViewController: BaseViewController {
     }
     
     // MARK: Selector Functions
-    @objc func onCancelButtonTapped() {
+    @objc private func onCancelButtonTapped() {
         toolBar.removeFromSuperview()
         sortingPickerView.removeFromSuperview()
     }
     
-    @objc func onDoneButtonTapped() {
+    @objc private func onDoneButtonTapped() {
         let selectedSorting = sortingOptions[selectedSortingRow]
         if selectedSorting != currentSorting {
             currentSorting = selectedSorting
@@ -98,7 +98,7 @@ final class GameListViewController: BaseViewController {
         sortingPickerView.removeFromSuperview()
     }
     
-    @objc func addTapped() {
+    @objc private func addTapped() {
         configurePickerview()
         configureToolbar()
     }

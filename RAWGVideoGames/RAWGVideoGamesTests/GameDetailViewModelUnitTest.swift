@@ -96,63 +96,6 @@ final class GameDetailViewModelUnitTest: XCTestCase {
         XCTAssertEqual(viewModel.getGameRatingCount(), 6040)
     }
     
-    func testIsItFavoriteGame() {
-        XCTAssertFalse(viewModel.isItFavoriteGame())
-        
-        viewModel.addGameToFavoriteList { result in
-            if result {
-                XCTAssertTrue(viewModel.isItFavoriteGame())
-            }
-        }
-        
-        viewModel.deleteGameFromFavoriteList { result in
-            if result {
-                XCTAssertFalse(viewModel.isItFavoriteGame())
-            }
-        }
-        
-    }
-    
-    func testAddGameToFavoriteList() {
-        viewModel.addGameToFavoriteList { result in
-            XCTAssertEqual(result, true)
-        }
-        
-        // after test, delete from favorite.
-        viewModel.deleteGameFromFavoriteList(completion: { result in })
-    }
-    
-    func testAddGameToFavoriteListIfAlreadyExists() {
-        
-        viewModel.addGameToFavoriteList(completion: { result in
-            XCTAssertEqual(result, true)
-        })
-        
-        viewModel.addGameToFavoriteList { result in
-            XCTAssertEqual(result, false)
-        }
-        
-        // after test, delete from favorite.
-        viewModel.deleteGameFromFavoriteList(completion: { result in })
-    }
-    
-    func testDeleteGameFromFavoriteList() {
-        // add to favorite, before test.
-        viewModel.addGameToFavoriteList(completion: { result in
-            XCTAssertEqual(result, true)
-        })
-        
-        viewModel.deleteGameFromFavoriteList { result in
-            XCTAssertEqual(result, true)
-        }
-    }
-    
-    func testDeleteGameFromFavoriteIfNotExists() {
-        viewModel.deleteGameFromFavoriteList { result in
-            XCTAssertEqual(result, false)
-        }
-    }
-    
     func testGameDetailsWithInvalidID() {
         let viewModelWithInvalidID =  GameDetailViewModel()
 
