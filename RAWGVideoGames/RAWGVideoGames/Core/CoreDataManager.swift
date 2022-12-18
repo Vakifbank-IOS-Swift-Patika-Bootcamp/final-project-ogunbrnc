@@ -5,8 +5,8 @@
 //  Created by Ogün Birinci on 10.12.2022.
 //
 
-import UIKit
 import CoreData
+import UIKit
 
 protocol DatabaseManager {
     func isFavorite(id gameId: Int) -> Bool
@@ -16,27 +16,28 @@ protocol DatabaseManager {
     func getNote(noteId: UUID) -> GameNote?
     func getNotes() -> [GameNote]
     func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date?) -> GameNote?
-    func updateNote(noteContent: String,noteScheduledReminderDate: Date? ,gameNoteId: UUID) -> GameNote?
+    func updateNote(noteContent: String, noteScheduledReminderDate: Date?, gameNoteId: UUID) -> GameNote?
     func deleteNote(id: UUID) -> Bool
 }
 
 extension DatabaseManager {
-    func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil ,gameNoteId: UUID) -> GameNote? {
+    func updateNote(noteContent: String, noteScheduledReminderDate: Date? = nil, gameNoteId: UUID) -> GameNote? {
         updateNote(noteContent: noteContent, noteScheduledReminderDate: noteScheduledReminderDate, gameNoteId: gameNoteId)
     }
-    func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil ) -> GameNote? {
+
+    func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil) -> GameNote? {
         addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: noteHasReminder, noteScheduledReminderDate: noteScheduledReminderDate)
     }
 }
 
-final class CoreDataManager:DatabaseManager {
+final class CoreDataManager: DatabaseManager {
     static let shared = CoreDataManager(managedContext: (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext)
     private let managedContext: NSManagedObjectContext
-        
+
     private init(managedContext: NSManagedObjectContext) {
         self.managedContext = managedContext
     }
-    
+
     func isFavorite(id gameId: Int) -> Bool {
         let fetchNote: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
         fetchNote.predicate = NSPredicate(format: "gameId = %@", String(gameId))
@@ -44,9 +45,8 @@ final class CoreDataManager:DatabaseManager {
         let results = try? managedContext.fetch(fetchNote)
 
         return results?.count != 0
-        
     }
-    
+
     func getFavoriteGames() -> [FavoriteGame] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteGame")
         do {
@@ -57,8 +57,7 @@ final class CoreDataManager:DatabaseManager {
         }
         return []
     }
-    
-    
+
     func addToFavorite(id: Int, gameName: String, gameImageURL: String) -> FavoriteGame? {
         let fetchGame: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
         fetchGame.predicate = NSPredicate(format: "gameId = %@", String(id))
@@ -66,13 +65,13 @@ final class CoreDataManager:DatabaseManager {
         if let _ = try? managedContext.fetch(fetchGame).first {
             return nil
         }
-        
+
         let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: managedContext)!
         let game = NSManagedObject(entity: entity, insertInto: managedContext)
         game.setValue(id, forKeyPath: "gameId")
         game.setValue(gameImageURL, forKey: "imageURL")
         game.setValue(gameName, forKey: "name")
-        
+
         do {
             try managedContext.save()
             return game as? FavoriteGame
@@ -81,7 +80,7 @@ final class CoreDataManager:DatabaseManager {
             return nil
         }
     }
-    
+
     func deleteFromFavorite(id gameId: Int) -> Bool {
         let fetchGame: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
         fetchGame.predicate = NSPredicate(format: "gameId = %@", String(gameId))
@@ -98,8 +97,7 @@ final class CoreDataManager:DatabaseManager {
         }
         return false
     }
-    
-    
+
     func getNote(noteId: UUID) -> GameNote? {
         let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
         fetchNote.predicate = NSPredicate(format: "id = %@", noteId.uuidString)
@@ -111,7 +109,7 @@ final class CoreDataManager:DatabaseManager {
 
         return nil
     }
-    
+
     func getNotes() -> [GameNote] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "GameNote")
         do {
@@ -122,35 +120,34 @@ final class CoreDataManager:DatabaseManager {
         }
         return []
     }
-    
-    
+
     func addNote(gameName: String, noteContent: String, noteHasReminder: Bool, noteScheduledReminderDate: Date? = nil) -> GameNote? {
         let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
         let note = NSManagedObject(entity: entity, insertInto: managedContext)
-        
+
         let noteDate = Date.now
         let noteId = UUID()
-        
+
         note.setValue(gameName, forKeyPath: "gameName")
         note.setValue(noteId, forKeyPath: "id")
         note.setValue(noteContent, forKeyPath: "noteContent")
         note.setValue(noteDate, forKeyPath: "noteDate")
         note.setValue(noteHasReminder, forKey: "noteHasReminder")
         note.setValue(noteScheduledReminderDate, forKey: "noteScheduledReminderDate")
-        
+
         do {
             try managedContext.save()
             return note as? GameNote
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        
+
         return nil
     }
-    
-    func updateNote(noteContent: String,noteScheduledReminderDate: Date? = nil,gameNoteId: UUID) -> GameNote? {
+
+    func updateNote(noteContent: String, noteScheduledReminderDate: Date? = nil, gameNoteId: UUID) -> GameNote? {
         let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
-        fetchNote.predicate = NSPredicate(format: "id = %@", gameNoteId.uuidString )
+        fetchNote.predicate = NSPredicate(format: "id = %@", gameNoteId.uuidString)
 
         let results = try? managedContext.fetch(fetchNote)
         if let note = results?.first {
@@ -158,8 +155,7 @@ final class CoreDataManager:DatabaseManager {
             note.noteContent = noteContent
             note.noteDate = currentDate
             note.noteScheduledReminderDate = noteScheduledReminderDate
-            
-            
+
             do {
                 try managedContext.save()
                 return note
@@ -170,7 +166,6 @@ final class CoreDataManager:DatabaseManager {
 
         return nil
     }
-  
 
     func deleteNote(id: UUID) -> Bool {
         let fetchNote: NSFetchRequest<GameNote> = GameNote.fetchRequest()
@@ -188,8 +183,4 @@ final class CoreDataManager:DatabaseManager {
         }
         return false
     }
-    
-    
-    
-    
 }

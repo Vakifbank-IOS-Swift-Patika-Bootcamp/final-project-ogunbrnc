@@ -8,9 +8,8 @@
 import XCTest
 
 final class ExtensionsUnitTest: XCTestCase {
-    
     var date: Date!
-    
+
     override func setUpWithError() throws {
         var dateComponents = DateComponents()
         dateComponents.year = 2022
@@ -18,15 +17,12 @@ final class ExtensionsUnitTest: XCTestCase {
         dateComponents.day = 18
         dateComponents.hour = 15
         dateComponents.minute = 06
-        
+
         let userCalendar = Calendar(identifier: .gregorian)
         date = userCalendar.date(from: dateComponents)
-        
     }
-    
+
     func testToFormattedString() {
         XCTAssertEqual(date.toFormattedString(), "15:06 Paz, 18 Ara 2022")
     }
-
-
 }

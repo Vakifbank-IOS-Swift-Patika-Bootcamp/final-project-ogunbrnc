@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    func localized(tableName: String = "Localizable", bundle: Bundle = .main, value: String = "", comment: String = "") -> String {
+    func localized(tableName: String = "Localizable", bundle: Bundle = .main, value _: String = "", comment: String = "") -> String {
         NSLocalizedString(
             self,
             tableName: tableName,
@@ -18,5 +18,3 @@ extension String {
         )
     }
 }
-
-

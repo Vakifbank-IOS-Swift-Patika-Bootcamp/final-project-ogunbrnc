@@ -18,7 +18,7 @@ struct GameModel: Decodable {
     let ratings: [Rating]?
     let ratingsCount: Int?
     let genres: [Genre]?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -36,8 +36,6 @@ struct GameModel: Decodable {
 struct Platform: Decodable {
     let platform: PlatformInfo
 }
-
-
 
 struct PlatformInfo: Decodable {
     let id: Int
@@ -57,7 +55,6 @@ struct Genre: Decodable {
     let name: String
     let slug: String
 }
-
 
 extension Platform: Equatable {
     static func == (lhs: Platform, rhs: Platform) -> Bool {

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
     func didAddNote(gameNote: GameNote)
     func didUpdateNote(gameNote: GameNote)
@@ -16,14 +15,15 @@ protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
 }
 
 final class GameNoteAddingEditingViewController: BaseViewController {
+    // MARK: IBOutlets
 
-    //MARK: IBOutlets
-    @IBOutlet weak var gameNameTextField: UITextField!
-    @IBOutlet weak var gameNoteTextView: UITextView!
-    @IBOutlet weak var noteTypeSegmentedControl: UISegmentedControl!
-    
-    //MARK: UI Components
-    private let gameNoteReminderDatePicker: UIDatePicker =  {
+    @IBOutlet var gameNameTextField: UITextField!
+    @IBOutlet var gameNoteTextView: UITextView!
+    @IBOutlet var noteTypeSegmentedControl: UISegmentedControl!
+
+    // MARK: UI Components
+
+    private let gameNoteReminderDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.timeZone = NSTimeZone.local
@@ -31,24 +31,27 @@ final class GameNoteAddingEditingViewController: BaseViewController {
         datePicker.preferredDatePickerStyle = .compact
         return datePicker
     }()
-    
-    //MARK: Variable Declarations
+
+    // MARK: Variable Declarations
+
     var noteId: UUID?
     weak var delegate: GameNoteAddingEditingViewControllerDelegate?
     private var viewModel: GameNoteAddingEditingViewModelProtocol = GameNoteAddingEditingViewModel()
 
-    //MARK: Configure UI Components
-    private func configureSegmentedControl(){
+    // MARK: Configure UI Components
+
+    private func configureSegmentedControl() {
         noteTypeSegmentedControl.addTarget(self, action: #selector(noteTypeSegmentedControlValueChanged(_:)), for: .valueChanged)
     }
-    
-    private func configureDatePickerConstraints () {
+
+    private func configureDatePickerConstraints() {
         gameNoteReminderDatePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         gameNoteReminderDatePicker.topAnchor.constraint(equalTo: gameNoteTextView.bottomAnchor, constant: 20).isActive = true
     }
-    
-    //MARK: Selector Functions
-    @objc private func noteTypeSegmentedControlValueChanged (_ sender: UISegmentedControl) {
+
+    // MARK: Selector Functions
+
+    @objc private func noteTypeSegmentedControlValueChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             gameNoteReminderDatePicker.removeFromSuperview()
         } else {
@@ -57,16 +60,18 @@ final class GameNoteAddingEditingViewController: BaseViewController {
         }
     }
 
-    //MARK: IBActions
-    @IBAction func saveNoteClicked(_ sender: Any) {
+    // MARK: IBActions
+
+    @IBAction func saveNoteClicked(_: Any) {
         guard let gameName = gameNameTextField.text,
               !gameName.isEmpty,
               let gameNote = gameNoteTextView.text,
-              !gameNote.isEmpty else {
+              !gameNote.isEmpty
+        else {
             showAlert(title: "Not Saved".localized(), message: "All fields must be filled.".localized())
             return
         }
-        
+
         if noteTypeSegmentedControl.selectedSegmentIndex == 0 {
             if viewModel.getNoteContent() == gameNote {
                 showAlert(title: "Not Saved".localized(), message: "Note content should be updated".localized())
@@ -77,22 +82,23 @@ final class GameNoteAddingEditingViewController: BaseViewController {
             viewModel.saveReminder(gameName: gameName, reminderContent: gameNote, reminderDate: gameNoteReminderDatePicker.date)
         }
     }
-    
-    //MARK: Life Cycle Methods
+
+    // MARK: Life Cycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         viewModel.delegate = self
         viewModel.getNote(noteId: noteId)
         configureSegmentedControl()
-        
     }
 }
+
 extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDelegate {
     func didNoteLoaded(gameNote: GameNote?, pageViewMode: PageViewMode) {
         if pageViewMode == .edit {
             guard let gameNote = gameNote else { return }
-            
+
             gameNoteTextView.text = gameNote.noteContent
             gameNameTextField.text = gameNote.gameName
             if gameNote.noteHasReminder {
@@ -102,42 +108,41 @@ extension GameNoteAddingEditingViewController: GameNoteAddingEditingViewModelDel
                 view.addSubview(gameNoteReminderDatePicker)
                 configureDatePickerConstraints()
             }
-            
+
             noteTypeSegmentedControl.isUserInteractionEnabled = false
         }
     }
-    
+
     func didAddReminder(gameNote: GameNote) {
         delegate?.didAddReminder(gameNote: gameNote)
         dismiss(animated: true)
     }
-    
+
     func didUpdateReminder(gameNote: GameNote) {
         delegate?.didUpdateReminder(gameNote: gameNote)
         dismiss(animated: true)
     }
-    
+
     func didAddNote(gameNote: GameNote) {
         delegate?.didAddNote(gameNote: gameNote)
         dismiss(animated: true)
     }
+
     func didUpdateNote(gameNote: GameNote) {
         delegate?.didUpdateNote(gameNote: gameNote)
         dismiss(animated: true)
     }
-    
+
     func didAuthErrorOccur(error: String) {
         let alertController = UIAlertController(title: "Enable Notifications", message: error.localized(), preferredStyle: .alert)
-        let goToSettings = UIAlertAction(title: "Settings", style: .default)
-        { (_) in
+        let goToSettings = UIAlertAction(title: "Settings", style: .default) { _ in
             guard let setttingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
-            if(UIApplication.shared.canOpenURL(setttingsURL)) {
-                UIApplication.shared.open(setttingsURL) { (_) in}
+            if UIApplication.shared.canOpenURL(setttingsURL) {
+                UIApplication.shared.open(setttingsURL) { _ in }
             }
         }
         alertController.addAction(goToSettings)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (_) in}))
-        self.present(alertController, animated: true)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { _ in }))
+        present(alertController, animated: true)
     }
-
 }

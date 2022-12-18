@@ -20,7 +20,7 @@ struct GameDetailModel: Decodable {
     let playtime: Int
     let ratingsCount: Int
     let rating: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -42,5 +42,3 @@ struct Tag: Decodable {
     let name: String
     let slug: String
 }
-
-

@@ -8,40 +8,41 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    // MARK: UI Components
 
-    //MARK: UI Components
     var indicatorView: UIActivityIndicatorView = {
-      let view = UIActivityIndicatorView(style: .medium)
-      view.color = .label
-      view.translatesAutoresizingMaskIntoConstraints = false
-      return view
+        let view = UIActivityIndicatorView(style: .medium)
+        view.color = .label
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
-    
-    //MARK: Configure UI Components
+
+    // MARK: Configure UI Components
+
     func setupActivityIndicatorView() {
         view.addSubview(indicatorView)
         setupActivityIndicatorViewConstraints()
     }
-        
+
     func setupActivityIndicatorViewConstraints() {
-      NSLayoutConstraint.activate([
-        indicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        indicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-      ])
+        NSLayoutConstraint.activate([
+            indicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            indicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
-    
-    func showAlert(title: String, message:String, completion:  (() -> Void)? = nil) {
+
+    func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK".localized(), style: .default, handler: { _ in
             completion?()
         }))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
-    
-    //MARK: Life Cycle Methods
+
+    // MARK: Life Cycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupActivityIndicatorView()
     }
-
 }

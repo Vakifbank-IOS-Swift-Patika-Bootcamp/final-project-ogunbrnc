@@ -14,7 +14,7 @@ class IconLabelStackView: UIStackView {
         imageView.tintColor = .label
         return imageView
     }()
-    
+
     private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -23,31 +23,30 @@ class IconLabelStackView: UIStackView {
         label.font = .systemFont(ofSize: 14, weight: .regular)
         return label
     }()
-    
+
     private let iconLabelStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
-       
+
         return stackView
     }()
-    
-    func configure(imageSystemName: String,labelValue: String){
+
+    func configure(imageSystemName: String, labelValue: String) {
         iconImageView.image = UIImage(systemName: imageSystemName)
         label.text = labelValue
     }
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(iconLabelStackView)
         iconLabelStackView.addArrangedSubview(iconImageView)
         iconLabelStackView.addArrangedSubview(label)
-        
     }
-    
-    required init(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError()
     }
 }

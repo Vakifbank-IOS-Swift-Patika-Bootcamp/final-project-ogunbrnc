@@ -58,7 +58,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "71C1401829432BE100B85AD6"
+               BlueprintIdentifier = "EDE0ED42294E315500D679EC"
                BuildableName = "RAWGVideoGamesTests.xctest"
                BlueprintName = "RAWGVideoGamesTests"
                ReferencedContainer = "container:RAWGVideoGames.xcodeproj">
@@ -70,7 +70,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = "tr"
+      language = "en"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

@@ -15,7 +15,7 @@ protocol FavoriteGameListViewModelProtocol {
     func getGameCount() -> Int
     func getGame(at index: Int) -> FavoriteGame?
     func getGameId(at index: Int) -> Int?
-    func deleteGameFromFavoriteList(index: Int, completion: (Bool) -> ())
+    func deleteGameFromFavoriteList(index: Int, completion: (Bool) -> Void)
 }
 
 protocol FavoriteGameListViewModelDelegate: AnyObject {
@@ -26,7 +26,7 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
     weak var delegate: FavoriteGameListViewModelDelegate?
     private var games: [FavoriteGame]?
     private var databaseManager: DatabaseManager
-    
+
     init(games: [FavoriteGame]? = nil, databaseManager: DatabaseManager = CoreDataManager.shared) {
         self.games = games
         self.databaseManager = databaseManager
@@ -36,16 +36,16 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
         games?.append(game)
         delegate?.gamesLoaded()
     }
-    
+
     func gameDeletedFromFavorites() {
-        //since game id is equal to 0 after deletion from coredata, we remove the one whose id is equal to zero.
-        if let index = games?.enumerated().filter({$0.element.gameId == 0}).map({$0.offset}).first {
+        // since game id is equal to 0 after deletion from coredata, we remove the one whose id is equal to zero.
+        if let index = games?.enumerated().filter({ $0.element.gameId == 0 }).map({ $0.offset }).first {
             games?.remove(at: index)
             delegate?.gamesLoaded()
         }
     }
-    
-    func deleteGameFromFavoriteList(index: Int, completion: (Bool) -> ()) {
+
+    func deleteGameFromFavoriteList(index: Int, completion: (Bool) -> Void) {
         guard let gameId = getGameId(at: index) else { completion(false); return }
         if databaseManager.deleteFromFavorite(id: gameId) {
             games?.remove(at: index)
@@ -60,17 +60,16 @@ final class FavoriteGameListViewModel: FavoriteGameListViewModelProtocol {
         games = databaseManager.getFavoriteGames()
         delegate?.gamesLoaded()
     }
-    
+
     func getGameCount() -> Int {
         games?.count ?? 0
     }
-    
+
     func getGame(at index: Int) -> FavoriteGame? {
         games?[index]
     }
-    
+
     func getGameId(at index: Int) -> Int? {
         Int(games![index].gameId)
     }
-    
 }

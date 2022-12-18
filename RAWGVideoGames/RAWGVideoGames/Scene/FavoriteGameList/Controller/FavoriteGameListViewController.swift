@@ -8,9 +8,9 @@
 import UIKit
 
 class FavoriteGameListViewController: UIViewController {
-
     // MARK: IBOutlets
-    @IBOutlet weak var favoriteGamesTableView: UITableView! {
+
+    @IBOutlet var favoriteGamesTableView: UITableView! {
         didSet {
             favoriteGamesTableView.register(FavoriteGameListTableViewCell.self, forCellReuseIdentifier: FavoriteGameListTableViewCell.identifier)
             favoriteGamesTableView.delegate = self
@@ -18,8 +18,9 @@ class FavoriteGameListViewController: UIViewController {
             favoriteGamesTableView.estimatedRowHeight = UITableView.automaticDimension
         }
     }
-    
+
     // MARK: UI Components
+
     private let noFavoriteGameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,12 +30,14 @@ class FavoriteGameListViewController: UIViewController {
         label.textColor = .label
         return label
     }()
-    
+
     // MARK: Variable Declarations
+
     private var viewModel: FavoriteGameListViewModelProtocol = FavoriteGameListViewModel()
 
     // MARK: UI Configurations
-    private func configureNoNoteLabel(){
+
+    private func configureNoNoteLabel() {
         if viewModel.getGameCount() == 0 {
             view.addSubview(noFavoriteGameLabel)
             noFavoriteGameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -42,43 +45,46 @@ class FavoriteGameListViewController: UIViewController {
             noFavoriteGameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
         }
     }
-    
+
     private func configureNotificationCenters() {
         NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameAdded), name: NSNotification.Name(rawValue: "FavoriteGameAdded"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameDeleted), name: NSNotification.Name(rawValue: "FavoriteGameDeleted"), object: nil)
     }
 
     // MARK: Selector Functions
+
     @objc func favoriteGameAdded(_ notification: NSNotification) {
-        //game is added to the favorite list for the first time
+        // game is added to the favorite list for the first time
         if viewModel.getGameCount() == 0 {
             noFavoriteGameLabel.removeFromSuperview()
         }
         if let favoriteGame = notification.userInfo?["favoriteGame"] as? FavoriteGame {
             viewModel.newGameAddedToFavorites(game: favoriteGame)
         }
-        
     }
-    
+
     @objc func favoriteGameDeleted() {
         viewModel.gameDeletedFromFavorites()
-        //last game in the list has been deleted from the favorite list
+        // last game in the list has been deleted from the favorite list
         if viewModel.getGameCount() == 0 {
             configureNoNoteLabel()
         }
     }
+
     // MARK: Life Cycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         viewModel.delegate = self
         viewModel.fetchGames()
         configureNotificationCenters()
         configureNoNoteLabel()
     }
-    
 }
+
 // MARK: FavoriteGameListViewModelDelegate Extension
+
 extension FavoriteGameListViewController: FavoriteGameListViewModelDelegate {
     func gamesLoaded() {
         favoriteGamesTableView.reloadData()
@@ -86,41 +92,40 @@ extension FavoriteGameListViewController: FavoriteGameListViewModelDelegate {
 }
 
 // MARK: TableView Delegate, DataSource Extension
+
 extension FavoriteGameListViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.getGameCount()
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteGameListTableViewCell.identifier,for: indexPath) as? FavoriteGameListTableViewCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteGameListTableViewCell.identifier, for: indexPath) as? FavoriteGameListTableViewCell,
               let model = viewModel.getGame(at: indexPath.row) else { return UITableViewCell() }
-       cell.configureCell(game: model)
-       return cell
+        cell.configureCell(game: model)
+        return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GameDetailViewController") as? GameDetailViewController else { return }
         detailVC.gameId = viewModel.getGameId(at: indexPath.row)
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             viewModel.deleteGameFromFavoriteList(index: indexPath.row) { result in
                 if result {
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     configureNoNoteLabel()
-                }
-                else {
+                } else {
                     return
                 }
-        }
+            }
         }
     }
-   
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 225
     }
 }
-

@@ -5,35 +5,36 @@
 //  Created by Ogün Birinci on 10.12.2022.
 //
 
-import UIKit
 import SDWebImage
+import UIKit
 
 final class GameDetailViewController: BaseViewController {
-    
     // MARK: IBOutlets
-    @IBOutlet weak var gameRatingAverageLabel: UILabel!
-    @IBOutlet weak var gameRatingCountLabel: UILabel!
-    @IBOutlet weak var gameTimeLabel: UILabel!
-    @IBOutlet weak var gameRatingSkipLabel: UILabel!
-    @IBOutlet weak var gameRatingMehLabel: UILabel!
-    @IBOutlet weak var gameRatingRecommendedLabel: UILabel!
-    @IBOutlet weak var gameRatingExceptionalLabel: UILabel!
-    @IBOutlet weak var gameImageView: UIImageView!
-    @IBOutlet weak var gameNameLabel: UILabel!
-    @IBOutlet weak var gamePlatformLabel: UILabel!
-    @IBOutlet weak var gameGenresLabel: UILabel!
-    @IBOutlet weak var gameTagsLabel: UILabel!
-    @IBOutlet weak var gameDescriptionLabel: UILabel!
-    
-    
+
+    @IBOutlet var gameRatingAverageLabel: UILabel!
+    @IBOutlet var gameRatingCountLabel: UILabel!
+    @IBOutlet var gameTimeLabel: UILabel!
+    @IBOutlet var gameRatingSkipLabel: UILabel!
+    @IBOutlet var gameRatingMehLabel: UILabel!
+    @IBOutlet var gameRatingRecommendedLabel: UILabel!
+    @IBOutlet var gameRatingExceptionalLabel: UILabel!
+    @IBOutlet var gameImageView: UIImageView!
+    @IBOutlet var gameNameLabel: UILabel!
+    @IBOutlet var gamePlatformLabel: UILabel!
+    @IBOutlet var gameGenresLabel: UILabel!
+    @IBOutlet var gameTagsLabel: UILabel!
+    @IBOutlet var gameDescriptionLabel: UILabel!
+
     // MARK: Variable Declarations
+
     private var favoriteButton = UIButton(type: .custom)
     var gameId: Int?
     private var viewModel: GameDetailViewModelProtocol = GameDetailViewModel()
-    
+
     // MARK: Selector Functions
+
     @objc func addFavoriteTapped() {
-        viewModel.addGameToFavoriteList {result in
+        viewModel.addGameToFavoriteList { result in
             if result {
                 favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                 favoriteButton.removeTarget(nil, action: nil, for: .allEvents)
@@ -41,7 +42,7 @@ final class GameDetailViewController: BaseViewController {
             }
         }
     }
-    
+
     @objc func removeFavoriteTapped() {
         viewModel.deleteGameFromFavoriteList { result in
             if result {
@@ -51,14 +52,14 @@ final class GameDetailViewController: BaseViewController {
             }
         }
     }
-    
+
     @objc func favoriteGameDeleted() {
         configureFavoriteButton()
     }
 
     // MARK: Configure UI Components
+
     private func configureFavoriteButton() {
-        
         if viewModel.isItFavoriteGame() {
             favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             favoriteButton.addTarget(self, action: #selector(removeFavoriteTapped), for: .touchUpInside)
@@ -66,43 +67,39 @@ final class GameDetailViewController: BaseViewController {
             favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
             favoriteButton.addTarget(self, action: #selector(addFavoriteTapped), for: .touchUpInside)
         }
-        
-        
+
         favoriteButton.frame = CGRect(x: 0, y: 0, width: 64, height: 64)
-        
+
         let barButton = UIBarButtonItem(customView: favoriteButton)
-        self.navigationItem.rightBarButtonItem = barButton
-        
+        navigationItem.rightBarButtonItem = barButton
     }
-    
+
     // MARK: Life Cycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let id = gameId else { return }
-        
+
         indicatorView.startAnimating()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(favoriteGameDeleted), name: NSNotification.Name(rawValue: "FavoriteGameDeletedInList"), object: nil)
 
         viewModel.delegate = self
         viewModel.fetchGameDetail(id: id)
     }
-    
-    
-    
 }
 
 // MARK: GameDetailViewModelDelegate extension
+
 extension GameDetailViewController: GameDetailViewModelDelegate {
     func gameLoadingError(error: Error) {
         showAlert(title: "Error occured".localized(), message: error.localizedDescription)
     }
-    
+
     func gameLoaded() {
-        
         gameNameLabel.text = viewModel.getGameName()
         guard let url = viewModel.getGameImageURL() else { return }
-        gameImageView.sd_setImage(with: url,placeholderImage: UIImage(systemName: "photo"),options: .continueInBackground)
+        gameImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"), options: .continueInBackground)
         gameRatingExceptionalLabel.text = String(viewModel.getGameRatingExceptionalCount())
         gameRatingRecommendedLabel.text = String(viewModel.getGameRatingRecommendedCount())
         gameRatingMehLabel.text = String(viewModel.getGameRatingMehCount())
@@ -114,11 +111,8 @@ extension GameDetailViewController: GameDetailViewModelDelegate {
         gameTimeLabel.text = String(viewModel.getGameTime())
         gameRatingCountLabel.text = String(viewModel.getGameRatingCount())
         gameRatingAverageLabel.text = String(viewModel.getGameRatingAverage())
-        
+
         configureFavoriteButton()
         indicatorView.stopAnimating()
-
-
     }
 }
-

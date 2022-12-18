@@ -11,45 +11,39 @@ import Foundation
 import XCTest
 
 final class GameDetailViewModelFetchUnitTest: XCTestCase {
-    
     var viewModel: GameDetailViewModel!
     var fetchExpectation: XCTestExpectation!
-    
+
     override func setUpWithError() throws {
         viewModel = GameDetailViewModel()
         viewModel.delegate = self
     }
-    
+
     func testFetchGameDetail() {
         fetchExpectation = expectation(description: "fetchGame")
-                
+
         viewModel.fetchGameDetail(id: 3498)
         waitForExpectations(timeout: 10)
-        
-        XCTAssertEqual(viewModel.getGameName(), "Grand Theft Auto V")
 
+        XCTAssertEqual(viewModel.getGameName(), "Grand Theft Auto V")
     }
-    
+
     func testFetchGameDetailInvalidID() {
         fetchExpectation = expectation(description: "fetchGame")
 
-        viewModel.fetchGameDetail(id: 12345678)
+        viewModel.fetchGameDetail(id: 12_345_678)
         waitForExpectations(timeout: 10)
-        
-        XCTAssertEqual(viewModel.getGameName(), "")
 
+        XCTAssertEqual(viewModel.getGameName(), "")
     }
-    
-    
 }
 
 extension GameDetailViewModelFetchUnitTest: GameDetailViewModelDelegate {
-    func gameLoadingError(error: Error) {
+    func gameLoadingError(error _: Error) {
         fetchExpectation.fulfill()
     }
-    
+
     func gameLoaded() {
         fetchExpectation.fulfill()
     }
 }
-
