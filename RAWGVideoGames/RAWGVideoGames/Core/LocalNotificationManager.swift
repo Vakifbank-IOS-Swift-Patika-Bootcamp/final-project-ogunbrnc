@@ -36,7 +36,7 @@ extension LocalNotificationManagerError: LocalizedError {
 protocol NotificationProtocol {
     func scheduleNotification(title: String, message: String, id: UUID, date: Date, completion: @escaping (VoidResult) -> Void)
     func updateScheduledNotification(title: String, message: String,id: UUID, date: Date, completion: @escaping (VoidResult) -> Void)
-    func deleteScheduledNotification(id: UUID)
+    func deleteScheduledNotification(id: UUID,completion: @escaping (VoidResult) -> Void)
 }
 
 final class LocalNotificationManager: NotificationProtocol {
@@ -86,8 +86,9 @@ final class LocalNotificationManager: NotificationProtocol {
         }
     }
     
-    func deleteScheduledNotification(id: UUID) {
+    func deleteScheduledNotification(id: UUID, completion: @escaping (VoidResult) -> Void) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id.uuidString])
+        completion(.success)
     }
     
     

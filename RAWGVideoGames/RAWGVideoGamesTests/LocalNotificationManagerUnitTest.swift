@@ -31,5 +31,17 @@ final class LocalNotificationManagerUnitTest: XCTestCase {
         }
     }
     
+    func testDeleteScheduledNotification() {
+        let id = UUID()
+        localNotificationManager.scheduleNotification(title: "Test Notification", message: "Test Notification Content", id: id, date: Date.now.addingTimeInterval(5 * 60)) { result in
+            
+            XCTAssertEqual(result, .success)
+        }
+        
+        localNotificationManager.deleteScheduledNotification(id: id) { result in
+            XCTAssertEqual(result, .success)
+        }
+    }
+    
 
 }
