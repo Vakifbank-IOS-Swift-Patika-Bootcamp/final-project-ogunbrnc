@@ -65,8 +65,9 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         }
         //updating note
         else {
-            guard let gameNoteId = gameNote?.id else { return nil }
-            if gameNote?.noteContent == noteContent {
+            guard let gameNote = gameNote,
+                  let gameNoteId = gameNote.id else { return nil }
+            if gameNote.noteContent == noteContent {
                 return nil
             }
             
@@ -78,12 +79,10 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         return nil
     }
     
-    func saveReminder(gameName: String, reminderContent: String, reminderDate: Date) {
+    func saveReminder(gameName: String, reminderContent: String, reminderDate: Date){
         if gameNote == nil {
             guard let gameNote = databaseManager.addNote(gameName: gameName, noteContent: reminderContent, noteHasReminder: true, noteScheduledReminderDate: reminderDate),
-                  let gameNoteId = gameNote.id else {
-                return
-            }
+                  let gameNoteId = gameNote.id else { return }
             notificationManager.scheduleNotification(title: gameName, message: reminderContent, id: gameNoteId, date: reminderDate, completion: { [weak self] result in
                 guard let self = self else { return }
                 switch result {
@@ -96,10 +95,8 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         }
         else {
             
-            guard let gameNoteId = gameNote?.id else { return }
-            guard let gameNote = databaseManager.updateNote(noteContent: reminderContent,noteScheduledReminderDate: reminderDate, gameNoteId: gameNoteId) else {
-                return
-            }
+            guard let gameNoteId = gameNote?.id,
+                  let gameNote = databaseManager.updateNote(noteContent: reminderContent,noteScheduledReminderDate: reminderDate, gameNoteId: gameNoteId) else { return }
             notificationManager.updateScheduledNotification(title: gameName, message: reminderContent, id: gameNoteId, date: reminderDate, completion: { [weak self] result in
                 guard let self = self else { return }
                 switch result {

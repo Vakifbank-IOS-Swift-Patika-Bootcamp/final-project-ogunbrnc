@@ -11,6 +11,7 @@ import CoreData
 
 final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
 
+    var databaseManager: DatabaseManager!
     var viewModel: GameNoteAddingEditingViewModel!
     var viewModelUndefinedNote: GameNoteAddingEditingViewModel!
     var fetchExpectation: XCTestExpectation!
@@ -19,12 +20,15 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
 
     
     override func setUpWithError() throws {
+        
+        databaseManager = CoreDataManager.shared
+        
         let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
         
         gameNoteWithReminder = NSManagedObject(entity: entity, insertInto: managedContext)
         gameNoteWithReminder.setValue("Grand Theft Auto V", forKeyPath: "gameName")
-        gameNoteWithReminder.setValue("Note content", forKeyPath: "noteContent")
+        gameNoteWithReminder.setValue("Note Reminder content", forKeyPath: "noteContent")
         gameNoteWithReminder.setValue(Date.now, forKeyPath: "noteDate")
         gameNoteWithReminder.setValue(UUID(), forKey: "id")
         gameNoteWithReminder.setValue(Date.now.addingTimeInterval(5 * 60), forKey: "noteScheduledReminderDate")
@@ -53,20 +57,15 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
     }
     
     func testAddNewNote() {
-        guard let note =  viewModelUndefinedNote.saveNote(gameName: "The Sims", noteContent: "The Sims Note") else { return }
+        guard let note =  viewModelUndefinedNote.saveNote(gameName: "Grand Theft Auto 4",
+                                                          noteContent: "Note content"),
+              let noteId = note.id  else { return }
         
-        XCTAssertEqual(note.noteContent, "The Sims Note")
+        XCTAssertEqual(note.noteContent, "Note content")
         
+        // delete after test
+        if databaseManager.deleteNote(id: noteId) { print ("deleted")}
         
-    }
-    
-    func testUpdatNote() {
-        guard let _ = gameNote,
-              let updatedNote = viewModel.saveNote(gameName: "Grand Theft Auto 4", noteContent: "Grand Theft Auto 4 Note Updated") else { return }
-        
-        
-
-        XCTAssertEqual(updatedNote.noteContent, "Grand Theft Auto 4 Note Updated")
     }
     
     
