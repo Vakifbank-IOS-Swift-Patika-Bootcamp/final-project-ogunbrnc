@@ -13,9 +13,8 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
 
     var databaseManager: DatabaseManager!
     var viewModel: GameNoteAddingEditingViewModel!
-    var viewModelUndefinedNote: GameNoteAddingEditingViewModel!
+    var viewModelNilNote: GameNoteAddingEditingViewModel!
     var fetchExpectation: XCTestExpectation!
-    var gameNoteWithReminder: NSManagedObject!
     var gameNote: NSManagedObject!
 
     
@@ -26,15 +25,6 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
         let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "GameNote", in: managedContext)!
         
-        gameNoteWithReminder = NSManagedObject(entity: entity, insertInto: managedContext)
-        gameNoteWithReminder.setValue("Grand Theft Auto V", forKeyPath: "gameName")
-        gameNoteWithReminder.setValue("Note Reminder content", forKeyPath: "noteContent")
-        gameNoteWithReminder.setValue(Date.now, forKeyPath: "noteDate")
-        gameNoteWithReminder.setValue(UUID(), forKey: "id")
-        gameNoteWithReminder.setValue(Date.now.addingTimeInterval(5 * 60), forKey: "noteScheduledReminderDate")
-        gameNoteWithReminder.setValue(true, forKey: "noteHasReminder")
-        
-        
         gameNote = NSManagedObject(entity: entity, insertInto: managedContext)
         gameNote.setValue("Grand Theft Auto 4", forKeyPath: "gameName")
         gameNote.setValue("Note content", forKeyPath: "noteContent")
@@ -43,31 +33,52 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
         gameNote.setValue(nil, forKey: "noteScheduledReminderDate")
         gameNote.setValue(false, forKey: "noteHasReminder")
 
+        guard let note = gameNote as? GameNote else { return }
+        viewModel = GameNoteAddingEditingViewModel(gameNote: note)
+        viewModelNilNote = GameNoteAddingEditingViewModel()
+        viewModel.delegate = self
+        viewModelNilNote.delegate = self
+    }
+    
+    func testAddNewNote() {
+        fetchExpectation = expectation(description: "fetchGame")
+
+        guard let note =  viewModelNilNote.saveNote(gameName: "Grand Theft Auto 3",
+                                                          noteContent: "Note content") else { return }
+
         
-        if let noteWithReminder = gameNoteWithReminder as? GameNote,
-           let note = gameNote as? GameNote {
-            viewModel = GameNoteAddingEditingViewModel(gameNote: note)
-            viewModelUndefinedNote = GameNoteAddingEditingViewModel()
-            viewModel.delegate = self
-        }
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertEqual(note.noteContent, "Note content")
+        
+    }
+    
+    func testUpdateNote() {
+        guard let note =  gameNote as? GameNote,
+              let gameName = note.gameName else { return }
+                
+        guard let noteUpdated = viewModel.saveNote(gameName: gameName,
+                                                           noteContent: "Note content updated") else { return }
+
+        XCTAssertEqual(noteUpdated.noteContent, "Note content updated")
+        
+    }
+    
+    func testUpdateWithSameNoteContent() {
+        guard let note =  gameNote as? GameNote,
+              let gameName = note.gameName,
+              let noteContent = note.noteContent else { return }
+                
+        // update with same content.
+        guard let noteUpdated = viewModel.saveNote(gameName: gameName,
+                                                   noteContent: noteContent) else { return }
+
+        XCTAssertNil(noteUpdated)  
     }
     
     func testNoteContent() {
         XCTAssertEqual(viewModel.getNoteContent(),"Note content")
     }
-    
-    func testAddNewNote() {
-        guard let note =  viewModelUndefinedNote.saveNote(gameName: "Grand Theft Auto 4",
-                                                          noteContent: "Note content"),
-              let noteId = note.id  else { return }
-        
-        XCTAssertEqual(note.noteContent, "Note content")
-        
-        // delete after test
-        if databaseManager.deleteNote(id: noteId) { print ("deleted")}
-        
-    }
-    
     
 }
 
