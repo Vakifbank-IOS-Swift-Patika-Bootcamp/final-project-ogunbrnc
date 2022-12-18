@@ -114,9 +114,6 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
 
         XCTAssertEqual(note.noteContent, updatedNoteContent)
         
-        // after test remove.
-        guard let noteId = note.id else { return }
-        viewModel.delete(id: noteId)
     }
     
     func testAddReminder(){
@@ -134,6 +131,20 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         // after test remove.
         guard let noteId = noteWithReminder.id else { return }
         viewModel.deleteReminder(id: noteId)
+    }
+    
+    func testUpdateReminder(){
+        fetchExpectation = expectation(description: "fetchGames")
+
+        guard let noteWithReminder = gameNoteWithReminder as? GameNote else { return }
+
+        noteWithReminder.noteContent = "Note content updated"
+        let updatedNoteContent = viewModel.update(reminder: noteWithReminder)
+        
+        waitForExpectations(timeout: 10)
+
+        XCTAssertEqual(noteWithReminder.noteContent, updatedNoteContent)
+        
     }
     
 }
