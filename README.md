@@ -10,7 +10,7 @@
 
 • When the screen is first turned on, indicator is shown until the games are loaded.
 
-• All games are sorted by popularity first when games are installed.
+• All games are sorted by popularity first when games are loaded.
 
 • 20 games are shown each time, pagination is provided. New games are loaded as the screen is pulled down.
 
