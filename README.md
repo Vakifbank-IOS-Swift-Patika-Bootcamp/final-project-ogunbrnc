@@ -91,3 +91,11 @@ Add Note | Add Reminder
 
 
 
+## Clean Code
+
+https://github.com/ogunbrnc/CleanCode
+
+## Pragmatic Programmer
+
+https://github.com/ogunbrnc/PragmaticProgrammer
+
