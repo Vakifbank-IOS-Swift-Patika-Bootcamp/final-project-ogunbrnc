@@ -222,7 +222,7 @@ extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegat
     }
     
     func didUpdateReminder(gameNote: GameNote) {
-        viewModel.update(reminder: gameNote)
+        let _ = viewModel.update(reminder: gameNote)
     }
     
     func didAddNote(gameNote: GameNote) {
@@ -232,6 +232,6 @@ extension GameNoteListViewController: GameNoteAddingEditingViewControllerDelegat
     }
     
     func didUpdateNote(gameNote: GameNote) {
-        viewModel.update(note: gameNote)
+        let _ = viewModel.update(note: gameNote)
     }
 }

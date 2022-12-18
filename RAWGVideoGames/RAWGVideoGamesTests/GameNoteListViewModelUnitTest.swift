@@ -16,9 +16,6 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
     var gameNote: NSManagedObject!
     var notes: [GameNote]?
     var notesWithReminder: [GameNote]?
-
-
-
     
     override func setUpWithError() throws {
         let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
