@@ -127,11 +127,19 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     func deleteReminder(id: UUID) {
         let success = databaseManager.deleteNote(id: id)
         if success {
-            notificationManager.deleteScheduledNotification(id: id)
-            if let index = gameNotesHasReminder?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {
-                gameNotesHasReminder?.remove(at: index)
-                delegate?.gameNotesLoaded()
+            notificationManager.deleteScheduledNotification(id: id) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    if let index = self.gameNotesHasReminder?.enumerated().filter({$0.element.id == nil}).map({$0.offset}).first {
+                        self.gameNotesHasReminder?.remove(at: index)
+                        self.delegate?.gameNotesLoaded()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
             }
+            
         }
     }
 }
