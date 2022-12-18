@@ -1,0 +1,63 @@
+
+/* Class = "UILabel"; text = "About"; ObjectID = "54z-N8-sgd"; */
+"54z-N8-sgd.text" = "Hakkında";
+
+/* Class = "UITabBarItem"; title = "Notes"; ObjectID = "8FR-Ts-qWR"; */
+"8FR-Ts-qWR.title" = "Notlarım";
+
+/* Class = "UIButton"; configuration.title = "Save"; ObjectID = "98n-51-6AN"; */
+"98n-51-6AN.configuration.title" = "Kaydet";
+
+/* Class = "UILabel"; text = "🔴"; ObjectID = "BhF-HF-i7g"; */
+"BhF-HF-i7g.text" = "🔴";
+
+/* Class = "UILabel"; text = "Genres"; ObjectID = "JHp-kP-fLG"; */
+"JHp-kP-fLG.text" = "Oyun Türü";
+
+/* Class = "UINavigationItem"; title = "Favorites"; ObjectID = "JPl-BX-fGI"; */
+"JPl-BX-fGI.title" = "Favorilerim";
+
+/* Class = "UITabBarItem"; title = "Games"; ObjectID = "Jse-EQ-Df2"; */
+"Jse-EQ-Df2.title" = "Oyunlar";
+
+/* Class = "UINavigationItem"; title = "My Notes"; ObjectID = "L17-ko-KSn"; */
+"L17-ko-KSn.title" = "Notlarım";
+
+/* Class = "UILabel"; text = "🟡"; ObjectID = "N5B-WG-q7W"; */
+"N5B-WG-q7W.text" = "🟡";
+
+/* Class = "UILabel"; text = "Note Type"; ObjectID = "NNQ-Eu-D60"; */
+"NNQ-Eu-D60.text" = "Not Tipi";
+
+/* Class = "UISegmentedControl"; Ofu-ec-I5f.segmentTitles[0] = "Note"; ObjectID = "Ofu-ec-I5f"; */
+"Ofu-ec-I5f.segmentTitles[0]" = "Not";
+
+/* Class = "UISegmentedControl"; Ofu-ec-I5f.segmentTitles[1] = "Reminder"; ObjectID = "Ofu-ec-I5f"; */
+"Ofu-ec-I5f.segmentTitles[1]" = "Hatırlatıcı";
+
+/* Class = "UILabel"; text = "Platforms"; ObjectID = "Q8F-re-eg4"; */
+"Q8F-re-eg4.text" = "Platformlar";
+
+/* Class = "UILabel"; text = "Note"; ObjectID = "XPw-A9-XXr"; */
+"XPw-A9-XXr.text" = "Not İçeriği";
+
+/* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "gQc-iu-rxb"; */
+"gQc-iu-rxb.title" = "Favorites";
+
+/* Class = "UILabel"; text = "🟢"; ObjectID = "iGS-qG-gwz"; */
+"iGS-qG-gwz.text" = "🟢";
+
+/* Class = "UILabel"; text = "Tags"; ObjectID = "mab-BW-gF3"; */
+"mab-BW-gF3.text" = "Oyun Etiketleri";
+
+/* Class = "UISegmentedControl"; msR-Zq-6ad.segmentTitles[0] = "Notes"; ObjectID = "msR-Zq-6ad"; */
+"msR-Zq-6ad.segmentTitles[0]" = "Notlarım";
+
+/* Class = "UISegmentedControl"; msR-Zq-6ad.segmentTitles[1] = "Reminders"; ObjectID = "msR-Zq-6ad"; */
+"msR-Zq-6ad.segmentTitles[1]" = "Hatırlatıcılarım";
+
+/* Class = "UILabel"; text = "Game Name"; ObjectID = "u2G-k0-xka"; */
+"u2G-k0-xka.text" = "Oyun İsmi";
+
+/* Class = "UILabel"; text = "🔵"; ObjectID = "uF9-0p-QWr"; */
+"uF9-0p-QWr.text" = "🔵";
