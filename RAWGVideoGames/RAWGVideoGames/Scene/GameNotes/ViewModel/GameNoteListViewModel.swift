@@ -19,8 +19,8 @@ protocol GameNoteListViewModelProtocol {
     func getGameNoteHasReminderId(at index: Int) -> UUID? 
     func add(note: GameNote)
     func add(reminder: GameNote)
-    func update(note: GameNote)
-    func update(reminder: GameNote)
+    func update(note: GameNote) -> String
+    func update(reminder: GameNote) -> String
     func delete(id: UUID)
     func deleteReminder(id: UUID)
 
@@ -42,15 +42,19 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
     
     init(databaseManager: DatabaseManager = CoreDataManager.shared,
          notificationManager: NotificationProtocol = LocalNotificationManager.shared,
-         gameNotes: [GameNote]? = nil) {
+         gameNotes: [GameNote]? = nil,
+         gameNotesHasReminder: [GameNote]? = nil
+    ) {
         self.databaseManager = databaseManager
         self.notificationManager = notificationManager
         self.gameNotes = gameNotes
+        self.gameNotesHasReminder = gameNotesHasReminder
     }
     
     func isEditable(note: GameNote) -> Bool {
+        guard let noteScheduledReminderDate = note.noteScheduledReminderDate else { return false }
         let currentTime = Date.now
-        return note.noteScheduledReminderDate! > currentTime
+        return noteScheduledReminderDate > currentTime
     }
     
     func fetchGameNotes() {
@@ -89,11 +93,12 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         delegate?.gameNotesLoaded()
     }
     
-    func update(note: GameNote) {
+    func update(note: GameNote) -> String{
         if let row = gameNotes?.firstIndex(where: {$0.id == note.id}) {
             gameNotes?[row] = note
             delegate?.gameNotesLoaded()
         }
+        return note.noteContent ?? ""
     }
     
     func add(reminder: GameNote) {
@@ -101,11 +106,12 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         delegate?.gameNotesLoaded()
     }
     
-    func update(reminder: GameNote) {
+    func update(reminder: GameNote) -> String {
         if let row = gameNotesHasReminder?.firstIndex(where: {$0.id == reminder.id}) {
             gameNotesHasReminder?[row] = reminder
             delegate?.gameNotesLoaded()
         }
+        return reminder.noteContent ?? ""
     }
     
     func delete(id: UUID){
