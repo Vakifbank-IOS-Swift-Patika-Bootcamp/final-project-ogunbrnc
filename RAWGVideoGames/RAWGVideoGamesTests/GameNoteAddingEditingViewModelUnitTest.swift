@@ -12,6 +12,7 @@ import CoreData
 final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
 
     var viewModel: GameNoteAddingEditingViewModel!
+    var viewModelUndefinedNote: GameNoteAddingEditingViewModel!
     var fetchExpectation: XCTestExpectation!
     var gameNoteWithReminder: NSManagedObject!
     var gameNote: NSManagedObject!
@@ -42,6 +43,7 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
         if let noteWithReminder = gameNoteWithReminder as? GameNote,
            let note = gameNote as? GameNote {
             viewModel = GameNoteAddingEditingViewModel(gameNote: note)
+            viewModelUndefinedNote = GameNoteAddingEditingViewModel()
             viewModel.delegate = self
         }
     }
@@ -49,6 +51,13 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
     func testNoteContent() {
         XCTAssertEqual(viewModel.getNoteContent(),"Note content")
     }
+    
+    func testAddNewNote() {
+        guard let note =  viewModelUndefinedNote.saveNote(gameName: "The Sims", noteContent: "The Sims Note") else { return }
+        
+        XCTAssertEqual(note.noteContent, "The Sims Note")
+    }
+    
 }
 
 extension GameNoteAddingEditingViewModelUnitTest: GameNoteAddingEditingViewModelDelegate {

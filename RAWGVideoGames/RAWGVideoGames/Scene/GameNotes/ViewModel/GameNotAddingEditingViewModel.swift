@@ -15,8 +15,8 @@ enum PageViewMode {
 protocol GameNoteAddingEditingViewModelProtocol {
     var delegate: GameNoteAddingEditingViewModelDelegate? { get set }
     func getNote(noteId: UUID?)
-    func getNoteContent() -> String
-    func saveNote(gameName: String, noteContent: String)
+    func getNoteContent() -> String?
+    func saveNote(gameName: String, noteContent: String)  -> GameNote?
     func saveReminder(gameName: String, reminderContent: String, reminderDate: Date)
 }
 
@@ -50,29 +50,32 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         delegate?.didNoteLoaded(gameNote: gameNote,pageViewMode: pageViewMode)
     }
     
-    func getNoteContent() -> String {
-        gameNote?.noteContent ?? ""
+    func getNoteContent() -> String? {
+        gameNote?.noteContent
     }
     
-    func saveNote(gameName: String, noteContent: String) {
+    func saveNote(gameName: String, noteContent: String) -> GameNote? {
         
         //adding new note
         if gameNote == nil {
             if let gameNote =  databaseManager.addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: false) {
                 delegate?.didAddNote(gameNote: gameNote)
+                return gameNote
             }
         }
         //updating note
         else {
-            guard let gameNoteId = gameNote?.id else { return }
+            guard let gameNoteId = gameNote?.id else { return nil }
             if gameNote?.noteContent == noteContent {
-                return
+                return nil
             }
             
             if let updatedGameNote = databaseManager.updateNote(noteContent: noteContent, gameNoteId: gameNoteId) {
                 delegate?.didUpdateNote(gameNote: updatedGameNote)
+                return gameNote
             }
         }
+        return nil
     }
     
     func saveReminder(gameName: String, reminderContent: String, reminderDate: Date) {
