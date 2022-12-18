@@ -76,10 +76,6 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
         XCTAssertNil(noteUpdated)  
     }
     
-    func testNoteContent() {
-        XCTAssertEqual(viewModel.getNoteContent(),"Note content")
-    }
-    
 }
 
 extension GameNoteAddingEditingViewModelUnitTest: GameNoteAddingEditingViewModelDelegate {
