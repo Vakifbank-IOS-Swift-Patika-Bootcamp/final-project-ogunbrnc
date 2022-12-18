@@ -15,8 +15,8 @@ enum PageViewMode {
 protocol GameNoteAddingEditingViewModelProtocol {
     var delegate: GameNoteAddingEditingViewModelDelegate? { get set }
     func getNote(noteId: UUID?)
-    func getNoteContent() -> String
-    func saveNote(gameName: String, noteContent: String)
+    func getNoteContent() -> String?
+    func saveNote(gameName: String, noteContent: String)  -> GameNote?
     func saveReminder(gameName: String, reminderContent: String, reminderDate: Date)
 }
 
@@ -37,9 +37,11 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
     private var gameNote: GameNote?
     
     init(databaseManager: DatabaseManager = CoreDataManager.shared,
-         notificationManager: NotificationProtocol = LocalNotificationManager.shared) {
+         notificationManager: NotificationProtocol = LocalNotificationManager.shared,
+         gameNote: GameNote? = nil) {
         self.databaseManager = databaseManager
         self.notificationManager = notificationManager
+        self.gameNote = gameNote
     }
     
     func getNote(noteId: UUID?) {
@@ -48,37 +50,39 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         delegate?.didNoteLoaded(gameNote: gameNote,pageViewMode: pageViewMode)
     }
     
-    func getNoteContent() -> String {
-        gameNote?.noteContent ?? ""
+    func getNoteContent() -> String? {
+        gameNote?.noteContent
     }
     
-    func saveNote(gameName: String, noteContent: String) {
+    func saveNote(gameName: String, noteContent: String) -> GameNote? {
         
         //adding new note
         if gameNote == nil {
             if let gameNote =  databaseManager.addNote(gameName: gameName, noteContent: noteContent, noteHasReminder: false) {
                 delegate?.didAddNote(gameNote: gameNote)
+                return gameNote
             }
         }
         //updating note
         else {
-            guard let gameNoteId = gameNote?.id else { return }
-            if gameNote?.noteContent == noteContent {
-                return
+            guard let gameNote = gameNote,
+                  let gameNoteId = gameNote.id else { return nil }
+            if gameNote.noteContent == noteContent {
+                return nil
             }
             
             if let updatedGameNote = databaseManager.updateNote(noteContent: noteContent, gameNoteId: gameNoteId) {
                 delegate?.didUpdateNote(gameNote: updatedGameNote)
+                return gameNote
             }
         }
+        return nil
     }
     
-    func saveReminder(gameName: String, reminderContent: String, reminderDate: Date) {
+    func saveReminder(gameName: String, reminderContent: String, reminderDate: Date){
         if gameNote == nil {
             guard let gameNote = databaseManager.addNote(gameName: gameName, noteContent: reminderContent, noteHasReminder: true, noteScheduledReminderDate: reminderDate),
-                  let gameNoteId = gameNote.id else {
-                return
-            }
+                  let gameNoteId = gameNote.id else { return }
             notificationManager.scheduleNotification(title: gameName, message: reminderContent, id: gameNoteId, date: reminderDate, completion: { [weak self] result in
                 guard let self = self else { return }
                 switch result {
@@ -91,10 +95,8 @@ final class GameNoteAddingEditingViewModel: GameNoteAddingEditingViewModelProtoc
         }
         else {
             
-            guard let gameNoteId = gameNote?.id else { return }
-            guard let gameNote = databaseManager.updateNote(noteContent: reminderContent,noteScheduledReminderDate: reminderDate, gameNoteId: gameNoteId) else {
-                return
-            }
+            guard let gameNoteId = gameNote?.id,
+                  let gameNote = databaseManager.updateNote(noteContent: reminderContent,noteScheduledReminderDate: reminderDate, gameNoteId: gameNoteId) else { return }
             notificationManager.updateScheduledNotification(title: gameName, message: reminderContent, id: gameNoteId, date: reminderDate, completion: { [weak self] result in
                 guard let self = self else { return }
                 switch result {
