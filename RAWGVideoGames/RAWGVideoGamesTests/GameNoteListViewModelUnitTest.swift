@@ -102,6 +102,23 @@ final class GameNoteListViewModelUnitTest: XCTestCase {
         viewModel.delete(id: noteId)
     }
     
+    func testUpdate(){
+        fetchExpectation = expectation(description: "fetchGames")
+
+        guard let note = gameNote as? GameNote else { return }
+
+        note.noteContent = "Note content updated"
+        let updatedNoteContent = viewModel.update(note: note)
+        
+        waitForExpectations(timeout: 10)
+
+        XCTAssertEqual(note.noteContent, updatedNoteContent)
+        
+        // after test remove.
+        guard let noteId = note.id else { return }
+        viewModel.delete(id: noteId)
+    }
+    
     func testAddReminder(){
         fetchExpectation = expectation(description: "fetchGames")
 

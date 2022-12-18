@@ -19,7 +19,7 @@ protocol GameNoteListViewModelProtocol {
     func getGameNoteHasReminderId(at index: Int) -> UUID? 
     func add(note: GameNote)
     func add(reminder: GameNote)
-    func update(note: GameNote)
+    func update(note: GameNote) -> String
     func update(reminder: GameNote)
     func delete(id: UUID)
     func deleteReminder(id: UUID)
@@ -93,11 +93,12 @@ final class GameNoteListViewModel: GameNoteListViewModelProtocol {
         delegate?.gameNotesLoaded()
     }
     
-    func update(note: GameNote) {
+    func update(note: GameNote) -> String{
         if let row = gameNotes?.firstIndex(where: {$0.id == note.id}) {
             gameNotes?[row] = note
             delegate?.gameNotesLoaded()
         }
+        return note.noteContent ?? ""
     }
     
     func add(reminder: GameNote) {
