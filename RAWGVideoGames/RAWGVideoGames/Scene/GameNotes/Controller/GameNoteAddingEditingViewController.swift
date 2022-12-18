@@ -18,9 +18,9 @@ protocol GameNoteAddingEditingViewControllerDelegate: AnyObject {
 final class GameNoteAddingEditingViewController: BaseViewController {
 
     //MARK: IBOutlets
-    @IBOutlet weak var gameNameTextField: UITextField!
-    @IBOutlet weak var gameNoteTextView: UITextView!
-    @IBOutlet weak var noteTypeSegmentedControl: UISegmentedControl!
+    @IBOutlet private weak var gameNameTextField: UITextField!
+    @IBOutlet private weak var gameNoteTextView: UITextView!
+    @IBOutlet private weak var noteTypeSegmentedControl: UISegmentedControl!
     
     //MARK: UI Components
     private let gameNoteReminderDatePicker: UIDatePicker =  {

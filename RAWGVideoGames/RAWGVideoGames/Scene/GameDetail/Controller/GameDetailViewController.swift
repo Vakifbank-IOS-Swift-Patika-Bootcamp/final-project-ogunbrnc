@@ -11,19 +11,19 @@ import SDWebImage
 final class GameDetailViewController: BaseViewController {
     
     // MARK: IBOutlets
-    @IBOutlet weak var gameRatingAverageLabel: UILabel!
-    @IBOutlet weak var gameRatingCountLabel: UILabel!
-    @IBOutlet weak var gameTimeLabel: UILabel!
-    @IBOutlet weak var gameRatingSkipLabel: UILabel!
-    @IBOutlet weak var gameRatingMehLabel: UILabel!
-    @IBOutlet weak var gameRatingRecommendedLabel: UILabel!
-    @IBOutlet weak var gameRatingExceptionalLabel: UILabel!
-    @IBOutlet weak var gameImageView: UIImageView!
-    @IBOutlet weak var gameNameLabel: UILabel!
-    @IBOutlet weak var gamePlatformLabel: UILabel!
-    @IBOutlet weak var gameGenresLabel: UILabel!
-    @IBOutlet weak var gameTagsLabel: UILabel!
-    @IBOutlet weak var gameDescriptionLabel: UILabel!
+    @IBOutlet private weak var gameRatingAverageLabel: UILabel!
+    @IBOutlet private weak var gameRatingCountLabel: UILabel!
+    @IBOutlet private weak var gameTimeLabel: UILabel!
+    @IBOutlet private weak var gameRatingSkipLabel: UILabel!
+    @IBOutlet private weak var gameRatingMehLabel: UILabel!
+    @IBOutlet private weak var gameRatingRecommendedLabel: UILabel!
+    @IBOutlet private weak var gameRatingExceptionalLabel: UILabel!
+    @IBOutlet private weak var gameImageView: UIImageView!
+    @IBOutlet private weak var gameNameLabel: UILabel!
+    @IBOutlet private weak var gamePlatformLabel: UILabel!
+    @IBOutlet private weak var gameGenresLabel: UILabel!
+    @IBOutlet private weak var gameTagsLabel: UILabel!
+    @IBOutlet private weak var gameDescriptionLabel: UILabel!
     
     
     // MARK: Variable Declarations
@@ -42,7 +42,7 @@ final class GameDetailViewController: BaseViewController {
         }
     }
     
-    @objc func removeFavoriteTapped() {
+    @objc private func removeFavoriteTapped() {
         viewModel.deleteGameFromFavoriteList { result in
             if result {
                 favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
@@ -52,7 +52,7 @@ final class GameDetailViewController: BaseViewController {
         }
     }
     
-    @objc func favoriteGameDeleted() {
+    @objc private func favoriteGameDeleted() {
         configureFavoriteButton()
     }
 

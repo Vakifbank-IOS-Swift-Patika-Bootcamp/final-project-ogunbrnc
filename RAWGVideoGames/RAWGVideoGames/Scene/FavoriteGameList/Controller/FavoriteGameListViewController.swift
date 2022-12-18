@@ -10,7 +10,7 @@ import UIKit
 class FavoriteGameListViewController: UIViewController {
 
     // MARK: IBOutlets
-    @IBOutlet weak var favoriteGamesTableView: UITableView! {
+    @IBOutlet private weak var favoriteGamesTableView: UITableView! {
         didSet {
             favoriteGamesTableView.register(FavoriteGameListTableViewCell.self, forCellReuseIdentifier: FavoriteGameListTableViewCell.identifier)
             favoriteGamesTableView.delegate = self
@@ -60,7 +60,7 @@ class FavoriteGameListViewController: UIViewController {
         
     }
     
-    @objc func favoriteGameDeleted() {
+    @objc private func favoriteGameDeleted() {
         viewModel.gameDeletedFromFavorites()
         //last game in the list has been deleted from the favorite list
         if viewModel.getGameCount() == 0 {
