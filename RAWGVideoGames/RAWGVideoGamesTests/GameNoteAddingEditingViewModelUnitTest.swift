@@ -26,7 +26,7 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
         gameNoteWithReminder.setValue("Grand Theft Auto V", forKeyPath: "gameName")
         gameNoteWithReminder.setValue("Note content", forKeyPath: "noteContent")
         gameNoteWithReminder.setValue(Date.now, forKeyPath: "noteDate")
-        gameNoteWithReminder.setValue(UUID(uuidString: "1"), forKey: "id")
+        gameNoteWithReminder.setValue(UUID(), forKey: "id")
         gameNoteWithReminder.setValue(Date.now.addingTimeInterval(5 * 60), forKey: "noteScheduledReminderDate")
         gameNoteWithReminder.setValue(true, forKey: "noteHasReminder")
         
@@ -35,7 +35,7 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
         gameNote.setValue("Grand Theft Auto 4", forKeyPath: "gameName")
         gameNote.setValue("Note content", forKeyPath: "noteContent")
         gameNote.setValue(Date.now, forKeyPath: "noteDate")
-        gameNote.setValue(UUID(uuidString: "2"), forKey: "id")
+        gameNote.setValue(UUID(), forKey: "id")
         gameNote.setValue(nil, forKey: "noteScheduledReminderDate")
         gameNote.setValue(false, forKey: "noteHasReminder")
 
@@ -56,7 +56,19 @@ final class GameNoteAddingEditingViewModelUnitTest: XCTestCase {
         guard let note =  viewModelUndefinedNote.saveNote(gameName: "The Sims", noteContent: "The Sims Note") else { return }
         
         XCTAssertEqual(note.noteContent, "The Sims Note")
+        
+        
     }
+    
+    func testUpdatNote() {
+        guard let _ = gameNote,
+              let updatedNote = viewModel.saveNote(gameName: "Grand Theft Auto 4", noteContent: "Grand Theft Auto 4 Note Updated") else { return }
+        
+        
+
+        XCTAssertEqual(updatedNote.noteContent, "Grand Theft Auto 4 Note Updated")
+    }
+    
     
 }
 
